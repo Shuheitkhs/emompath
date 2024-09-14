@@ -1,9 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Oswald:wght@400;700&display=swap");
+
+/* Tailwind CSSベースの設定 */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* 日本語にNoto Sans JP、英語にOswaldを適用するための設定 */
+.font-jp {
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+.font-en {
+  font-family: "Oswald", sans-serif;
 }
