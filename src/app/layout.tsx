@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "EMOM Path",
   description:
     "EMOM Path is your ultimate training companion, guiding you through personalized EMOM workouts. Track your progress with detailed graphs and stay motivated as the app helps you plan the next steps on your fitness journey. Whether you're aiming to improve endurance, strength, or overall fitness, EMOM Path charts your path forward.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
@@ -25,7 +28,6 @@ export default function RootLayout({
         </video>
         <div className="absolute inset-0 bg-gray-600 bg-opacity-30"></div>
 
-        {/* コンテンツ */}
         <div className="relative z-10">{children}</div>
       </body>
     </html>
