@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
-import VideoBackground from "@/components/VideoBackground";
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "EMOM Path",
@@ -15,14 +15,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-en antialiased text-gray-200 relative min-h-screen flex items-center justify-center">
-        <div className="absolute inset-0 bg-gray-700 bg-opacity-30"></div>
-        <VideoBackground />
-        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-40 z-[-1]"></div>
+      <body className="font-en antialiased text-gray-200 relative min-h-screen">
+        <div className="absolute inset-0 bg-black bg-opacity-30 pointer-events-none z-[-1]"></div>
+        <video
+          className="fixed top-0 left-0 w-full h-full object-cover z-[-2]"
+          autoPlay
+          loop
+          muted
+        >
+          <source src="/emompath.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
 
         <div className="z-10 w-full flex justify-center items-center">
-          <div className="bg-black bg-opacity-80 p-8 rounded-lg shadow-lg max-w-[768px] w-full min-w-[300px] text-center">
+          <div className="bg-black bg-opacity-80 px-6 rounded-lg max-w-[768px] w-full min-w-[300px] text-center mx-2">
+            <Header />
             {children}
+            <div className="text-center text-xs">
+              Copyright © All rights reserved | Shuhei Takahashi💪
+            </div>
           </div>
         </div>
       </body>

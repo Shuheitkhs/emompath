@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="HSkgegW4dpEm0707C9yM" name="/signin">
-        <mxGraphModel dx="559" dy="359" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1118" dy="718" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -99,7 +99,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="/signup" id="HZNWICLq0J-qOC8f-yRH">
-        <mxGraphModel dx="559" dy="359" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1242" dy="798" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="kfkF3YHAHHioUtLzQz8b-0"/>
                 <mxCell id="kfkF3YHAHHioUtLzQz8b-1" parent="kfkF3YHAHHioUtLzQz8b-0"/>
@@ -229,7 +229,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="/mypage_delete_modal" id="4qwTzqILTbJeOLo6G8lY">
-        <mxGraphModel dx="1016" dy="653" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="559" dy="359" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="JAktLBHFDvIe4T0V0z1L-0"/>
                 <mxCell id="JAktLBHFDvIe4T0V0z1L-1" parent="JAktLBHFDvIe4T0V0z1L-0"/>
@@ -466,7 +466,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="/emoms" id="dzgOOaHsHQuFLqOHd7wv">
-        <mxGraphModel dx="559" dy="359" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="699" dy="449" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="2nd5VbWjP6MpvrefB3Rn-0"/>
                 <mxCell id="2nd5VbWjP6MpvrefB3Rn-1" parent="2nd5VbWjP6MpvrefB3Rn-0"/>
@@ -807,7 +807,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="/emoms/[id]" id="WEz-_GXvzKy5m3M25WcH">
-        <mxGraphModel dx="559" dy="304" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="860" dy="552" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="kYvzT20Q3j9n9NqyP7gZ-0"/>
                 <mxCell id="kYvzT20Q3j9n9NqyP7gZ-1" parent="kYvzT20Q3j9n9NqyP7gZ-0"/>
@@ -907,7 +907,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="/emoms/[id]_delete_exercisemodal" id="b_5H1oIpyZwPb0JKrXyT">
-        <mxGraphModel dx="860" dy="468" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="559" dy="359" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="akS2QWlakZdRzpB0wCMK-0"/>
                 <mxCell id="akS2QWlakZdRzpB0wCMK-1" parent="akS2QWlakZdRzpB0wCMK-0"/>
@@ -1024,7 +1024,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="/emoms/[id]_delete_EMOMmodal" id="7uK3WtU6hwgUGdpsss4y">
-        <mxGraphModel dx="1398" dy="760" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="559" dy="359" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="4PPsYb0aFTdxOFHtFenb-0"/>
                 <mxCell id="4PPsYb0aFTdxOFHtFenb-1" parent="4PPsYb0aFTdxOFHtFenb-0"/>
@@ -1141,7 +1141,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="/emoms/[id]/timer" id="kG7Bbu_NULgUN-K6jzet">
-        <mxGraphModel dx="559" dy="359" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1863" dy="1197" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="CLBJPFEddZCQHRqZJGed-0"/>
                 <mxCell id="CLBJPFEddZCQHRqZJGed-1" parent="CLBJPFEddZCQHRqZJGed-0"/>
@@ -1206,7 +1206,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="complete_modal" id="ostJrDCQ4PGaTLND7Xj4">
-        <mxGraphModel dx="860" dy="552" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="559" dy="359" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0ti7cfsbj7oif5bnkDSE-0"/>
                 <mxCell id="0ti7cfsbj7oif5bnkDSE-1" parent="0ti7cfsbj7oif5bnkDSE-0"/>
