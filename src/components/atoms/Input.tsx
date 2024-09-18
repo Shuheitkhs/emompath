@@ -1,12 +1,16 @@
-type InputProps = {
+export type InputTypes = "text" | "password" | "email" | "number";
+
+export type InputProps = {
   size?: "medium" | "large";
+  type: InputTypes;
   placeholder?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value: string;
+  value?: string;
 };
 
-export const Input: React.FC<InputProps> = ({
+const Input: React.FC<InputProps> = ({
   size = "medium",
+  type,
   placeholder = "",
   onChange,
   value,
@@ -18,7 +22,7 @@ export const Input: React.FC<InputProps> = ({
       sizeClass = "py-2 px-4 text-md text-text_dark w-[45%]"; // medium: 横幅45%
       break;
     case "large":
-      sizeClass = "py-3 px-6 text-lg text-text_dark w-[80%]"; // large: 横幅80%
+      sizeClass = "py-3 px-6 text-lg text-text_dark w-[90%]"; // large: 横幅80%
       break;
     default:
       sizeClass = "py-2 px-4 text-md w-[45%]"; // デフォルトは medium
@@ -27,10 +31,12 @@ export const Input: React.FC<InputProps> = ({
   return (
     <input
       className={`rounded ${sizeClass} transition duration-150 ease-in-out`}
-      type="text"
+      type={type}
       placeholder={placeholder}
       onChange={onChange}
       value={value}
     />
   );
 };
+
+export default Input;

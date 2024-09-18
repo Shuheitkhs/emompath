@@ -27,11 +27,11 @@ export default function RootLayout({
           Your browser does not support the video tag.
         </video>
 
-        <div className="z-10 w-full flex justify-center items-center">
-          <div className="bg-black bg-opacity-80 px-6 rounded-lg max-w-[768px] w-full min-w-[300px] text-center mx-2">
+        <div className="z-10 w-full min-h-screen flex justify-center items-center">
+          <div className="bg-black bg-opacity-80 px-6 rounded-lg max-w-[768px] w-full min-w-[300px] text-center mx-2 ">
             <Header />
             {children}
-            <div className="text-center text-xs">
+            <div className="text-center text-sm">
               Copyright © All rights reserved | Shuhei Takahashi💪
             </div>
           </div>
