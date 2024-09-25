@@ -1233,7 +1233,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="complete_modal" id="ostJrDCQ4PGaTLND7Xj4">
-        <mxGraphModel dx="1686" dy="1186" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="2360" dy="1660" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0ti7cfsbj7oif5bnkDSE-0"/>
                 <mxCell id="0ti7cfsbj7oif5bnkDSE-1" parent="0ti7cfsbj7oif5bnkDSE-0"/>
@@ -1332,6 +1332,32 @@
                         <mxGeometry x="1118" y="780" width="196" height="70" as="geometry"/>
                     </mxCell>
                 </UserObject>
+                <mxCell id="-sC-a257SJWA_zORa2op-0" value="" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=default;fontSize=23;fontColor=#FFFFFF;fillColor=default;gradientColor=none;gradientDirection=north;" vertex="1" parent="0ti7cfsbj7oif5bnkDSE-1">
+                    <mxGeometry x="1810" y="269.5" width="670" height="765" as="geometry"/>
+                </mxCell>
+                <mxCell id="-sC-a257SJWA_zORa2op-1" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;Update with 10% increase?&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fontSize=23;fontColor=#FFFFFF;fillColor=default;gradientColor=none;gradientDirection=north;" vertex="1" parent="0ti7cfsbj7oif5bnkDSE-1">
+                    <mxGeometry x="1995" y="366.12" width="300" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="-sC-a257SJWA_zORa2op-2" value="Updated!!" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=default;fontSize=27;fontColor=#FFFFFF;fillColor=default;gradientColor=none;gradientDirection=north;" vertex="1" parent="0ti7cfsbj7oif5bnkDSE-1">
+                    <mxGeometry x="1935" y="436.12" width="420" height="330" as="geometry"/>
+                </mxCell>
+                <UserObject label="EMOM list" id="-sC-a257SJWA_zORa2op-3">
+                    <mxCell style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#A50040;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#d80073;whiteSpace=wrap;" vertex="1" parent="0ti7cfsbj7oif5bnkDSE-1">
+                        <mxGeometry x="1940" y="786.12" width="410" height="70" as="geometry"/>
+                    </mxCell>
+                </UserObject>
+                <mxCell id="-sC-a257SJWA_zORa2op-5" value="" style="shape=flexArrow;endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="0ti7cfsbj7oif5bnkDSE-1" source="fnBP9Df1-8H8DCwG4mRQ-3" target="O0Bhm7lAScpUF8W_RcNB-0">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="750" y="570" as="sourcePoint"/>
+                        <mxPoint x="800" y="520" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="-sC-a257SJWA_zORa2op-7" value="" style="shape=flexArrow;endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.991;exitY=0.567;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="0ti7cfsbj7oif5bnkDSE-1" source="O0Bhm7lAScpUF8W_RcNB-10" target="-sC-a257SJWA_zORa2op-0">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="1580" y="710" as="sourcePoint"/>
+                        <mxPoint x="1710" y="570" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
             </root>
         </mxGraphModel>
     </diagram>
@@ -1436,7 +1462,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="complete_modal_update" id="njIXDwyEmsrcvJRzR94s">
-        <mxGraphModel dx="590" dy="415" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="2360" dy="1660" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="xA0824QYi7QH134xQI6--0"/>
                 <mxCell id="xA0824QYi7QH134xQI6--1" parent="xA0824QYi7QH134xQI6--0"/>
