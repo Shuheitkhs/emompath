@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="HSkgegW4dpEm0707C9yM" name="/auth/signin">
-        <mxGraphModel dx="1475" dy="1038" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1136" dy="847" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -99,7 +99,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="/auth/signup" id="HZNWICLq0J-qOC8f-yRH">
-        <mxGraphModel dx="843" dy="593" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="511" dy="381" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="kfkF3YHAHHioUtLzQz8b-0"/>
                 <mxCell id="kfkF3YHAHHioUtLzQz8b-1" parent="kfkF3YHAHHioUtLzQz8b-0"/>
@@ -177,7 +177,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="/auth/mypage" id="qw6BN2ONXNQFkoXADAFX">
-        <mxGraphModel dx="590" dy="415" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="511" dy="381" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="oyTpnDkLFFV-aHSwhS3g-0"/>
                 <mxCell id="oyTpnDkLFFV-aHSwhS3g-1" parent="oyTpnDkLFFV-aHSwhS3g-0"/>
@@ -229,7 +229,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="/mypage_delete_modal" id="4qwTzqILTbJeOLo6G8lY">
-        <mxGraphModel dx="1967" dy="1383" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="511" dy="381" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="JAktLBHFDvIe4T0V0z1L-0"/>
                 <mxCell id="JAktLBHFDvIe4T0V0z1L-1" parent="JAktLBHFDvIe4T0V0z1L-0"/>
@@ -296,7 +296,7 @@
                 <mxCell id="JAktLBHFDvIe4T0V0z1L-11" value="delete account" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#A50040;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#d80073;whiteSpace=wrap;" parent="JAktLBHFDvIe4T0V0z1L-1" vertex="1">
                     <mxGeometry x="134" y="535" width="542" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="8vBK9NkvLxX80yUMmvfE-1" value="" style="shape=flexArrow;endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="JAktLBHFDvIe4T0V0z1L-1" target="Hvc-Z_7ImDL_PJ3XLuTe-0">
+                <mxCell id="8vBK9NkvLxX80yUMmvfE-1" value="" style="shape=flexArrow;endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="JAktLBHFDvIe4T0V0z1L-1" target="Hvc-Z_7ImDL_PJ3XLuTe-0" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="670" y="550" as="sourcePoint"/>
                         <mxPoint x="720" y="500" as="targetPoint"/>
@@ -306,7 +306,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="/mypage/email" id="R0Wpko4FtvjJ1FLH6yQ3">
-        <mxGraphModel dx="590" dy="415" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="511" dy="381" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="FN0xxmibblL0z2B7oTNd-0"/>
                 <mxCell id="FN0xxmibblL0z2B7oTNd-1" parent="FN0xxmibblL0z2B7oTNd-0"/>
@@ -391,7 +391,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="/mypage/password" id="TPwB80Wty0QdK5WLKHQn">
-        <mxGraphModel dx="590" dy="415" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="511" dy="381" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="wmcbM0_0WPt_gQkxVzzx-0"/>
                 <mxCell id="wmcbM0_0WPt_gQkxVzzx-1" parent="wmcbM0_0WPt_gQkxVzzx-0"/>
