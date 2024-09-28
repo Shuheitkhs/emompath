@@ -2,38 +2,33 @@
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
 import Label from "@/components/atoms/Label";
-import FormField from "@/components/molecules/FormFiled";
-import Link from "next/link";
+import BorderLabel from "@/components/atoms/BorderLabel";
+import LoginIcon from "@mui/icons-material/Login";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
 
 const SignUpPage = () => {
   const handleChange = () => {
     alert("onchange!");
   };
   return (
-    <div className="flex flex-col items-start space-y-2 p-6">
-      <h2 className="text-2xl">SIGN UP</h2>
-      <FormField
-        label="Email"
-        value="write your email"
-        type="text"
-        size="large"
-        onChange={handleChange}
-      ></FormField>
-
-      <Label>Email</Label>
-      <Input size="large" type="email" value="text" onChange={handleChange} />
-      <Label>Password</Label>
-      <Input
-        size="large"
-        type="password"
-        value="text"
-        onChange={handleChange}
-      />
-      <Button size="medium" color="secondary" onClick={handleChange}>
-        {"SIGN UP"}
-      </Button>
-      <Link href="/SignIn">Back to SignIn</Link>
-    </div>
+    <>
+      <div className="flex flex-col space-y-2 border-b-2 py-2">
+        <h3 className="text-start text-2xl ">Sign Up</h3>
+        <Label className="text-start">Email:</Label>
+        <Input size="large" type="email" onChange={handleChange}></Input>
+        <Label className="text-start">Password:</Label>
+        <Input size="large" type="password" onChange={handleChange}></Input>
+        <Button size="small" color="secondary" onClick={handleChange}>
+          <span className="px-2">
+            <LoginIcon />
+          </span>
+          SIGN IN
+        </Button>
+        <div className="flex justify-start">
+          <BorderLabel href="/auth/signin">Back to Sign In</BorderLabel>
+        </div>
+      </div>
+    </>
   );
 };
 

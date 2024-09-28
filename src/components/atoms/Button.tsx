@@ -6,7 +6,7 @@
 export type ButtonProps = {
   size?: "extra-small" | "small" | "medium" | "large" | "normal";
   color?: "primary" | "secondary" | "danger";
-  onClick: () => void;
+  onClick?: () => void;
   children: React.ReactNode;
 };
 

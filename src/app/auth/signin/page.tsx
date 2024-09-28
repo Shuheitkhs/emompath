@@ -7,6 +7,8 @@ import Label from "@/components/atoms/Label";
 import Input from "@/components/atoms/Input";
 import BorderLabel from "@/components/atoms/BorderLabel";
 import LoginIcon from "@mui/icons-material/Login";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
+import Link from "next/link";
 
 const sData = [150, 165, 180, 200, 240, 260, 300, 330, 350, 385];
 const cData = [30, 33, 40, 45, 50, 55, 70, 80, 100, 110];
@@ -71,9 +73,7 @@ const page = () => {
       <div className="space-y-3 justify-center ">
         <div>
           <Button size="large" onClick={signinWithGoogle}>
-            <span className="px-2">
-              <GoogleIcon />
-            </span>
+            <GoogleIcon className="mr-2" />
             Sign In With Google
           </Button>
         </div>
@@ -89,9 +89,7 @@ const page = () => {
             onChange={signinWithGoogle}
           ></Input>
           <Button size="small" color="secondary" onClick={signinWithGoogle}>
-            <span className="px-2">
-              <LoginIcon />
-            </span>
+            <LoginIcon className="mr-2" />
             SIGN IN
           </Button>
           <div className="flex justify-start">
@@ -100,8 +98,11 @@ const page = () => {
         </div>
         <div className="space-y-2 flex flex-col justify-start border-b-2 py-2">
           <h3 className="text-start text-2xl">New User</h3>
-          <Button size="small" color="secondary" onClick={signinWithGoogle}>
-            SIGN UP
+          <Button size="small" color="secondary">
+            <Link href="/auth/signup">
+              <BorderColorIcon className="mr-2" />
+              SIGN UP
+            </Link>
           </Button>
         </div>
       </div>
