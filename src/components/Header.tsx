@@ -19,7 +19,7 @@ function Header() {
         </Link>
       </div>
       <div className="flex items-center ml-auto">
-        <Link href={"/mypage"}>
+        <Link href={"/auth/mypage"}>
           <img
             src="/mypage.png"
             alt="to mypage"

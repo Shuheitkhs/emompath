@@ -74,12 +74,12 @@ const page = () => {
         <div>
           <Button size="large" onClick={signinWithGoogle}>
             <GoogleIcon className="mr-2" />
-            Sign In With Google
+            SIGN IN WITH GOOGLE
           </Button>
         </div>
 
         <div className="flex flex-col space-y-2 border-b-2 py-2">
-          <h3 className="text-start text-2xl ">Sign In</h3>
+          <h2 className="text-start text-3xl ">Sign In</h2>
           <Label className="text-start">Email:</Label>
           <Input size="large" type="email" onChange={signinWithGoogle}></Input>
           <Label className="text-start">Password:</Label>
@@ -97,7 +97,7 @@ const page = () => {
           </div>
         </div>
         <div className="space-y-2 flex flex-col justify-start border-b-2 py-2">
-          <h3 className="text-start text-2xl">New User</h3>
+          <h2 className="text-start text-2xl">New User</h2>
           <Button size="small" color="secondary">
             <Link href="/auth/signup">
               <BorderColorIcon className="mr-2" />

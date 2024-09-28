@@ -3,7 +3,6 @@ import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
 import Label from "@/components/atoms/Label";
 import BorderLabel from "@/components/atoms/BorderLabel";
-import LoginIcon from "@mui/icons-material/Login";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 
 const SignUpPage = () => {
@@ -19,9 +18,7 @@ const SignUpPage = () => {
         <Label className="text-start">Password:</Label>
         <Input size="large" type="password" onChange={handleChange}></Input>
         <Button size="small" color="secondary" onClick={handleChange}>
-          <span className="px-2">
-            <LoginIcon />
-          </span>
+          <BorderColorIcon className="mr-2" />
           SIGN IN
         </Button>
         <div className="flex justify-start">

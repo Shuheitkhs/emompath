@@ -10,7 +10,7 @@ import Button from "@/components/atoms/Button";
 
 // Dialogが受け取るプロップスの定義
 interface AlertDialogProps {
-  openText?: string;
+  trigger: React.ReactNode;
   title?: string;
   content?: string;
   agreeText?: string;
@@ -21,7 +21,7 @@ interface AlertDialogProps {
 
 const AlertDialog: React.FC<AlertDialogProps> = ({
   // お試しデフォルト
-  openText = "ひらけごま",
+  trigger,
   title = "デフォルトのテキストですか？",
   content = "デフォルトのテキストです",
   agreeText = "Yes",
@@ -52,9 +52,7 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
 
   return (
     <React.Fragment>
-      <Button size="large" color="primary" onClick={handleClickOpen}>
-        {openText}
-      </Button>
+      <div onClick={handleClickOpen}>{trigger}</div>{" "}
       <Dialog
         open={open}
         onClose={handleClose}
@@ -62,15 +60,21 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
         aria-describedby="alert-dialog-description"
         sx={{
           "& .MuiPaper-root": {
+            borderRadius: "16px", // 角丸のサイズを指定
             backgroundColor: "#444444", // dialogの背景色を指定
             minWidth: "300px", //dialogの最低幅
             minHeight: "300px", //dialogの最低高
           },
         }}
       >
-        <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+        <DialogTitle id="alert-dialog-title" sx={{ color: "#EAEAEA" }}>
+          {title}
+        </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText
+            id="alert-dialog-description"
+            sx={{ color: "#EAEAEA" }}
+          >
             {content}
           </DialogContentText>
         </DialogContent>
