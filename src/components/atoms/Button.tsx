@@ -20,7 +20,7 @@ const Button: React.FC<ButtonProps> = ({
   switch (size) {
     case "extra-small":
       sizeClass =
-        "py-2 px-2 text-xl text-text_dark font-bold w-auto  hover:scale-105 transition-transform duration-100 active:scale-95"; // +-ボタンのみに使用
+        "py-2 px-2 text-xl text-text_dark font-bold w-[10%]  hover:scale-105 transition-transform duration-100 active:scale-95"; // +-ボタンのみに使用
       break;
     case "small":
       sizeClass =
