@@ -20,8 +20,12 @@ function page() {
           <div className="row-start-2 col-span-2">Exercise Name</div>
           <div className="row-start-2">10reps</div>
           <div className="row-start-3">Exercise Volume 100</div>
-          <div className="row-start-3 bg-secondary rounded">Edit</div>
-          <div className="row-start-3 bg-primary rounded">Start EMOM</div>
+          <div className="row-start-3 flex items-center justify-center bg-secondary rounded">
+            Edit
+          </div>
+          <div className="row-start-3 flex items-center justify-center bg-primary rounded">
+            Start EMOM
+          </div>
         </div>
         {/* 第二のグリッド */}
 
