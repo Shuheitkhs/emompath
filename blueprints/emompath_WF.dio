@@ -1165,7 +1165,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="/emoms/[id]/timer" id="kG7Bbu_NULgUN-K6jzet">
-        <mxGraphModel dx="1420" dy="962" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1549" dy="1049" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="CLBJPFEddZCQHRqZJGed-0"/>
                 <mxCell id="CLBJPFEddZCQHRqZJGed-1" parent="CLBJPFEddZCQHRqZJGed-0"/>
@@ -1215,7 +1215,7 @@
                     <mxGeometry x="120" y="288.75" width="200" height="77" as="geometry"/>
                 </mxCell>
                 <mxCell id="ZHI1kcwt2u0O5gqNZn5W-6" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;set&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=20;" parent="CLBJPFEddZCQHRqZJGed-1" vertex="1">
-                    <mxGeometry x="375" y="640" width="60" height="50" as="geometry"/>
+                    <mxGeometry x="450" y="700" width="60" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="ZHI1kcwt2u0O5gqNZn5W-7" value="Exercise A rep" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=30;" parent="CLBJPFEddZCQHRqZJGed-1" vertex="1">
                     <mxGeometry x="295" y="760" width="220" height="50" as="geometry"/>
@@ -1227,7 +1227,7 @@
                     <mxGeometry x="295" y="860" width="220" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="p67XbcO-jDsewBmDzE5r-0" value="EMOM name" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=30;" parent="CLBJPFEddZCQHRqZJGed-1" vertex="1">
-                    <mxGeometry x="305" y="700" width="200" height="50" as="geometry"/>
+                    <mxGeometry x="250" y="700" width="200" height="50" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

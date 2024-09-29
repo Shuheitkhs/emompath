@@ -7,7 +7,6 @@ import React, { useState } from "react";
 import EMOMEdit from "@/components/organisms/EmomEdit";
 import Exercise from "@/components/organisms/Exercise";
 import FirstExercise from "@/components/organisms/FirstExercise";
-import BorderLabel from "@/components/atoms/BorderLabel";
 import AlertDialog from "@/components/AlertDialog";
 
 interface ExerciseState {
