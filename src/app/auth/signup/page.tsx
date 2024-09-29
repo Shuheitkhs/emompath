@@ -19,7 +19,7 @@ const SignUpPage = () => {
         <Input size="large" type="password" onChange={handleChange}></Input>
         <Button size="small" color="secondary" onClick={handleChange}>
           <BorderColorIcon className="mr-2" />
-          SIGN IN
+          SIGN UP
         </Button>
         <div className="flex justify-start">
           <BorderLabel href="/auth/signin">Back to Sign In</BorderLabel>
