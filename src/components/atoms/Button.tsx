@@ -54,7 +54,7 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className={`flex items-center justify-center rounded ${sizeClass} ${colorClass}`}
+      className={`text-center rounded ${sizeClass} ${colorClass}`}
       onClick={onClick}
     >
       {children}
