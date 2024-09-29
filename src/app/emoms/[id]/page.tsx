@@ -7,6 +7,8 @@ import React, { useState } from "react";
 import EMOMEdit from "@/components/organisms/EmomEdit";
 import Exercise from "@/components/organisms/Exercise";
 import FirstExercise from "@/components/organisms/FirstExercise";
+import BorderLabel from "@/components/atoms/BorderLabel";
+import AlertDialog from "@/components/AlertDialog";
 
 interface ExerciseState {
   name: string;
@@ -70,6 +72,14 @@ const page = () => {
     const updatedExercises = exercises.filter((_, i) => i !== index);
     setExercises(updatedExercises);
   };
+  // Dialog用の関数
+  const handleAgree = () => {
+    alert("Agreed!");
+  };
+
+  const handleDisagree = () => {
+    alert("Disagreed!");
+  };
 
   return (
     <div className="my-5">
@@ -123,6 +133,21 @@ const page = () => {
         <Button size="medium" color="primary" onClick={handleNewExercise}>
           Add New Exercise
         </Button>
+      </div>
+      <div className="my-5">
+        <AlertDialog
+          trigger={
+            <p className=" inline-block text-blue-500 border-b  border-blue-500 hover:text-blue-700 hover:border-blue-700">
+              Delete EMOM?
+            </p>
+          }
+          title="Delete your EMOM?"
+          content="Previous logs will also be lost."
+          agreeText="Yes"
+          disagreeText="No"
+          onAgree={handleAgree}
+          onDisagree={handleDisagree}
+        />
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ const Counter: React.FC<CounterProps> = ({ title, number, plus1, minus1 }) => {
           <RemoveIcon />
         </Button>
         <p className="text-2xl font-bold">
-          {`${title}`} {`${number}`}
+          {`${title}`} <span className="text-3xl">{`${number}`}</span>
         </p>
         <Button size="extra-small" color="secondary" onClick={plus1}>
           <AddIcon />

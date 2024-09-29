@@ -24,7 +24,8 @@ const FirstExercise = ({ sets }: { sets: number }) => {
         />
         <Counter title="Reps" number={reps} plus1={plus1r} minus1={minus1r} />
         <p className="inline-block text-2xl font-bold border-b-2 my-2">
-          {exercise} -Volume- <span className="text-primary">{volume}</span>
+          {exercise} -Volume-{" "}
+          <span className="text-primary text-3xl">{volume}</span>
         </p>
       </div>
     </div>
