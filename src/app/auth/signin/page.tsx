@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Chart from "@/components/atoms/Chart"; // コンポーネントのパスを適切に変更
+import Chart from "@/components/atoms/Chart";
 import Button from "@/components/atoms/Button";
 import GoogleIcon from "@mui/icons-material/Google";
 import Label from "@/components/atoms/Label";

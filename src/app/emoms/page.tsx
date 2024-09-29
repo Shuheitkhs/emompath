@@ -8,7 +8,7 @@ function page() {
       <div>
         <h2 className="text-3xl my-5">EMOM List</h2>
       </div>
-      <div className="mb-5">
+      <div className="mb-5 flex justify-center">
         <Button size="large" color="secondary">
           <Link href="/emoms/create">Create New EMOM</Link>
         </Button>

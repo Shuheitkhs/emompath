@@ -1,11 +1,10 @@
 "use client";
 import Button from "@/components/atoms/Button";
-import Input from "@/components/atoms/Input";
 import React, { useState } from "react";
-import ClearIcon from "@mui/icons-material/Clear";
-import Counter from "@/components/molecules/Counter";
 import Link from "next/link";
-import Exercise from "@/components/organisums/exercise";
+import Exercise from "@/components/organisms/Exercise";
+import EMOMEdit from "@/components/organisms/EmomEdit";
+import FirstExercise from "@/components/organisms/FirstExercise";
 
 interface ExerciseState {
   name: string;
@@ -14,30 +13,14 @@ interface ExerciseState {
 
 function Page() {
   // EMOM用の状態管理
+  const [emomName, setEmomName] = useState<string>("");
+
   const [ready, setReady] = useState<number>(10);
   const [sets, setSets] = useState<number>(10);
   // デフォルトのexercise用の状態管理
-  const [exercise, setExercise] = useState<string>("");
-  const [reps, setReps] = useState<number>(10);
 
   // 2つ目以降のエクササイズを管理
   const [exercises, setExercises] = useState<ExerciseState[]>([]);
-
-  // Readyのカウント用関数
-  const minus1 = () => setReady((prevReady) => Math.max(prevReady - 1, 0));
-  const plus1 = () => setReady((prevReady) => prevReady + 1);
-
-  // Setsのカウント用関数
-  const minus1s = () => setSets((prevSets) => Math.max(prevSets - 1, 0));
-  const plus1s = () => setSets((prevSets) => prevSets + 1);
-
-  // 初期エクササイズの名前変更用関数
-  const handleExerciseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setExercise(e.target.value);
-  };
-  // Repsのカウント用関数
-  const minus1r = () => setReps((prevReps) => Math.max(prevReps - 1, 0));
-  const plus1r = () => setReps((prevReps) => prevReps + 1);
 
   // 新しいエクササイズを追加
   const handleNewExercise = () => {
@@ -68,37 +51,22 @@ function Page() {
     setExercises(updatedExercises);
   };
 
-  const volume = sets * reps;
-
   return (
     <div className="my-5">
       <div>
         {/* EMOM全体の情報 */}
         <div>
-          <Input
-            size="large"
-            type="text"
-            onChange={() => {}}
-            placeholder="Input your EMOM Name"
+          <EMOMEdit
+            emomName={emomName}
+            onNameChange={setEmomName}
+            ready={ready}
+            setReady={setReady}
+            sets={sets}
+            setSets={setSets}
           />
-          <Counter title="Ready" number={ready} plus1={plus1} minus1={minus1} />
-          <Counter title="Sets" number={sets} plus1={plus1s} minus1={minus1s} />
         </div>
-
         {/* 最初のエクササイズ情報 */}
-        <div className="my-5">
-          <Input
-            size="large"
-            type="text"
-            onChange={handleExerciseChange}
-            placeholder="Input Your Exercise Name"
-          />
-          <Counter title="Reps" number={reps} plus1={plus1r} minus1={minus1r} />
-          <p className="inline-block text-2xl font-bold border-b-2 my-2">
-            {exercise} -Volume- <span className="text-primary">{volume}</span>
-          </p>
-        </div>
-
+        <FirstExercise sets={sets} />
         {/* 二番目以降のexercise */}
         {exercises.map((exercise, index) => (
           <Exercise
