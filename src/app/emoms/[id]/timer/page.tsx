@@ -2,7 +2,7 @@
 
 import Button from "@/components/atoms/Button";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // タイマー
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
@@ -26,22 +26,27 @@ const page = () => {
   // 準備タイマーのスタート・ポーズ関数
   const handleReadyPose = () => {
     setIsReadyRunning(false);
+    playSound("/stop.mp3");
   };
   const handleReadyStart = () => {
     setIsReadyRunning(true);
+    playSound("/gong.mp3");
   };
 
   // 本番タイマーのポーズ・リスタート関数
   const handlePose = () => {
     setIsRunning(false);
+    playSound("/stop.mp3");
   };
 
   const handleRestart = () => {
     // タイマーをリセットせず、一時停止したところから再開
     if (isReadyPhase) {
       setIsReadyRunning(true); // 準備タイマーを再開
+      playSound("/gong.mp3");
     } else {
       setIsRunning(true); // 本番タイマーを再開
+      playSound("/gong.mp3");
     }
   };
 
@@ -54,22 +59,28 @@ const page = () => {
       </div>
       <div>
         <div className="flex justify-center my-5">
+          {/* 事前にReadyでトレーニング開始までの時間を設ける
+          key:タイマーが正常に作動するように必要
+          color:colorTimeとの組み合わせで色を設定できる
+          duration:タイマーの時間を設定
+          onComplete:タイマー完了後の動きを設定
+          */}
           {isReadyPhase ? (
             <CountdownCircleTimer
               key={`ready-${key}`}
               isPlaying={isReadyRunning}
               colors={["#FFF700", "#FF2603"]}
               colorsTime={[5, 0]}
-              duration={10} // 準備時間を10秒に設定
+              duration={10} // 仮で準備時間を10秒に設定
               onComplete={() => {
-                setIsReadyPhase(false); // 準備時間が終了したら本番タイマーに移行
+                setIsReadyPhase(false); // 三項演算子で準備時間が終了したら本番タイマーに移行
                 setIsRunning(true); // 本番タイマーを開始
-                return { shouldRepeat: false };
+                return { shouldRepeat: false }; //falseにして本番タイマーを表示
               }}
             >
               {({ remainingTime }) => {
                 // 残り3秒でサウンド再生
-                React.useEffect(() => {
+                useEffect(() => {
                   if (remainingTime === 3) {
                     playSound("/3sec_countdown.mp3");
                   }
@@ -89,9 +100,9 @@ const page = () => {
             <CountdownCircleTimer
               key={`main-${key}`}
               isPlaying={isRunning}
-              duration={10}
+              duration={60}
               colors={["#4666FF", "#00FEFC", "#FFF700", "#FF2603"]}
-              colorsTime={[7, 5, 3, 0]}
+              colorsTime={[45, 30, 15, 0]}
               onComplete={() => {
                 let shouldRepeat = true;
 
@@ -111,7 +122,7 @@ const page = () => {
             >
               {({ remainingTime }) => {
                 // 残り3秒でサウンド再生
-                React.useEffect(() => {
+                useEffect(() => {
                   if (remainingTime === 3) {
                     playSound("/3sec_countdown.mp3");
                   }
@@ -131,6 +142,7 @@ const page = () => {
           )}
         </div>
       </div>
+      {/* 仮のEMOM情報 */}
       <div className="mx-[30%] my-5">
         <div className="grid grid-cols-2 grid-rows-4 gap-5 text-2xl ">
           <div>EMOM Name</div>
@@ -144,6 +156,7 @@ const page = () => {
         </div>
       </div>
       <div className="flex justify-center space-x-3">
+        {/* Readyの場合のボタン */}
         {isReadyPhase ? (
           isReadyRunning ? (
             <Button size="large" color="secondary" onClick={handleReadyPose}>
@@ -154,7 +167,8 @@ const page = () => {
               START
             </Button>
           )
-        ) : isRunning ? (
+        ) : // Readyでない場合のボタン
+        isRunning ? (
           <Button size="large" color="secondary" onClick={handlePose}>
             POSE
           </Button>
