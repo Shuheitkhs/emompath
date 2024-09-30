@@ -22,10 +22,10 @@ const page = () => {
           Logout
         </Button>
         <Button size="large" color="danger">
-          <Link href="/mypage/email">Change Email</Link>
+          <Link href="/auth/mypage/email">Change Email</Link>
         </Button>
         <Button size="large" color="danger">
-          <Link href="/mypage/password">Change Password</Link>
+          <Link href="/auth/mypage/password">Change Password</Link>
         </Button>
       </div>
       <div>

@@ -11,7 +11,7 @@ const SignUpPage = () => {
   };
   return (
     <>
-      <div className="flex flex-col space-y-2 border-b-2 py-2">
+      <div className="flex flex-col space-y-2 border-b-2 py-2 my-5">
         <h3 className="text-start text-2xl ">Sign Up</h3>
         <Label className="text-start">Email:</Label>
         <Input size="large" type="email" onChange={handleChange}></Input>
