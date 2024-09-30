@@ -2,21 +2,20 @@
 
 import Button from "@/components/atoms/Button";
 import Link from "next/link";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 // タイマー
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 const page = () => {
-  const [isRunning, setIsRunning] = useState(true);
+  // ステートの定義
+  const [isRunning, setIsRunning] = useState(false); // 本番タイマーの再生状態
   const [isReadyPhase, setIsReadyPhase] = useState(true); // 準備時間かどうか
-  const [sets, setSets] = useState(3);
+  const [isReadyRunning, setIsReadyRunning] = useState(false); // 準備タイマーの再生状態
   const [elapsedSets, setElapsedSets] = useState(0);
-  const elapsedSetsRef = useRef(elapsedSets);
   const [key, setKey] = useState(0); // タイマーのリセット用
 
-  useEffect(() => {
-    elapsedSetsRef.current = elapsedSets;
-  }, [elapsedSets]);
+  // 仮のセット数
+  const sets = 10;
 
   // サウンドを再生する関数
   const playSound = (soundFile: string) => {
@@ -24,16 +23,26 @@ const page = () => {
     audio.play();
   };
 
+  // 準備タイマーのスタート・ポーズ関数
+  const handleReadyPose = () => {
+    setIsReadyRunning(false);
+  };
+  const handleReadyStart = () => {
+    setIsReadyRunning(true);
+  };
+
+  // 本番タイマーのポーズ・リスタート関数
   const handlePose = () => {
     setIsRunning(false);
   };
 
   const handleRestart = () => {
-    setIsRunning(true);
-    // 準備タイマーから再開する場合は以下をコメントアウト
-    // setIsReadyPhase(true);
-    // setElapsedSets(0);
-    // setKey((prevKey) => prevKey + 1);
+    // タイマーをリセットせず、一時停止したところから再開
+    if (isReadyPhase) {
+      setIsReadyRunning(true); // 準備タイマーを再開
+    } else {
+      setIsRunning(true); // 本番タイマーを再開
+    }
   };
 
   return (
@@ -48,18 +57,19 @@ const page = () => {
           {isReadyPhase ? (
             <CountdownCircleTimer
               key={`ready-${key}`}
-              isPlaying={isRunning}
+              isPlaying={isReadyRunning}
               colors={["#FFF700", "#FF2603"]}
               colorsTime={[5, 0]}
               duration={10} // 準備時間を10秒に設定
               onComplete={() => {
                 setIsReadyPhase(false); // 準備時間が終了したら本番タイマーに移行
+                setIsRunning(true); // 本番タイマーを開始
                 return { shouldRepeat: false };
               }}
             >
               {({ remainingTime }) => {
                 // 残り3秒でサウンド再生
-                useEffect(() => {
+                React.useEffect(() => {
                   if (remainingTime === 3) {
                     playSound("/3sec_countdown.mp3");
                   }
@@ -81,22 +91,27 @@ const page = () => {
               isPlaying={isRunning}
               duration={10}
               colors={["#4666FF", "#00FEFC", "#FFF700", "#FF2603"]}
-              colorsTime={[45, 30, 15, 0]}
+              colorsTime={[7, 5, 3, 0]}
               onComplete={() => {
-                const nextElapsedSets = elapsedSetsRef.current + 1;
-                setElapsedSets(nextElapsedSets);
-                elapsedSetsRef.current = nextElapsedSets;
+                let shouldRepeat = true;
 
-                if (nextElapsedSets >= sets) {
-                  setIsRunning(false);
-                  return { shouldRepeat: false };
-                }
-                return { shouldRepeat: true };
+                setElapsedSets((prevElapsedSets) => {
+                  const nextElapsedSets = prevElapsedSets + 1;
+
+                  if (nextElapsedSets >= sets) {
+                    setIsRunning(false);
+                    shouldRepeat = false;
+                  }
+
+                  return nextElapsedSets;
+                });
+
+                return { shouldRepeat };
               }}
             >
               {({ remainingTime }) => {
                 // 残り3秒でサウンド再生
-                useEffect(() => {
+                React.useEffect(() => {
                   if (remainingTime === 3) {
                     playSound("/3sec_countdown.mp3");
                   }
@@ -129,7 +144,17 @@ const page = () => {
         </div>
       </div>
       <div className="flex justify-center space-x-3">
-        {isRunning ? (
+        {isReadyPhase ? (
+          isReadyRunning ? (
+            <Button size="large" color="secondary" onClick={handleReadyPose}>
+              POSE
+            </Button>
+          ) : (
+            <Button size="large" color="primary" onClick={handleReadyStart}>
+              START
+            </Button>
+          )
+        ) : isRunning ? (
           <Button size="large" color="secondary" onClick={handlePose}>
             POSE
           </Button>
