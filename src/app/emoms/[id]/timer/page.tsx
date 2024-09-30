@@ -11,7 +11,7 @@ const page = () => {
   const [isRunning, setIsRunning] = useState(false); // 本番タイマーの再生状態
   const [isReadyPhase, setIsReadyPhase] = useState(true); // 準備時間かどうか
   const [isReadyRunning, setIsReadyRunning] = useState(false); // 準備タイマーの再生状態
-  const [elapsedSets, setElapsedSets] = useState(0);
+  const [completedSets, setCompletedSets] = useState(0); //完了したセット数の表示
   const [key, setKey] = useState(0); // タイマーのリセット用
 
   // 仮のセット数
@@ -97,24 +97,25 @@ const page = () => {
               }}
             </CountdownCircleTimer>
           ) : (
+            // 本番のタイマー
             <CountdownCircleTimer
               key={`main-${key}`}
               isPlaying={isRunning}
-              duration={60}
+              duration={60} //本番は60秒固定
               colors={["#4666FF", "#00FEFC", "#FFF700", "#FF2603"]}
               colorsTime={[45, 30, 15, 0]}
               onComplete={() => {
                 let shouldRepeat = true;
 
-                setElapsedSets((prevElapsedSets) => {
-                  const nextElapsedSets = prevElapsedSets + 1;
-
-                  if (nextElapsedSets >= sets) {
+                setCompletedSets((prevCompletedSets) => {
+                  const nextCompletedSets = prevCompletedSets + 1;
+                  // 表示する完了セットを更新しつつ、設定したsetsより多くなったら終了
+                  if (nextCompletedSets >= sets) {
                     setIsRunning(false);
                     shouldRepeat = false;
                   }
 
-                  return nextElapsedSets;
+                  return nextCompletedSets;
                 });
 
                 return { shouldRepeat };
@@ -133,7 +134,7 @@ const page = () => {
                       {remainingTime} sec
                     </div>
                     <div className="text-primary text-xl font-bold">
-                      Current {elapsedSets + 1} sets
+                      Current {completedSets + 1} sets
                     </div>
                   </div>
                 );
