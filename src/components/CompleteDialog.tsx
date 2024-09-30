@@ -24,7 +24,7 @@ const CompleteDialog = () => {
         </p>
         <AlertDialog
           trigger={
-            <div className=" bg-black rounded-lg cursor-pointer text-2xl shadow-xl">
+            <div className=" bg-black rounded-lg cursor-pointer text-2xl shadow-xl hover:scale-105 transition-transform duration-100 active:scale-95">
               <div>
                 <DirectionsRunIcon fontSize="large" />
               </div>
@@ -59,7 +59,7 @@ const CompleteDialog = () => {
         />
         <AlertDialog
           trigger={
-            <div className=" bg-black rounded-lg cursor-pointer text-2xl shadow-xl">
+            <div className=" bg-black rounded-lg cursor-pointer text-2xl shadow-xl hover:scale-105 transition-transform duration-100 active:scale-95">
               <div>
                 <TwoWheelerIcon fontSize="large" />
               </div>
@@ -94,7 +94,7 @@ const CompleteDialog = () => {
         />
         <AlertDialog
           trigger={
-            <div className=" bg-black rounded-lg cursor-pointer text-2xl shadow-xl">
+            <div className=" bg-black rounded-lg cursor-pointer text-2xl shadow-xl hover:scale-105 transition-transform duration-100 active:scale-95">
               <div>
                 <FlightTakeoffIcon fontSize="large" />
               </div>

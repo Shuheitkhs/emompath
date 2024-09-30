@@ -229,7 +229,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="/mypage_delete_modal" id="4qwTzqILTbJeOLo6G8lY">
-        <mxGraphModel dx="1893" dy="1282" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="852" dy="577" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="JAktLBHFDvIe4T0V0z1L-0"/>
                 <mxCell id="JAktLBHFDvIe4T0V0z1L-1" parent="JAktLBHFDvIe4T0V0z1L-0"/>
@@ -299,7 +299,7 @@
                         <mxPoint x="720" y="500" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="CveshcOKj1VjXY24LwZS-0" value="delete account" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=none;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=5;fillColor=none;whiteSpace=wrap;" vertex="1" parent="JAktLBHFDvIe4T0V0z1L-1">
+                <mxCell id="CveshcOKj1VjXY24LwZS-0" value="delete account" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=none;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=5;fillColor=none;whiteSpace=wrap;" parent="JAktLBHFDvIe4T0V0z1L-1" vertex="1">
                     <mxGeometry x="134" y="535" width="542" height="50" as="geometry"/>
                 </mxCell>
             </root>
