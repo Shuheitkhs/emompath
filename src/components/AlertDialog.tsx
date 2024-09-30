@@ -12,7 +12,7 @@ import Button from "@/components/atoms/Button";
 interface AlertDialogProps {
   trigger: React.ReactNode;
   title?: string;
-  content?: string;
+  content?: React.ReactNode;
   agreeText?: string;
   disagreeText?: string;
   onAgree?: () => void;

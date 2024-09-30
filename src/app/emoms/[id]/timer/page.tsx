@@ -5,6 +5,8 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 // タイマー
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+// 完了後のポップアップ
+import CompleteDialog from "@/components/CompleteDialog";
 
 const page = () => {
   // ステートの定義
@@ -13,9 +15,10 @@ const page = () => {
   const [isReadyRunning, setIsReadyRunning] = useState(false); // 準備タイマーの再生状態
   const [completedSets, setCompletedSets] = useState(0); //完了したセット数の表示
   const [key, setKey] = useState(0); // タイマーのリセット用
+  const [isComplete, setIsComplete] = useState(false); // トレーニング完了かどうか
 
   // 仮のセット数
-  const sets = 10;
+  const sets = 1;
 
   // サウンドを再生する関数
   const playSound = (soundFile: string) => {
@@ -101,7 +104,7 @@ const page = () => {
             <CountdownCircleTimer
               key={`main-${key}`}
               isPlaying={isRunning}
-              duration={60} //本番は60秒固定
+              duration={3} //本番は60秒固定
               colors={["#4666FF", "#00FEFC", "#FFF700", "#FF2603"]}
               colorsTime={[45, 30, 15, 0]}
               onComplete={() => {
@@ -113,6 +116,7 @@ const page = () => {
                   if (nextCompletedSets >= sets) {
                     setIsRunning(false);
                     shouldRepeat = false;
+                    setIsComplete(true); // トレーニング完了を設定
                   }
 
                   return nextCompletedSets;
@@ -179,6 +183,7 @@ const page = () => {
           </Button>
         )}
       </div>
+      <div> {isComplete && <CompleteDialog />}</div>
     </div>
   );
 };
