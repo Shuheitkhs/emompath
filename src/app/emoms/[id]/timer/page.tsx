@@ -2,23 +2,27 @@
 
 import Button from "@/components/atoms/Button";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // タイマー
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 // 完了後のポップアップ
 import CompleteDialog from "@/components/CompleteDialog";
+import Countdown3sec from "@/components/Countdown3sec";
 
-const page = () => {
+const TimerPage = () => {
   // ステートの定義
   const [isRunning, setIsRunning] = useState(false); // 本番タイマーの再生状態
   const [isReadyPhase, setIsReadyPhase] = useState(true); // 準備時間かどうか
   const [isReadyRunning, setIsReadyRunning] = useState(false); // 準備タイマーの再生状態
   const [completedSets, setCompletedSets] = useState(0); //完了したセット数の表示
-  const [key, setKey] = useState(0); // タイマーのリセット用
+
   const [isComplete, setIsComplete] = useState(false); // トレーニング完了かどうか
 
   // 仮のセット数
   const sets = 1;
+
+  // keyを0で固定
+  const key = 0;
 
   // サウンドを再生する関数
   const playSound = (soundFile: string) => {
@@ -83,12 +87,11 @@ const page = () => {
             >
               {({ remainingTime }) => {
                 // 残り3秒でサウンド再生
-                useEffect(() => {
-                  if (remainingTime === 3) {
-                    playSound("/3sec_countdown.mp3");
-                  }
-                }, [remainingTime]);
-
+                <Countdown3sec
+                  remainingTime={remainingTime}
+                  isReady={isReadyPhase}
+                  completedSets={completedSets}
+                />;
                 return (
                   <div className="flex flex-col">
                     <div className="text-2xl font-bold">Ready</div>
@@ -127,11 +130,11 @@ const page = () => {
             >
               {({ remainingTime }) => {
                 // 残り3秒でサウンド再生
-                useEffect(() => {
-                  if (remainingTime === 3) {
-                    playSound("/3sec_countdown.mp3");
-                  }
-                }, [remainingTime]);
+                <Countdown3sec
+                  remainingTime={remainingTime}
+                  isReady={isReadyPhase}
+                  completedSets={completedSets}
+                />;
                 return (
                   <div className="flex flex-col">
                     <div className="text-2xl font-bold">
@@ -188,4 +191,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default TimerPage;

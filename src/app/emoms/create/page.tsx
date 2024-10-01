@@ -15,7 +15,7 @@ interface ExerciseState {
   reps: number;
 }
 
-function Page() {
+const CreatePage = () => {
   // EMOM用の状態管理
   const [emomName, setEmomName] = useState("");
 
@@ -100,6 +100,6 @@ function Page() {
       </div>
     </div>
   );
-}
+};
 
-export default Page;
+export default CreatePage;

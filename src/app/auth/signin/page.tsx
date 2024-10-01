@@ -29,7 +29,7 @@ const xLabels = [
   "Day 10",
 ];
 
-const page = () => {
+const SignInPage = () => {
   const seriesData = [
     { data: pData, label: "Pushup" },
     { data: sData, label: "Squat" },
@@ -52,8 +52,8 @@ const page = () => {
         <div className="w-[85%]">
           <p className="text-start text-xl leading-[2]">
             Track your progress, push your limits, and take control of your
-            workouts with personalized EMOM routines. Whether you're a beginner
-            or a seasoned athlete,{" "}
+            workouts with personalized EMOM routines. Whether you&apos;re a
+            beginner or a seasoned athlete,{" "}
             <span className="text-primary">EMOM Path</span> adapts to your
             goals, guiding you every step of the way. Visualize your growth
             through detailed graphs and get tailored workout recommendations for
@@ -113,4 +113,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default SignInPage;

@@ -7,7 +7,7 @@ import AlertDialog from "@/components/AlertDialog";
 import Button from "@/components/atoms/Button";
 import Link from "next/link";
 
-const page = () => {
+const MypagePage = () => {
   const handleAgree = () => {
     alert("Agreed!");
   };
@@ -52,4 +52,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default MypagePage;

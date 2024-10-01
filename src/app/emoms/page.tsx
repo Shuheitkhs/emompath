@@ -2,7 +2,7 @@ import Button from "@/components/atoms/Button";
 import Link from "next/link";
 import React from "react";
 
-function page() {
+const EmomListPage = () => {
   return (
     <div>
       <div>
@@ -68,6 +68,6 @@ function page() {
       </div>
     </div>
   );
-}
+};
 
-export default page;
+export default EmomListPage;

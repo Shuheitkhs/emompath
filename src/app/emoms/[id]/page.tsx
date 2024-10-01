@@ -35,7 +35,7 @@ const xLabels = [
   "Day 10",
 ];
 
-const page = () => {
+const EmomEditPage = () => {
   const [ready, setReady] = useState<number>(10);
   const [sets, setSets] = useState<number>(10);
   const [emomName, setEmomName] = useState<string>("");
@@ -157,4 +157,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default EmomEditPage;
