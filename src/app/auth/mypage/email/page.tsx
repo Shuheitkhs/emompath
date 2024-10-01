@@ -1,3 +1,5 @@
+/** 登録したEmailの変更フォーム */
+
 "use client";
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";

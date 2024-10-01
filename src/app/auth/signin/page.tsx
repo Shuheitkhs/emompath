@@ -1,5 +1,8 @@
+/** セッション情報のないユーザーが着地するページ
+ *  サービスの簡単な紹介と、各種サインイン
+ */
+
 "use client";
-import React from "react";
 import Chart from "@/components/atoms/Chart";
 import Button from "@/components/atoms/Button";
 import GoogleIcon from "@mui/icons-material/Google";

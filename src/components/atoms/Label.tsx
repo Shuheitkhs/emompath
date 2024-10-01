@@ -1,3 +1,5 @@
+/** インプットの上部に入れるラベル */
+
 interface LabelProps {
   children: React.ReactNode;
   className?: string;

@@ -1,3 +1,5 @@
+/** add exerciseで追加される削除ボタン付きのエクササイズコンポーネント */
+
 import React from "react";
 import Input from "@/components/atoms/Input";
 import Counter from "@/components/molecules/Counter";

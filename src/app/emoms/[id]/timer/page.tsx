@@ -104,7 +104,7 @@ const page = () => {
             <CountdownCircleTimer
               key={`main-${key}`}
               isPlaying={isRunning}
-              duration={3} //本番は60秒固定
+              duration={10} //本番は60秒固定
               colors={["#4666FF", "#00FEFC", "#FFF700", "#FF2603"]}
               colorsTime={[45, 30, 15, 0]}
               onComplete={() => {

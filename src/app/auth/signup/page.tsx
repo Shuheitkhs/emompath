@@ -1,3 +1,5 @@
+/** メールアドレスによるユーザー登録のページ */
+
 "use client";
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";

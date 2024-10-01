@@ -1,3 +1,7 @@
+/**　ボーダー付きのリンクを作成
+ *  重要なものを消去するとき、ユーザー情報の変更から/auth/mypageに戻るときなどに使用
+ */
+
 import Link from "next/link";
 import React from "react";
 

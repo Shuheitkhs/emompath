@@ -1,4 +1,5 @@
-// CompleteDialog.tsx
+/** timer完了後のダイアログ */
+
 import React from "react";
 import AlertDialog from "./AlertDialog";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";

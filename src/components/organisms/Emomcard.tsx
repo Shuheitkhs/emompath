@@ -1,3 +1,5 @@
+/** List用のemomカード */
+
 import Button from "@/components/atoms/Button";
 import Link from "next/link";
 import React from "react";

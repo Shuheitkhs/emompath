@@ -1,3 +1,5 @@
+/** yes,noを表示するダイアログ */
+
 // MUIからのインポート
 import * as React from "react";
 import Dialog from "@mui/material/Dialog";

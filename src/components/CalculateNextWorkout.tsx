@@ -1,4 +1,6 @@
-// utils/calculateNextWorkout.ts
+/** 次回のトレーニングを計算するロジック
+ *  timer終了後に表示
+ */
 
 export interface WorkoutPlan {
   volumeIncrease: string;
@@ -19,7 +21,7 @@ export function calculateNextWorkout(
   const results = targetVolumes.map((targetVolume) => {
     const idealReps = targetVolume / currentSets;
     const roundedReps = Math.ceil(idealReps);
-    let neededSets = Math.ceil(targetVolume / roundedReps);
+    const neededSets = Math.ceil(targetVolume / roundedReps);
 
     let sets;
     if (neededSets < minSets) {

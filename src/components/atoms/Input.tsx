@@ -1,3 +1,6 @@
+/** インプットをサイズ3種類、type4種類で使い分け
+ */
+
 export type InputTypes = "text" | "password" | "email" | "number";
 
 export type InputProps = {

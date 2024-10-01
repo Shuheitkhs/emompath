@@ -1,8 +1,11 @@
+/** mypage
+ * ここから登録情報の変更と、アカウントの削除
+ */
+
 "use client";
 import AlertDialog from "@/components/AlertDialog";
 import Button from "@/components/atoms/Button";
 import Link from "next/link";
-import React from "react";
 
 const page = () => {
   const handleAgree = () => {

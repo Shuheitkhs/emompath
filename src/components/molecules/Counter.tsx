@@ -1,4 +1,5 @@
-// Counter.tsx
+/** ready,sets, reps などを変更するカウンター
+ */
 import Button from "@/components/atoms/Button";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";

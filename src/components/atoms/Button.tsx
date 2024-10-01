@@ -1,8 +1,16 @@
-// ボタンを5種類、カラーを3種類で使い分け
-// small +-ボタン
-// medium 親要素45%
-// large　親要素90%
-// デフォルト値はnormal
+/** ボタンを5種類、カラーを3種類で使い分け
+ *  extra-small +-ボタン
+ *  small 画面の30%
+ *  medium 画面の45%
+ *  large 画面の90%
+ *  normal 適宜必要な際
+ *  カラーは肯定的な意味の
+ *  primary ピンク
+ *  secondary ブルー
+ *  中止・戻る意味の
+ *  danger
+ */
+
 export type ButtonProps = {
   size?: "extra-small" | "small" | "medium" | "large" | "normal";
   color?: "primary" | "secondary" | "danger";

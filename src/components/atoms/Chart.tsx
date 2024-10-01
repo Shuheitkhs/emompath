@@ -1,4 +1,8 @@
-"use client"; // これを追加してクライアントコンポーネントにする
+/** トレーニングボリュームのチャートを表示する
+ *
+ */
+
+"use client";
 
 import * as React from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
@@ -58,20 +62,3 @@ const Chart: React.FC<ChartProps> = ({ seriesData, xLabels }) => {
 };
 
 export default Chart;
-
-// // デモデータの定義
-// const seriesData: SeriesData[] = [
-//   { data: [100, 110, 120], label: "Pushup", lineStyle: { stroke: "#FF0000" } }, // 赤色
-//   { data: [150, 160, 170], label: "Squat", lineStyle: { stroke: "#00FF00" } }, // 緑色
-//   { data: [80, 90, 100], label: "Chining", lineStyle: { stroke: "#0000FF" } }, // 青色
-// ];
-
-// // デモ用のラベル
-// const xLabels = ["Day 1", "Day 2", "Day 3", "Day 4"];
-
-// // Chartコンポーネントの使用
-// const App: React.FC = () => {
-//   return <Chart seriesData={seriesData} xLabels={xLabels} />;
-// };
-
-// export default App;

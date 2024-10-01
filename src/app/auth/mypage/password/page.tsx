@@ -1,3 +1,5 @@
+/** 登録したパスワードの変更フォーム */
+
 "use client";
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
@@ -10,7 +12,6 @@ const PasswordPage = () => {
     alert("onchange!");
   };
 
-  const currentEmail = "XXXXXXX@XXXX.com";
   return (
     <div className="my-5 ">
       <div className="flex flex-col space-y-2 border-b-2 py-2">

@@ -1,3 +1,7 @@
+/** EMOMの作成ページ
+ *  あとで、バリデーションを入れて最低セット数、最大セット数を決める
+ */
+
 "use client";
 import Button from "@/components/atoms/Button";
 import React, { useState } from "react";
@@ -13,10 +17,10 @@ interface ExerciseState {
 
 function Page() {
   // EMOM用の状態管理
-  const [emomName, setEmomName] = useState<string>("");
+  const [emomName, setEmomName] = useState("");
 
-  const [ready, setReady] = useState<number>(10);
-  const [sets, setSets] = useState<number>(10);
+  const [ready, setReady] = useState(10);
+  const [sets, setSets] = useState(10);
   // デフォルトのexercise用の状態管理
 
   // 2つ目以降のエクササイズを管理

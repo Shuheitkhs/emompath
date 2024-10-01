@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -11,7 +12,9 @@ function Header() {
       </div>
       <div className="flex items-center">
         <Link href={"/emoms"}>
-          <img
+          <Image
+            width={50}
+            height={50}
             src="/logo.png"
             alt="logo of EMOM Path"
             className="h-[30px] object-contain"
@@ -20,7 +23,9 @@ function Header() {
       </div>
       <div className="flex items-center ml-auto">
         <Link href={"/auth/mypage"}>
-          <img
+          <Image
+            width={50}
+            height={50}
             src="/mypage.png"
             alt="to mypage"
             className="h-[30px] object-contain"

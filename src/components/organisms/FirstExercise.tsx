@@ -1,10 +1,12 @@
+/** 削除機能を持たないデフォルトのエクササイズコンポーネント */
+
 import React, { useState } from "react";
 import Input from "@/components/atoms/Input";
 import Counter from "@/components/molecules/Counter";
 
 const FirstExercise = ({ sets }: { sets: number }) => {
-  const [exercise, setExercise] = useState<string>("");
-  const [reps, setReps] = useState<number>(10);
+  const [exercise, setExercise] = useState("");
+  const [reps, setReps] = useState(10);
   const handleExerciseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setExercise(e.target.value);
   };
