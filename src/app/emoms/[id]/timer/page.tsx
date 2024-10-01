@@ -86,19 +86,13 @@ const TimerPage = () => {
               }}
             >
               {({ remainingTime }) => {
-                // 残り3秒でサウンド再生
-                <Countdown3sec
-                  remainingTime={remainingTime}
-                  isReady={isReadyPhase}
-                  completedSets={completedSets}
-                />;
                 return (
-                  <div className="flex flex-col">
-                    <div className="text-2xl font-bold">Ready</div>
-                    <div className="text-3xl font-bold text-primary">
-                      {remainingTime} sec
-                    </div>
-                  </div>
+                  // 残り3秒でサウンド再生
+                  <Countdown3sec
+                    remainingTime={remainingTime}
+                    isReady={isReadyPhase}
+                    completedSets={completedSets}
+                  />
                 );
               }}
             </CountdownCircleTimer>
@@ -129,21 +123,13 @@ const TimerPage = () => {
               }}
             >
               {({ remainingTime }) => {
-                // 残り3秒でサウンド再生
-                <Countdown3sec
-                  remainingTime={remainingTime}
-                  isReady={isReadyPhase}
-                  completedSets={completedSets}
-                />;
                 return (
-                  <div className="flex flex-col">
-                    <div className="text-2xl font-bold">
-                      {remainingTime} sec
-                    </div>
-                    <div className="text-primary text-xl font-bold">
-                      Current {completedSets + 1} sets
-                    </div>
-                  </div>
+                  // 残り3秒でサウンド再生
+                  <Countdown3sec
+                    remainingTime={remainingTime}
+                    isReady={isReadyPhase}
+                    completedSets={completedSets}
+                  />
                 );
               }}
             </CountdownCircleTimer>
