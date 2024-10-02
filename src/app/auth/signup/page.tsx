@@ -56,9 +56,6 @@ const SignUpPage = () => {
     }
   };
 
-  const handleChange = () => {
-    alert("onchange!");
-  };
   return (
     <>
       <div className="flex flex-col space-y-2 border-b-2 py-2 my-5">

@@ -4,7 +4,7 @@
 
 "use client";
 import Button from "@/components/atoms/Button";
-import React, { use, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Exercise from "@/components/organisms/Exercise";
 import EMOMEdit from "@/components/organisms/EmomEdit";
