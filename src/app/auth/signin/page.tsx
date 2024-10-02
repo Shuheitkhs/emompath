@@ -3,6 +3,7 @@
  */
 
 "use client";
+import { useState } from "react";
 import Chart from "@/components/atoms/Chart";
 import Button from "@/components/atoms/Button";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -12,6 +13,16 @@ import BorderLabel from "@/components/atoms/BorderLabel";
 import LoginIcon from "@mui/icons-material/Login";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Link from "next/link";
+import { z } from "zod";
+
+const schema = z.object({
+  email: z
+    .string()
+    .email({ message: "It is not in the form of an email address." }),
+  password: z
+    .string()
+    .min(6, { message: "The password must be at least 6 characters long." }),
+});
 
 const sData = [150, 165, 180, 200, 240, 260, 300, 330, 350, 385];
 const cData = [30, 33, 40, 45, 50, 55, 70, 80, 100, 110];
@@ -30,14 +41,52 @@ const xLabels = [
 ];
 
 const SignInPage = () => {
+  const [email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {}
+  );
+
   const seriesData = [
     { data: pData, label: "Pushup" },
     { data: sData, label: "Squat" },
     { data: cData, label: "Chining" },
   ];
 
+  const inputEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const inputPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  const onSubmit = () => {
+    // バリデーション
+    const result = schema.safeParse({ email: email, password: Password });
+    if (!result.success) {
+      // エラーメッセージを設定
+      const fieldErrors: { email?: string; password?: string } = {};
+      result.error.errors.forEach((err) => {
+        if (err.path.includes("email")) {
+          fieldErrors.email = err.message;
+        }
+        if (err.path.includes("password")) {
+          fieldErrors.password = err.message;
+        }
+      });
+      setErrors(fieldErrors);
+    } else {
+      setErrors({});
+      // 認証処理
+      alert("サインインしました");
+      // APIを呼び出して認証
+    }
+  };
+
   const signinWithGoogle = () => {
-    alert("サインイン");
+    alert("Googleでサインイン");
+    // Googleサインインの処理
   };
 
   return (
@@ -52,8 +101,8 @@ const SignInPage = () => {
         <div className="w-[85%]">
           <p className="text-start text-xl leading-[2]">
             Track your progress, push your limits, and take control of your
-            workouts with personalized EMOM routines. Whether you&apos;re a
-            beginner or a seasoned athlete,{" "}
+            workouts with personalized EMOM routines. Whether you're a beginner
+            or a seasoned athlete,{" "}
             <span className="text-primary">EMOM Path</span> adapts to your
             goals, guiding you every step of the way. Visualize your growth
             through detailed graphs and get tailored workout recommendations for
@@ -84,14 +133,22 @@ const SignInPage = () => {
         <div className="flex flex-col space-y-2 border-b-2 py-2">
           <h2 className="text-start text-3xl ">Sign In</h2>
           <Label className="text-start">Email:</Label>
-          <Input size="large" type="email" onChange={signinWithGoogle}></Input>
+          <Input
+            size="large"
+            type="email"
+            onChange={inputEmail}
+            value={email}
+          />
+          {errors.email && <p className="text-red-500">{errors.email}</p>}
           <Label className="text-start">Password:</Label>
           <Input
             size="large"
             type="password"
-            onChange={signinWithGoogle}
-          ></Input>
-          <Button size="small" color="secondary" onClick={signinWithGoogle}>
+            onChange={inputPassword}
+            value={Password}
+          />
+          {errors.password && <p className="text-red-500">{errors.password}</p>}
+          <Button size="small" color="secondary" onClick={onSubmit}>
             <LoginIcon className="mr-2" />
             SIGN IN
           </Button>
