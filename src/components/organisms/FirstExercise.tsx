@@ -7,12 +7,20 @@ import Counter from "@/components/molecules/Counter";
 const FirstExercise = ({ sets }: { sets: number }) => {
   const [exercise, setExercise] = useState("");
   const [reps, setReps] = useState(10);
+  const [repsError, setRepsError] = useState<string | null>(null);
+
   const handleExerciseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setExercise(e.target.value);
   };
   // Repsのカウント用関数
-  const minus1r = () => setReps((prevReps) => Math.max(prevReps - 1, 0));
-  const plus1r = () => setReps((prevReps) => prevReps + 1);
+  const handleRepsChange = (newReps: number) => {
+    if (newReps === 1) {
+      setRepsError("Reps should be at least 1");
+    } else {
+      setRepsError(null);
+    }
+    setReps(newReps);
+  };
 
   const volume = sets * reps;
   return (
@@ -23,8 +31,15 @@ const FirstExercise = ({ sets }: { sets: number }) => {
           type="text"
           onChange={handleExerciseChange}
           placeholder="Input Your Exercise Name"
+          default="Exercise"
         />
-        <Counter title="Reps" number={reps} plus1={plus1r} minus1={minus1r} />
+        <Counter
+          title="Reps"
+          number={reps}
+          plus1={() => handleRepsChange(reps + 1)}
+          minus1={() => handleRepsChange(Math.max(reps - 1, 1))}
+        />
+        <div>{repsError && <p className="text-red-500">{repsError}</p>}</div>
         <p className="inline-block text-2xl font-bold border-b-2 my-2">
           {exercise} -Volume-{" "}
           <span className="text-primary text-3xl">{volume}</span>

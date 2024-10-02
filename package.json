@@ -19,7 +19,8 @@
     "react": "^17.0.0 || ^18.0.0",
     "react-countdown-circle-timer": "^3.2.1",
     "react-dom": "^17.0.0 || ^18.0.0",
-    "styled-components": "^6.1.13"
+    "styled-components": "^6.1.13",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",

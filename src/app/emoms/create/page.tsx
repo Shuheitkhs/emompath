@@ -4,7 +4,7 @@
 
 "use client";
 import Button from "@/components/atoms/Button";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import Link from "next/link";
 import Exercise from "@/components/organisms/Exercise";
 import EMOMEdit from "@/components/organisms/EmomEdit";
@@ -26,10 +26,15 @@ const CreatePage = () => {
   // 2つ目以降のエクササイズを管理
   const [exercises, setExercises] = useState<ExerciseState[]>([]);
 
+  // エクササイズ数のバリデーション用
+  const [exercisesError, setExercisesError] = useState<string | null>(null);
+
   // 新しいエクササイズを追加
   const handleNewExercise = () => {
     if (exercises.length < 2) {
       setExercises([...exercises, { name: "", reps: 10 }]);
+    } else {
+      setExercisesError("Exercises should be at most 3");
     }
   };
 
@@ -84,7 +89,9 @@ const CreatePage = () => {
             sets={sets}
           />
         ))}
-
+        <div>
+          <p className="text-red-500">{exercisesError}</p>
+        </div>
         {/* ボタンの配置 */}
         <div className="flex justify-center space-x-3">
           <Button size="small" color="danger">

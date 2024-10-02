@@ -1,6 +1,6 @@
 /**　EMOMの詳細ページ
  *   トレーニングのチャート確認と、編集が可能
- *   あとで、バリデーションを入れて最低セット数、最大セット数を決める
+ *   あとで、バリデーションを入れて最低セット数、最大セット数を決める→完成
  */
 
 "use client";
@@ -42,6 +42,9 @@ const EmomEditPage = () => {
 
   const [exercises, setExercises] = useState<ExerciseState[]>([]);
 
+  // エクササイズ数のバリデーション用
+  const [exercisesError, setExercisesError] = useState<string | null>(null);
+
   const seriesData = [
     { data: pData, label: "Pushup" },
     { data: sData, label: "Squat" },
@@ -52,6 +55,8 @@ const EmomEditPage = () => {
   const handleNewExercise = () => {
     if (exercises.length < 2) {
       setExercises([...exercises, { name: "", reps: 10 }]);
+    } else {
+      setExercisesError("Exercises should be at most 3");
     }
   };
 
@@ -75,7 +80,10 @@ const EmomEditPage = () => {
   const handleRemoveExercise = (index: number) => {
     const updatedExercises = exercises.filter((_, i) => i !== index);
     setExercises(updatedExercises);
+    //エラー文の削除
+    setExercisesError(null);
   };
+
   // Dialog用の関数
   const handleAgree = () => {
     alert("Agreed!");
@@ -130,12 +138,15 @@ const EmomEditPage = () => {
           />
         ))}
       </div>
+      <div>
+        <p className="text-red-500">{exercisesError}</p>
+      </div>
       <div className="flex justify-center space-x-2">
         <Button size="medium" color="secondary" onClick={handleNewExercise}>
           Add New Exercise
         </Button>
         <Button size="medium" color="primary" onClick={handleNewExercise}>
-          Add New Exercise
+          Start EMOM
         </Button>
       </div>
       <div className="my-5">

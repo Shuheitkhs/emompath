@@ -9,6 +9,7 @@ export type InputProps = {
   placeholder?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
+  default?: string;
 };
 
 const Input: React.FC<InputProps> = ({
