@@ -14,7 +14,7 @@
 export type ButtonProps = {
   size?: "extra-small" | "small" | "medium" | "large" | "normal";
   color?: "primary" | "secondary" | "danger";
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children: React.ReactNode;
 };
 

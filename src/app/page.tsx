@@ -4,7 +4,60 @@
  */
 
 "use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Session } from "@supabase/supabase-js"; // Session 型をインポート
+import { supabase } from "@/lib/supabaseClient";
 
-export default function Home() {
-  return <div></div>;
-}
+const HomePage = () => {
+  const [session, setSession] = useState<Session | null>(null); // 型を指定
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (error) {
+        console.error("Error fetching session:", error.message);
+      } else {
+        setSession(data.session); // sessionがnullでない場合はセット
+      }
+    };
+
+    fetchSession();
+  }, []);
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-4">ようこそ EMOM Pathへ</h1>
+      {session ? (
+        <div>
+          <p className="mb-4">こんにちは!!</p> {/* userが存在する場合 */}
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded m-2"
+            onClick={() => router.push("/emoms")}
+          >
+            EMOM一覧を見る
+          </button>
+          <button
+            className="bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded m-2"
+            onClick={() => router.push("/emoms/create")}
+          >
+            新しいEMOMを作成
+          </button>
+        </div>
+      ) : (
+        <div>
+          <p className="mb-4">Todoの管理にはログインが必要です。</p>
+          <button
+            className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded"
+            onClick={() => router.push("/auth/signin")}
+          >
+            ログイン
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default HomePage;

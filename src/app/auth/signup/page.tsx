@@ -9,21 +9,29 @@ import BorderLabel from "@/components/atoms/BorderLabel";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import { z } from "zod";
 
+// フロントエンド側でのメールアドレスとパスワードのバリデーション
 const schema = z.object({
   email: z
     .string()
     .email({ message: "It is not in the form of an email address." }),
   password: z
     .string()
-    .min(6, { message: "The password must be at least 6 characters long." }),
+    .min(8, {
+      message: "The password must be between 8 and 20 characters long.",
+    })
+    .max(20, {
+      message: "The password must be between 8 and 20 characters long.",
+    }),
 });
 
 const SignUpPage = () => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
-    {}
-  );
+  const [errors, setErrors] = useState<{
+    email?: string;
+    password?: string;
+    apiError?: string;
+  }>({});
 
   const inputEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -33,7 +41,8 @@ const SignUpPage = () => {
     setPassword(e.target.value);
   };
 
-  const onSubmit = () => {
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
     // バリデーション
     const result = schema.safeParse({ email: Email, password: Password });
     if (!result.success) {
@@ -50,9 +59,24 @@ const SignUpPage = () => {
       setErrors(fieldErrors);
     } else {
       setErrors({});
-      // 認証処理
-      alert("サインインしました");
-      // APIを呼び出して認証
+      try {
+        const res = await fetch("/api/auth/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: Email, password: Password }),
+        });
+
+        if (res.ok) {
+          // サインアップ成功
+          alert("SignUp Success! check your Email");
+          window.location.href = "/auth/signin";
+        } else {
+          const errorData = await res.json();
+          setErrors({ apiError: errorData.error });
+        }
+      } catch (error) {
+        setErrors({ apiError: "An unexpected error occurred." });
+      }
     }
   };
 
@@ -76,12 +100,19 @@ const SignUpPage = () => {
           value={Password}
           onChange={inputPassword}
         ></Input>
-        {errors.email && <p className="text-red-500">{errors.password}</p>}
+        {errors.password && <p className="text-red-500">{errors.password}</p>}
 
-        <Button size="small" color="secondary" onClick={onSubmit}>
+        <Button size="small" color="secondary" onClick={handleSignUp}>
           <BorderColorIcon className="mr-2" />
           SIGN UP
         </Button>
+        <div>
+          <p>
+            {errors.apiError && (
+              <p className="text-red-500">{errors.apiError}</p>
+            )}
+          </p>
+        </div>
         <div className="flex justify-start">
           <BorderLabel href="/auth/signin">Back to Sign In</BorderLabel>
         </div>

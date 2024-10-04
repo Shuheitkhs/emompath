@@ -1,7 +1,6 @@
 /** セッション情報のないユーザーが着地するページ
  *  サービスの簡単な紹介と、各種サインイン
  */
-
 "use client";
 import { useState } from "react";
 import Chart from "@/components/atoms/Chart";
@@ -14,16 +13,25 @@ import LoginIcon from "@mui/icons-material/Login";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Link from "next/link";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabaseClient";
 
+// フロントエンド側でのメールアドレスとパスワードのバリデーション
 const schema = z.object({
   email: z
     .string()
     .email({ message: "It is not in the form of an email address." }),
   password: z
     .string()
-    .min(6, { message: "The password must be at least 6 characters long." }),
+    .min(8, {
+      message: "The password must be between 8 and 20 characters long.",
+    })
+    .max(20, {
+      message: "The password must be between 8 and 20 characters long.",
+    }),
 });
 
+// デモ用のトレーニングデータ
 const sData = [150, 165, 180, 200, 240, 260, 300, 330, 350, 385];
 const cData = [30, 33, 40, 45, 50, 55, 70, 80, 100, 110];
 const pData = [100, 110, 120, 135, 150, 170, 200, 220, 240, 300];
@@ -43,25 +51,33 @@ const xLabels = [
 const SignInPage = () => {
   const [email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
-    {}
-  );
+  // エラーを種類によって出し分け
+  const [errors, setErrors] = useState<{
+    email?: string;
+    password?: string;
+    apiError?: string;
+  }>({});
+  const router = useRouter();
 
+  // デモデータのラベル設定
   const seriesData = [
     { data: pData, label: "Pushup" },
     { data: sData, label: "Squat" },
     { data: cData, label: "Chining" },
   ];
 
+  // メールアドレスインプットのハンドリング
   const inputEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-
+  // パスワードインプットのハンドリング
   const inputPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const onSubmit = () => {
+  // サインインのハンドリング
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
     // バリデーション
     const result = schema.safeParse({ email: email, password: Password });
     if (!result.success) {
@@ -78,15 +94,54 @@ const SignInPage = () => {
       setErrors(fieldErrors);
     } else {
       setErrors({});
-      // 認証処理
-      alert("サインインしました");
-      // APIを呼び出して認証
+      // 以降API
+      try {
+        const res = await fetch("/api/auth/signin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email, password: Password }),
+        });
+
+        if (res.ok) {
+          // サインイン成功
+          router.push("/emoms"); // EMOM Listにリダイレクト
+        } else {
+          // サインイン失敗
+          const errorData = await res.json();
+          setErrors({ apiError: errorData.error });
+        }
+      } catch (error) {
+        setErrors({ apiError: "An unexpected error occurred." }); //エラー表示
+      }
     }
   };
 
-  const signinWithGoogle = () => {
-    alert("Googleでサインイン");
-    // Googleサインインの処理
+  const signinWithGoogle = async () => {
+    // Googleサインインの処理・クライアントサイドで処理
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: process.env.NEXT_PUBLIC_REDIRECT_URL,
+      },
+    });
+    if (error) {
+      console.error("Error signing in with Google:", error.message);
+    }
+    // 307エラーが出るので、一旦API経由せずに実装
+    // try {
+    //   const res = await fetch("/api/auth/signin-google", {
+    //     method: "POST",
+    //   });
+    //   if (res.ok) {
+    //     const data = await res.json();
+    //     window.location.href = data.url;
+    //   } else {
+    //     const errorData = await res.json();
+    //     setErrors({ apiError: errorData.error });
+    //   }
+    // } catch (error) {
+    //   setErrors({ apiError: "An unexpected error occurred." });
+    // }
   };
 
   return (
@@ -148,10 +203,17 @@ const SignInPage = () => {
             value={Password}
           />
           {errors.password && <p className="text-red-500">{errors.password}</p>}
-          <Button size="small" color="secondary" onClick={onSubmit}>
+          <Button size="small" color="secondary" onClick={handleSignIn}>
             <LoginIcon className="mr-2" />
             SIGN IN
           </Button>
+          <div>
+            <p>
+              {errors.apiError && (
+                <p className="text-red-500">{errors.apiError}</p>
+              )}
+            </p>
+          </div>
           <div className="flex justify-start">
             <BorderLabel href="">Forgot Password?</BorderLabel>
           </div>
