@@ -10,21 +10,37 @@ import { Session } from "@supabase/supabase-js"; // Session 型をインポー�
 import { supabase } from "@/lib/supabaseClient";
 
 const HomePage = () => {
+  const [sessionChecked, setSessionChecked] = useState(false); // セッションチェックが完了したか
+
   const [session, setSession] = useState<Session | null>(null); // 型を指定
   const router = useRouter();
 
   useEffect(() => {
     const fetchSession = async () => {
       const { data, error } = await supabase.auth.getSession();
+      // エラーがある場合のみログを出力
       if (error) {
         console.error("Error fetching session:", error.message);
-      } else {
-        setSession(data.session); // sessionがnullでない場合はセット
       }
+
+      if (error || !data.session) {
+        // セッションが取得できなかった場合
+        router.push("/auth/signin");
+      } else {
+        // セッションが取得できた場合
+        setSession(data.session);
+        router.push("/emoms");
+      }
+
+      setSessionChecked(true); // セッションのチェック完了
     };
 
     fetchSession();
-  }, []);
+  }, [router]);
+
+  if (!sessionChecked) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -47,7 +63,7 @@ const HomePage = () => {
         </div>
       ) : (
         <div>
-          <p className="mb-4">Todoの管理にはログインが必要です。</p>
+          <p className="mb-4">EMOMの管理にはログインが必要です。</p>
           <button
             className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded"
             onClick={() => router.push("/auth/signin")}
