@@ -6,8 +6,31 @@
 import AlertDialog from "@/components/AlertDialog";
 import Button from "@/components/atoms/Button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const MypagePage = () => {
+  const router = useRouter();
+
+  // ログアウトのハンドラー関数
+  const handleLogout = async () => {
+    try {
+      const res = await fetch("/api/auth/signout", {
+        method: "POST",
+      });
+
+      if (res.ok) {
+        // ログアウト成功時にサインインページにリダイレクト
+        router.push("/auth/signin");
+      } else {
+        // エラーメッセージの表示
+        const errorData = await res.json();
+        console.error("Error logging out:", errorData.error);
+      }
+    } catch (error) {
+      console.error("Unexpected error logging out:", error);
+    }
+  };
+
   const handleAgree = () => {
     alert("Agreed!");
   };
@@ -21,7 +44,7 @@ const MypagePage = () => {
         <Button size="large" color="secondary">
           <Link href="/emoms">EMOM List</Link>
         </Button>
-        <Button size="large" color="danger">
+        <Button size="large" color="danger" onClick={handleLogout}>
           Logout
         </Button>
         <Button size="large" color="danger">
