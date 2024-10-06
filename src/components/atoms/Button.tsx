@@ -16,6 +16,7 @@ export type ButtonProps = {
   color?: "primary" | "secondary" | "danger";
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children: React.ReactNode;
+  disabled?: React.ReactNode;
 };
 
 const Button: React.FC<ButtonProps> = ({

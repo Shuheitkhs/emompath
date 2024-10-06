@@ -8,7 +8,6 @@ import Link from "next/link";
 import Exercise from "@/components/organisms/Exercise";
 import EMOMEdit from "@/components/organisms/EmomEdit";
 import FirstExercise from "@/components/organisms/FirstExercise";
-import { createEmom } from "@/lib/api";
 import { useRouter } from "next/navigation";
 
 interface ExerciseState {
@@ -69,7 +68,7 @@ const CreatePage = () => {
 
   // フォームの送信
   const handleSubmit = async () => {
-    // フロントエンドでの追加バリデーション
+    // バリデーション
     if (!emomName.trim()) {
       setSubmitError("EMOM name is required.");
       return;
@@ -92,16 +91,36 @@ const CreatePage = () => {
       const emomData = {
         name: emomName,
         ready,
-        sets,
-        exercises,
+        sets: sets, // "set" カラム名に合わせて送信
       };
 
       console.log("Request payload:", emomData);
 
-      const createdEmom = await createEmom(emomData);
-      router.push(`/emoms/${createdEmom.id}/timer`);
-    } catch (error: any) {
-      setSubmitError(error.message);
+      // `fetch` を使ってAPIにPOSTリクエスト
+      const response = await fetch("/api/emoms", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(emomData),
+      });
+
+      // レスポンスのチェック
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to create emom");
+      }
+
+      const createdEmom = await response.json();
+
+      // emomのIDを使ってリダイレクト
+      router.push(`/emoms/${createdEmom[0].id}/timer`);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setSubmitError(error.message);
+      } else {
+        setSubmitError("'An unknown error occurred'");
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -138,6 +157,7 @@ const CreatePage = () => {
         ))}
         <div>
           <p className="text-red-500">{exercisesError}</p>
+          <p className="text-red-500">{submitError}</p>
         </div>
         {/* ボタンの配置 */}
         <div className="flex justify-center space-x-3">
@@ -147,8 +167,13 @@ const CreatePage = () => {
           <Button size="small" color="secondary" onClick={handleNewExercise}>
             Add New Exercise
           </Button>
-          <Button size="small" color="primary" onClick={handleSubmit}>
-            Start EMOM
+          <Button
+            size="small"
+            color="primary"
+            onClick={handleSubmit}
+            disabled={isSubmitting} // 送信中はボタンを無効化
+          >
+            {isSubmitting ? "Submitting..." : "Start EMOM"}
           </Button>
         </div>
       </div>
