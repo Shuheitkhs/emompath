@@ -31,12 +31,12 @@ export async function POST(req: NextRequest) {
   const user = sessionData.session.user;
 
   // リクエストボディから新しいemomのデータを取得
-  const { name, ready, set } = await req.json();
+  const { name, ready, sets } = await req.json();
 
   // user.idをuser_idとして新しいemomを作成
   const { data, error } = await supabase
     .from("emoms")
-    .insert([{ user_id: user.id, name, ready, set }]);
+    .insert([{ user_id: user.id, name, ready, sets }]);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 400 });
