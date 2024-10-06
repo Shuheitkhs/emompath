@@ -6,3 +6,12 @@ CREATE TABLE exercises (
     reps INTEGER NOT NULL, 
     FOREIGN KEY (emom_id) REFERENCES emoms(id) ON DELETE CASCADE
 );
+
+
+-- exercisesテーブルRLSポリシーの有効化
+ALTER TABLE exercisess ENABLE ROW LEVEL SECURITY;
+
+-- 全ての操作に対するデフォルトの拒否
+CREATE POLICY "Restrict to owner" ON exercisess
+    FOR ALL
+    USING (emoms(id) = emom_id);

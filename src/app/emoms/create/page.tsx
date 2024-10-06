@@ -1,5 +1,4 @@
 /** EMOMの作成ページ
- *  あとで、バリデーションを入れて最低セット数、最大セット数を決める
  */
 
 "use client";
@@ -9,6 +8,8 @@ import Link from "next/link";
 import Exercise from "@/components/organisms/Exercise";
 import EMOMEdit from "@/components/organisms/EmomEdit";
 import FirstExercise from "@/components/organisms/FirstExercise";
+import { createEmom } from "@/lib/api";
+import { useRouter } from "next/navigation";
 
 interface ExerciseState {
   name: string;
@@ -16,9 +17,10 @@ interface ExerciseState {
 }
 
 const CreatePage = () => {
+  const router = useRouter();
+
   // EMOM用の状態管理
   const [emomName, setEmomName] = useState("");
-
   const [ready, setReady] = useState(10);
   const [sets, setSets] = useState(10);
   // デフォルトのexercise用の状態管理
@@ -29,10 +31,15 @@ const CreatePage = () => {
   // エクササイズ数のバリデーション用
   const [exercisesError, setExercisesError] = useState<string | null>(null);
 
+  // API呼び出しの際の状態管理
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
   // 新しいエクササイズを追加
   const handleNewExercise = () => {
     if (exercises.length < 2) {
       setExercises([...exercises, { name: "", reps: 10 }]);
+      setExercisesError(null);
     } else {
       setExercisesError("Exercises should be at most 3");
     }
@@ -58,6 +65,46 @@ const CreatePage = () => {
   const handleRemoveExercise = (index: number) => {
     const updatedExercises = exercises.filter((_, i) => i !== index);
     setExercises(updatedExercises);
+  };
+
+  // フォームの送信
+  const handleSubmit = async () => {
+    // フロントエンドでの追加バリデーション
+    if (!emomName.trim()) {
+      setSubmitError("EMOM name is required.");
+      return;
+    }
+
+    if (sets < 5) {
+      setSubmitError("Sets must be at least 5.");
+      return;
+    }
+
+    if (exercises.some((ex) => !ex.name.trim())) {
+      setSubmitError("All exercise names are required.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const emomData = {
+        name: emomName,
+        ready,
+        sets,
+        exercises,
+      };
+
+      console.log("Request payload:", emomData);
+
+      const createdEmom = await createEmom(emomData);
+      router.push(`/emoms/${createdEmom.id}/timer`);
+    } catch (error: any) {
+      setSubmitError(error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -100,8 +147,8 @@ const CreatePage = () => {
           <Button size="small" color="secondary" onClick={handleNewExercise}>
             Add New Exercise
           </Button>
-          <Button size="small" color="primary">
-            <Link href="/emoms">Start EMOM</Link>
+          <Button size="small" color="primary" onClick={handleSubmit}>
+            Start EMOM
           </Button>
         </div>
       </div>
