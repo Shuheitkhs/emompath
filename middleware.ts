@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { supabase } from "@/lib/supabaseClient";
+import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
+
+  // Create a Supabase client configured to use cookies
+  const supabase = createMiddlewareClient({ req, res });
 
   // 認証が必要なパスを定義
   const protectedPaths = ["/emoms", "/auth/mypage"];
@@ -28,6 +31,9 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/auth/signin", req.url));
     }
   }
+
+  // Refresh session if expired - required for Server Components
+  await supabase.auth.getSession();
 
   return res;
 }

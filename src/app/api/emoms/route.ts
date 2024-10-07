@@ -1,10 +1,12 @@
 // emomsを操作するAPI
 // 一覧取得と新規作成
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 import { NextResponse, NextRequest } from "next/server";
-import { supabase } from "@/lib/supabaseClient";
 
 // GET: 全てのemomsを取得
 export async function GET() {
+  const supabase = createRouteHandlerClient({ cookies: () => cookies() });
   const { data, error } = await supabase.from("emoms").select("*");
 
   if (error) {
@@ -16,6 +18,7 @@ export async function GET() {
 
 // POST: 新しいemomを作成
 export async function POST(req: NextRequest) {
+  const supabase = createRouteHandlerClient({ cookies: () => cookies() });
   // セッションからユーザーIDを取得
   const { data: sessionData, error: sessionError } =
     await supabase.auth.getSession();

@@ -1,7 +1,8 @@
 // サインイン用のAPI
 // 認証はデータのCRUD操作とは別に管理し、役割を明確に分離する
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabaseClient";
 
 export async function POST(request: Request) {
   // リクエストのボディをJSONとして解析し、emailとpasswordとして取得
@@ -15,6 +16,7 @@ export async function POST(request: Request) {
     );
   }
   // サインインへのリクエストの返答をdataかエラーに格納
+  const supabase = createRouteHandlerClient({ cookies: () => cookies() });
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,

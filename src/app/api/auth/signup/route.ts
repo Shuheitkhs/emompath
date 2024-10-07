@@ -1,7 +1,9 @@
 // サインアップ用のAPI
 // 認証はデータのCRUD操作とは別に管理し、役割を明確に分離する
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server"; //サーバーサイドAPIを扱うため
-import { supabaseServerClient } from "@/lib/supabaseServerClient";
+// import { supabaseServerClient } from "@/lib/supabaseServerClient";
 
 export async function POST(request: Request) {
   // リクエストのボディをJSONとして解析し、emailとpasswordとして取得
@@ -34,7 +36,9 @@ export async function POST(request: Request) {
     );
   }
   // Supabaseの管理APIを使用して新しいユーザーを作成
-  const { data, error } = await supabaseServerClient.auth.admin.createUser({
+  const cookiesStore = cookies();
+  const supabase = createServerComponentClient({cookies: () => cookiesStore});
+  const { data, error } = await supabase.auth.admin.createUser({
     email,
     password,
     email_confirm: false, // ユーザーがメールで確認する前にアカウントが有効であるか=>false
