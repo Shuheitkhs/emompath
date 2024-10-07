@@ -15,6 +15,7 @@
     "@mui/material": "^6.1.0",
     "@mui/styled-engine-sc": "^6.1.1",
     "@mui/x-charts": "^7.18.0",
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/supabase-js": "^2.45.4",
     "next": "14.2.11",
     "react": "^17.0.0 || ^18.0.0",

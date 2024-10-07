@@ -1,10 +1,12 @@
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabaseClient";
 
 // POST: 新しいexercise_historyを作成
 export async function POST(req: NextRequest) {
   const { exercise_id, volume, completed_at } = await req.json();
 
+  const supabase = createRouteHandlerClient({ cookies: () => cookies() });
   const { data, error } = await supabase
     .from("exercise_histories")
     .insert([{ exercise_id, volume, completed_at }]);

@@ -1,5 +1,6 @@
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabaseClient";
 
 // PUT: exerciseの更新・/emoms/[id]で使用
 export async function PUT(
@@ -10,6 +11,7 @@ export async function PUT(
   const { emom_id, name, reps } = await req.json();
 
   // 更新データを指定して全てのフィールドを置き換え
+  const supabase = createRouteHandlerClient({ cookies: () => cookies() });
   const { data, error } = await supabase
     .from("exercises")
     .upsert({ id: exerciseId, emom_id, name, reps });
@@ -29,6 +31,7 @@ export async function DELETE(
   const exerciseId = params.id;
 
   // 特定のidを持つexerciseを削除
+  const supabase = createRouteHandlerClient({ cookies: () => cookies() });
   const { data, error } = await supabase
     .from("exercises")
     .delete()

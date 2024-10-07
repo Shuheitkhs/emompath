@@ -1,7 +1,8 @@
 // 特定のemomの取得・更新・削除を行うAPI
 
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabaseClient";
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
 // GET: 特定のemomsの詳細を取得・/emoms/[id]とcompleteで使用
 export async function GET(
@@ -10,6 +11,7 @@ export async function GET(
 ) {
   const emomId = params.id;
 
+  const supabase = createRouteHandlerClient({ cookies: () => cookies() });
   const { data, error } = await supabase
     .from("emoms")
     .select("*")
@@ -32,6 +34,7 @@ export async function PUT(
   const { name, ready, set } = await req.json();
 
   // 更新データを指定して全てのフィールドを置き換え
+  const supabase = createRouteHandlerClient({ cookies: () => cookies() });
   const { data, error } = await supabase
     .from("emoms")
     .upsert({ id: emomId, name, ready, set });
@@ -50,6 +53,7 @@ export async function DELETE(
 ) {
   const emomId = params.id;
 
+  const supabase = createRouteHandlerClient({ cookies: () => cookies() });
   const { data, error } = await supabase
     .from("emoms")
     .delete()

@@ -1,5 +1,6 @@
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabaseClient";
 
 // GET: 特定のemom_idを持つexercisesを取得・/emoms/[id]で使用
 export async function GET(req: NextRequest) {
@@ -13,6 +14,7 @@ export async function GET(req: NextRequest) {
   }
 
   // 特定のemom_idを持つexercisesを取得
+  const supabase = createRouteHandlerClient({ cookies: () => cookies() });
   const { data, error } = await supabase
     .from("exercises")
     .select("*")
@@ -28,6 +30,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const { emom_id, name, reps } = await req.json();
 
+  const supabase = createRouteHandlerClient({ cookies: () => cookies() });
   const { data, error } = await supabase
     .from("exercises")
     .insert([{ emom_id, name, reps }]);
