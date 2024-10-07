@@ -14,7 +14,7 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Link from "next/link";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabaseClient";
+import { createClient } from "@/utils/supabase/client";
 
 // フロントエンド側でのメールアドレスとパスワードのバリデーション
 const schema = z.object({
@@ -117,6 +117,7 @@ const SignInPage = () => {
   };
 
   const signinWithGoogle = async () => {
+    const supabase = createClient()
     // Googleサインインの処理・クライアントサイドで処理
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",

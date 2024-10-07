@@ -7,13 +7,14 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Session } from "@supabase/supabase-js"; // Session 型をインポート
-import { supabase } from "@/lib/supabaseClient";
+import { createClient } from "@/utils/supabase/client";
 
 const HomePage = () => {
   const [sessionChecked, setSessionChecked] = useState(false); // セッションチェックが完了したか
 
   const [session, setSession] = useState<Session | null>(null); // 型を指定
   const router = useRouter();
+  const supabase = createClient();
 
   useEffect(() => {
     const fetchSession = async () => {

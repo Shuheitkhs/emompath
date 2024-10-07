@@ -1,10 +1,11 @@
 // ログアウトのAPI
 
+import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabaseClient";
 
 export async function POST() {
   // supabaseのサインアウト
+  const supabase = createClient();
   const { error } = await supabase.auth.signOut();
 
   // エラーハンドリング

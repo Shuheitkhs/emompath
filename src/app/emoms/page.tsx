@@ -1,9 +1,10 @@
 import Button from "@/components/atoms/Button";
+import { createClient } from "@/utils/supabase/client";
 import Link from "next/link";
 import React from "react";
-import { supabase } from "@/lib/supabaseClient";
 
 const EmomListPage = async () => {
+  const supabase = createClient();
   const { data: sessionData } = await supabase.auth.getSession();
   console.log(sessionData?.session?.access_token);
 

@@ -1,8 +1,9 @@
 // Google認証する場合のAPI
+import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabaseClient";
 
 export async function POST() {
+  const supabase = createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {

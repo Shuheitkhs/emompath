@@ -1,10 +1,13 @@
 // emomsを操作するAPI
 // 一覧取得と新規作成
+import { createClient } from "@/utils/supabase/server";
 import { NextResponse, NextRequest } from "next/server";
-import { supabase } from "@/lib/supabaseClient";
+
+export const dynamic = 'force-dynamic';
 
 // GET: 全てのemomsを取得
 export async function GET() {
+  const supabase = createClient();
   const { data, error } = await supabase.from("emoms").select("*");
 
   if (error) {
@@ -16,6 +19,7 @@ export async function GET() {
 
 // POST: 新しいemomを作成
 export async function POST(req: NextRequest) {
+  const supabase = createClient();
   // セッションからユーザーIDを取得
   const { data: sessionData, error: sessionError } =
     await supabase.auth.getSession();
