@@ -1,11 +1,24 @@
+"use client";
+
 import Button from "@/components/atoms/Button";
 import Link from "next/link";
-import React from "react";
+import { useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
 const EmomListPage = async () => {
-  const { data: sessionData } = await supabase.auth.getSession();
-  console.log(sessionData?.session?.access_token);
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: sessionData, error } = await supabase.auth.getSession();
+      const accessToken = sessionData?.session?.access_token;
+      console.log("Session after OAuth:", sessionData);
+      console.log("access Token:", accessToken);
+      if (error) {
+        console.error("Session error:", error);
+      }
+    };
+
+    checkSession();
+  }, []);
 
   return (
     <div>
