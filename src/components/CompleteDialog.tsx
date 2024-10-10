@@ -1,19 +1,42 @@
 /** timer完了後のダイアログ */
 
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import AlertDialog from "./AlertDialog";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
+import { WorkoutPlan, EMOM, calculateNextWorkout } from "@/utils/workout";
+import UpdateDialog from "./UpdateDialog";
 
-const CompleteDialog = () => {
-  const handleAgree = () => {
-    alert("Agreed!");
+interface CompleteDialogProps {
+  emom: EMOM;
+  onUpdate: (plan: WorkoutPlan) => void;
+}
+
+const CompleteDialog: React.FC<CompleteDialogProps> = ({ emom, onUpdate }) => {
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const workoutPlans: WorkoutPlan[] = calculateNextWorkout(emom);
+
+  const handleAgree = (plan: WorkoutPlan) => {
+    onUpdate(plan);
+
+    setShowConfirmation(true);
   };
 
-  const handleDisagree = () => {
-    alert("Disagreed!");
+  const handleDisagree = () => {};
+
+  const handleCloseConfirmation = () => {
+    setShowConfirmation(false);
   };
+
+  const icons = [
+    <DirectionsRunIcon fontSize="large" key="icon-10" />,
+    <TwoWheelerIcon fontSize="large" key="icon-20" />,
+    <FlightTakeoffIcon fontSize="large" key="icon-30" />,
+  ];
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-danger p-5 rounded shadow-lg">
@@ -23,111 +46,48 @@ const CompleteDialog = () => {
         <p className="text-xl font-bold mb-4">
           Now get ready for your next training session!
         </p>
-        <AlertDialog
-          trigger={
-            <div className=" bg-black rounded-lg cursor-pointer text-2xl shadow-xl hover:scale-105 transition-transform duration-100 active:scale-95">
-              <div>
-                <DirectionsRunIcon fontSize="large" />
+        {workoutPlans.map((plan, index) => (
+          <AlertDialog
+            key={index}
+            trigger={
+              <div className="bg-black rounded-lg cursor-pointer text-2xl shadow-xl hover:scale-105 transition-transform duration-100 active:scale-95 p-4 mb-4">
+                <div>{icons[index]}</div>
+                <div className="text-3xl">
+                  Volume{" "}
+                  <span className="text-primary">{plan.volumeIncrease}</span> up
+                </div>
+                <div className="grid grid-cols-2 gap-5 text-2xl py-2 my-2">
+                  <div className="">{emom.name}</div>
+                  <div>{plan.sets} sets</div>
+                  {plan.exercises.map((exercise, exIndex) => (
+                    <React.Fragment key={exercise.id}>
+                      <div>{exercise.name}</div>
+                      <div>{exercise.reps} reps</div>
+                    </React.Fragment>
+                  ))}
+                </div>
               </div>
-              <div className="text-3xl">
-                Volume <span className="text-primary">10%</span>up
+            }
+            title={`Update with ${plan.volumeIncrease} increase?`}
+            content={
+              <div className="grid grid-cols-2 gap-5 text-2xl text-center">
+                <div>{emom.name}</div>
+                <div>{plan.sets} sets</div>
+                {plan.exercises.map((exercise, exIndex) => (
+                  <React.Fragment key={exercise.id}>
+                    <div>{exercise.name}</div>
+                    <div>{exercise.reps} reps</div>
+                  </React.Fragment>
+                ))}
               </div>
-              <div className=" grid grid-cols-2 grid-rows-2 gap-5 text-2xl py-2 my-2">
-                <div>EMOM Name</div>
-                <div>10 sets</div>
-                <div>Exercise A</div>
-                <div>20 reps</div>
-              </div>
-            </div>
-          }
-          title="Update with 10% increase?"
-          content={
-            <div className=" grid grid-cols-2 grid-rows-4 gap-5 text-2xl ">
-              <div>EMOM Name</div>
-              <div>10 sets</div>
-              <div>Exercise A</div>
-              <div>20 reps</div>
-              <div>Exercise B</div>
-              <div>20 reps</div>
-              <div>Exercise C</div>
-              <div>20 reps</div>
-            </div>
-          }
-          agreeText="Yes"
-          disagreeText="No"
-          onAgree={handleAgree}
-          onDisagree={handleDisagree}
-        />
-        <AlertDialog
-          trigger={
-            <div className=" bg-black rounded-lg cursor-pointer text-2xl shadow-xl hover:scale-105 transition-transform duration-100 active:scale-95">
-              <div>
-                <TwoWheelerIcon fontSize="large" />
-              </div>
-              <div className="text-3xl">
-                Volume <span className="text-primary">20%</span>up
-              </div>
-              <div className=" grid grid-cols-2 grid-rows-2 gap-5 text-2xl py-2 my-2">
-                <div>EMOM Name</div>
-                <div>10 sets</div>
-                <div>Exercise A</div>
-                <div>20 reps</div>
-              </div>
-            </div>
-          }
-          title="Update with 20% increase?"
-          content={
-            <div className=" grid grid-cols-2 grid-rows-4 gap-5 text-2xl ">
-              <div>EMOM Name</div>
-              <div>10 sets</div>
-              <div>Exercise A</div>
-              <div>20 reps</div>
-              <div>Exercise B</div>
-              <div>20 reps</div>
-              <div>Exercise C</div>
-              <div>20 reps</div>
-            </div>
-          }
-          agreeText="Yes"
-          disagreeText="No"
-          onAgree={handleAgree}
-          onDisagree={handleDisagree}
-        />
-        <AlertDialog
-          trigger={
-            <div className=" bg-black rounded-lg cursor-pointer text-2xl shadow-xl hover:scale-105 transition-transform duration-100 active:scale-95">
-              <div>
-                <FlightTakeoffIcon fontSize="large" />
-              </div>
-              <div className="text-3xl">
-                Volume <span className="text-primary">30%</span>up
-              </div>
-              <div className=" grid grid-cols-2 grid-rows-2 gap-5 text-2xl py-2 my-2">
-                <div>EMOM Name</div>
-                <div>10 sets</div>
-                <div>Exercise A</div>
-                <div>20 reps</div>
-              </div>
-            </div>
-          }
-          title="Update with 30% increase?"
-          content={
-            <div className=" grid grid-cols-2 grid-rows-4 gap-5 text-2xl ">
-              <div>EMOM Name</div>
-              <div>10 sets</div>
-              <div>Exercise A</div>
-              <div>20 reps</div>
-              <div>Exercise B</div>
-              <div>20 reps</div>
-              <div>Exercise C</div>
-              <div>20 reps</div>
-            </div>
-          }
-          agreeText="Yes"
-          disagreeText="No"
-          onAgree={handleAgree}
-          onDisagree={handleDisagree}
-        />
+            }
+            agreeText="Yes"
+            disagreeText="No"
+            onAgree={() => handleAgree(plan)}
+            onDisagree={handleDisagree}
+          />
+        ))}
+        {showConfirmation && <UpdateDialog onClose={handleCloseConfirmation} />}
       </div>
     </div>
   );

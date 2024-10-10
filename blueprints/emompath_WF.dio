@@ -229,7 +229,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="/mypage_delete_modal" id="4qwTzqILTbJeOLo6G8lY">
-        <mxGraphModel dx="1549" dy="1049" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="852" dy="577" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="JAktLBHFDvIe4T0V0z1L-0"/>
                 <mxCell id="JAktLBHFDvIe4T0V0z1L-1" parent="JAktLBHFDvIe4T0V0z1L-0"/>
@@ -1233,7 +1233,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="complete_modal" id="ostJrDCQ4PGaTLND7Xj4">
-        <mxGraphModel dx="1549" dy="1049" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="545" dy="543" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0ti7cfsbj7oif5bnkDSE-0"/>
                 <mxCell id="0ti7cfsbj7oif5bnkDSE-1" parent="0ti7cfsbj7oif5bnkDSE-0"/>
@@ -1362,7 +1362,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="complete_modal_check" id="9X6zJPdogrSZZOYmmf9A">
-        <mxGraphModel dx="852" dy="577" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="545" dy="543" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="MM4M9i8WzZ3xbwFAMxDD-0"/>
                 <mxCell id="MM4M9i8WzZ3xbwFAMxDD-1" parent="MM4M9i8WzZ3xbwFAMxDD-0"/>

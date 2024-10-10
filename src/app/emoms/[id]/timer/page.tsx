@@ -2,24 +2,43 @@
 
 import Button from "@/components/atoms/Button";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useParams } from "next/navigation";
+import React, { useState, useEffect } from "react";
 // タイマー
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 // 完了後のポップアップ
 import CompleteDialog from "@/components/CompleteDialog";
 import Countdown3sec from "@/components/Countdown3sec";
+import { WorkoutPlan } from "@/utils/workout";
+
+interface Exercise {
+  id: string;
+  name: string;
+  reps: number;
+}
+
+interface EMOM {
+  id: string;
+  name: string;
+  ready: number;
+  sets: number;
+  exercises: Exercise[];
+}
 
 const TimerPage = () => {
-  // ステートの定義
+  const params = useParams();
+  const emomId = params.id; // ルートからemom_idを取得
+  // EMOMの状態管理
+  const [emom, setEmom] = useState<EMOM | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
+  // タイマーの状態管理
   const [isRunning, setIsRunning] = useState(false); // 本番タイマーの再生状態
   const [isReadyPhase, setIsReadyPhase] = useState(true); // 準備時間かどうか
   const [isReadyRunning, setIsReadyRunning] = useState(false); // 準備タイマーの再生状態
   const [completedSets, setCompletedSets] = useState(0); //完了したセット数の表示
 
   const [isComplete, setIsComplete] = useState(false); // トレーニング完了かどうか
-
-  // 仮のセット数
-  const sets = 1;
 
   // keyを0で固定
   const key = 0;
@@ -57,6 +76,99 @@ const TimerPage = () => {
     }
   };
 
+  // EMOMデータをget
+  useEffect(() => {
+    const fetchEMOM = async () => {
+      setIsLoading(true);
+      setFetchError(null);
+      // GETメソッド
+      try {
+        const response = await fetch(`/api/emoms/${emomId}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        // エラーハンドリング
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || "Failed to fetch EMOM");
+        }
+
+        const data: EMOM = await response.json();
+        setEmom(data);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setFetchError(error.message);
+        } else {
+          setFetchError("An unknown error occurred");
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (emomId) {
+      fetchEMOM();
+    } else {
+      setFetchError("EMOM ID is missing in the route.");
+      setIsLoading(false);
+    }
+  }, [emomId]);
+
+  // EMOM更新関数
+  const updateEMOM = async (plan: WorkoutPlan) => {
+    if (!emom) return;
+
+    // 各エクササイズのレップ数を更新
+    const updatedExercises = emom.exercises.map((exercise) => ({
+      ...exercise,
+      reps:
+        plan.exercises.find((ex) => ex.id === exercise.id)?.reps ||
+        exercise.reps,
+    }));
+
+    // 新しいセット数と更新されたエクササイズを送信
+    const updatedEMOM = {
+      sets: plan.sets,
+      exercises: updatedExercises,
+    };
+
+    try {
+      const response = await fetch(`/api/emoms/${emomId}/complete`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedEMOM),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to update EMOM");
+      }
+
+      const data: EMOM = await response.json();
+      setEmom(data); // 更新されたEMOMデータを設定
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(`Error: ${error.message}`);
+      } else {
+        alert("An unknown error occurred while updating EMOM.");
+      }
+    }
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (fetchError || !emom) {
+    return <div>Error: {fetchError || "EMOM not found"}</div>;
+  }
+
+  const { name, ready, sets, exercises } = emom;
+
   return (
     <div className="my-5">
       <div>
@@ -74,11 +186,11 @@ const TimerPage = () => {
           */}
           {isReadyPhase ? (
             <CountdownCircleTimer
-              key={`ready-${key}`}
+              key={`ready-${emomId}`}
               isPlaying={isReadyRunning}
               colors={["#FFF700", "#FF2603"]}
-              colorsTime={[5, 0]}
-              duration={10} // 仮で準備時間を10秒に設定
+              colorsTime={[ready, 0]}
+              duration={ready}
               onComplete={() => {
                 setIsReadyPhase(false); // 三項演算子で準備時間が終了したら本番タイマーに移行
                 setIsRunning(true); // 本番タイマーを開始
@@ -101,7 +213,7 @@ const TimerPage = () => {
             <CountdownCircleTimer
               key={`main-${key}`}
               isPlaying={isRunning}
-              duration={10} //本番は60秒固定
+              duration={5} //本番は60秒固定
               colors={["#4666FF", "#00FEFC", "#FFF700", "#FF2603"]}
               colorsTime={[45, 30, 15, 0]}
               onComplete={() => {
@@ -136,17 +248,18 @@ const TimerPage = () => {
           )}
         </div>
       </div>
-      {/* 仮のEMOM情報 */}
-      <div className="mx-[30%] my-5">
-        <div className="grid grid-cols-2 grid-rows-4 gap-5 text-2xl ">
-          <div>EMOM Name</div>
+      {/* EMOMの情報表示 */}
+      <div className="mx-[10%] my-5">
+        <div className="grid grid-cols-2 grid-rows-4 gap-5 text-2xl">
+          <div>{name}</div>
           <div>{sets} sets</div>
-          <div>Exercise A</div>
-          <div>20 reps</div>
-          <div>Exercise B</div>
-          <div>20 reps</div>
-          <div>Exercise C</div>
-          <div>20 reps</div>
+          {/* 動的にエクササイズを表示 */}
+          {exercises.map((exercise) => (
+            <React.Fragment key={exercise.id}>
+              <div>{exercise.name}</div>
+              <div>{exercise.reps} reps</div>
+            </React.Fragment>
+          ))}
         </div>
       </div>
       <div className="flex justify-center space-x-3">
@@ -172,7 +285,9 @@ const TimerPage = () => {
           </Button>
         )}
       </div>
-      <div> {isComplete && <CompleteDialog />}</div>
+      <div>
+        {isComplete && <CompleteDialog emom={emom} onUpdate={updateEMOM} />}
+      </div>
     </div>
   );
 };
