@@ -4,10 +4,32 @@ import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { NextResponse, NextRequest } from "next/server";
 
-// GET: 全てのemomsを取得
+// GET: ユーザーの全てのemomsを取得
 export async function GET() {
   const supabase = createRouteHandlerClient({ cookies: () => cookies() });
-  const { data, error } = await supabase.from("emoms").select("*");
+  // セッションからユーザーIDを取得
+  const { data: sessionData, error: sessionError } =
+    await supabase.auth.getSession();
+  // セッション情報が取得できない場合、認証エラー
+  if (sessionError || !sessionData?.session) {
+    return NextResponse.json(
+      { error: "User not authenticated" },
+      { status: 401 }
+    );
+  }
+
+  // 認証されたユーザーのidを取得
+  const userId = sessionData.session.user.id;
+  // ユーザーのidに紐づくemomとexerciseを取得
+  const { data, error } = await supabase
+    .from("emoms")
+    .select(
+      `
+      *,
+      exercises(id, name, reps)
+    `
+    )
+    .eq("user_id", userId);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 400 });

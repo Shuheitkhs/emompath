@@ -2,23 +2,52 @@
 
 import Button from "@/components/atoms/Button";
 import Link from "next/link";
-import { useEffect } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { useEffect, useState } from "react";
+import Exercise from "@/components/organisms/Exercise";
 
-const EmomListPage = async () => {
+// EMOMのデータ型を定義
+interface Exercise {
+  id: string;
+  name: string;
+  reps: number;
+}
+
+interface Emom {
+  id: string;
+  name: string;
+  sets: number;
+  exercises: Exercise[];
+}
+
+const EmomListPage = () => {
+  const [emoms, setEmoms] = useState<Emom[]>([]); // EMOMデータを格納するstate
+  const [loading, setLoading] = useState(true); // ローディング状態を管理
+  const [error, setError] = useState<string | null>(null); // エラーメッセージを管理
+
+  // 初回レンダリング時にEMOMデータを取得・後でServerComponentに
   useEffect(() => {
-    const checkSession = async () => {
-      const { data: sessionData, error } = await supabase.auth.getSession();
-      const accessToken = sessionData?.session?.access_token;
-      console.log("Session after OAuth:", sessionData);
-      console.log("access Token:", accessToken);
-      if (error) {
-        console.error("Session error:", error);
+    const fetchEmoms = async () => {
+      try {
+        const res = await fetch("/api/emoms"); // APIにGETリクエスト
+        if (!res.ok) throw new Error("Failed to fetch emoms");
+        const data = await res.json();
+        setEmoms(data); // データをセット
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred");
+        }
+      } finally {
+        setLoading(false);
       }
     };
 
-    checkSession();
-  }, []);
+    fetchEmoms(); // 非同期関数を直接呼び出す
+  }, []); // 空の依存配列で初回レンダリング時のみ実行
+
+  if (loading) return <p>Loading...</p>; // ローディング中の表示
+  if (error) return <p>Error: {error}</p>; // エラー時の表示
 
   return (
     <div>
@@ -30,59 +59,59 @@ const EmomListPage = async () => {
           <Link href="/emoms/create">Create New EMOM</Link>
         </Button>
       </div>
-      <div>
-        <div className="grid grid-cols-3 grid-rows-3 gap-5 border rounded text-xl p-3 my-3 font-bold">
-          <div className="col-span-2">EMOM Name</div>
-          <div>10sets</div>
-          <div className="row-start-2 col-span-2">Exercise Name</div>
-          <div className="row-start-2">10reps</div>
-          <div className="row-start-3">Exercise Volume 100</div>
-          <div className="row-start-3 flex items-center justify-center bg-secondary rounded">
-            Edit
-          </div>
-          <div className="row-start-3 flex items-center justify-center bg-primary rounded">
-            Start EMOM
-          </div>
-        </div>
-        {/* 第二のグリッド */}
 
-        <div className="grid grid-cols-3 grid-rows-3 gap-5 border rounded text-xl p-3 my-3 font-bold">
-          <div className="col-span-2">EMOM Name</div>
-          <div>15sets</div>
-          <div className="row-start-2 col-span-2">Exercise NameA</div>
-          <div className="row-start-2">10reps</div>
-          <div className="row-start-3 col-span-2">Exercise NameB</div>
-          <div className="row-start-3">20reps</div>
-          <div className="row-start-4">ExerciseA Volume 150</div>
-          <div className="row-start-4 row-span-2 flex items-center justify-center bg-secondary rounded">
-            Edit
+      {/* EMOMリストを動的に生成 */}
+      {emoms.map((emom) => {
+        return (
+          <div
+            key={emom.id}
+            className="grid grid-cols-3 gap-5 border rounded text-xl p-3 my-3 font-bold"
+          >
+            {/* EMOM名とセット数の表示 */}
+            <div className="col-span-2">{emom.name}</div>
+            <div>{emom.sets} sets</div>
+
+            {/* 各Exerciseの表示 */}
+            {emom.exercises.map((exercise, index) => (
+              <div
+                key={exercise.id}
+                className={`col-span-2 row-start-${index + 2}`}
+              >
+                {exercise.name}
+              </div>
+            ))}
+            {emom.exercises.map((exercise, index) => (
+              <div key={exercise.id} className={`row-start-${index + 2}`}>
+                {exercise.reps} reps
+              </div>
+            ))}
+
+            {/* 各exercisesのvolumeの表示 */}
+            {emom.exercises.map((exercise, index) => (
+              <div
+                key={exercise.id}
+                className={`row-start-${index + emom.exercises.length + 2}`}
+              >
+                {exercise.name} Volume {emom.sets * exercise.reps}
+              </div>
+            ))}
+
+            {/* Editボタン */}
+            <div
+              className={`row-span-${emom.exercises.length} col-span-1 flex items-center justify-center bg-secondary rounded cursor-pointer hover:scale-105 transition-transform duration-100 active:scale-95`}
+            >
+              <Link href={`/emom/${emom.id}`}>Edit</Link>
+            </div>
+
+            {/* Start EMOMボタン */}
+            <div
+              className={`row-span-${emom.exercises.length} col-span-1 flex items-center justify-center bg-primary rounded cursor-pointer hover:scale-105 transition-transform duration-100 active:scale-95`}
+            >
+              <Link href={`/emom/${emom.id}/timer`}>Start EMOM</Link>
+            </div>
           </div>
-          <div className="row-start-4 row-span-2 flex items-center justify-center bg-primary rounded">
-            Start EMOM
-          </div>
-          <div className="row-start-5">ExerciseB Volume 300</div>
-        </div>
-        {/* 第三のグリッド */}
-        <div className="grid grid-cols-3 grid-rows-3 gap-5 border rounded text-xl p-3 my-3 font-bold">
-          <div className="col-span-2">EMOM Name</div>
-          <div>15sets</div>
-          <div className="row-start-2 col-span-2">Exercise NameA</div>
-          <div className="row-start-2">10reps</div>
-          <div className="row-start-3 col-span-2">Exercise NameB</div>
-          <div className="row-start-3">20reps</div>
-          <div className="row-start-4 col-span-2">Exercise NameC</div>
-          <div className="row-start-4">20reps</div>
-          <div className="row-start-5">ExerciseA Volume 150</div>
-          <div className="row-start-5 row-span-3 flex items-center justify-center bg-secondary rounded">
-            Edit
-          </div>
-          <div className="row-start-5 row-span-3 flex items-center justify-center bg-primary rounded">
-            Start EMOM
-          </div>
-          <div className="row-start-6">ExerciseB Volume 300</div>
-          <div className="row-start-7">ExerciseC Volume 300</div>
-        </div>
-      </div>
+        );
+      })}
     </div>
   );
 };
