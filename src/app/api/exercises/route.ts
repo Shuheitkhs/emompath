@@ -26,18 +26,29 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json(data, { status: 200 });
 }
+
 // POST: 新しいexercisesを作成・/emoms/createと/emoms/[id]で使用
 export async function POST(req: NextRequest) {
   const { emom_id, name, reps } = await req.json();
 
   const supabase = createRouteHandlerClient({ cookies: () => cookies() });
+
+  // 必要なバリデーション
+  if (!emom_id || !name || reps <= 0) {
+    return NextResponse.json(
+      { error: "Invalid input values" },
+      { status: 400 }
+    );
+  }
+
   const { data, error } = await supabase
     .from("exercises")
-    .insert([{ emom_id, name, reps }]);
+    .insert([{ emom_id, name, reps }])
+    .select();
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 
-  return NextResponse.json(data, { status: 200 });
+  return NextResponse.json(data?.[0] ?? { id: null }, { status: 201 });
 }

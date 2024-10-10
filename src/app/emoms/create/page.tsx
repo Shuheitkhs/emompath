@@ -1,6 +1,5 @@
 /** EMOMの作成ページ
  */
-
 "use client";
 import Button from "@/components/atoms/Button";
 import { useState } from "react";
@@ -23,6 +22,7 @@ const CreatePage = () => {
   const [emomName, setEmomName] = useState("");
   const [ready, setReady] = useState(10);
   const [sets, setSets] = useState(10);
+
   // デフォルトのexercise用の状態管理
   const [firstExerciseName, setFirstExerciseName] = useState("");
   const [firstExerciseReps, setFirstExerciseReps] = useState(10);
@@ -36,7 +36,7 @@ const CreatePage = () => {
   // エクササイズ数のバリデーション用
   const [exercisesError, setExercisesError] = useState<string | null>(null);
 
-  // API呼び出しの際の状態管理
+  // API呼び出しの状態管理
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -84,37 +84,62 @@ const CreatePage = () => {
   };
 
   // フォームの送信
-  const handleSubmit = async () => {
-    // バリデーション
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // 各種バリデーション
+    // emom名の要求
     if (!emomName.trim()) {
       setSubmitError("EMOM name is required.");
       return;
     }
-
+    // 最低セット数の設定
     if (sets < 5) {
       setSubmitError("Sets must be at least 5.");
       return;
     }
-
+    // 最低readyの設定
+    if (ready < 5 || ready > 60) {
+      setSubmitError("Ready time must be between 0 and 60 seconds.");
+      return;
+    }
+    // デフォルトのエクササイズの名前の要求
+    if (!firstExerciseName.trim()) {
+      setFirstExerciseError("First exercise name is required.");
+      return;
+    }
+    //　デフォルトのエクササイズの最低レップ数の設定
+    if (firstExerciseReps < 1) {
+      setFirstExerciseError("Reps for first exercise must be at least 1.");
+      return;
+    }
+    //　追加エクササイズの名前の要求
     if (exercises.some((ex) => !ex.name.trim())) {
       setSubmitError("All exercise names are required.");
+      return;
+    }
+    //  追加エクササイズの最低レップ数の設定
+    if (exercises.some((ex) => ex.reps < 1)) {
+      setFirstExerciseError("Reps for all exercise must be at least 1.");
       return;
     }
 
     setIsSubmitting(true);
     setSubmitError(null);
+    setFirstExerciseError(null);
+    setExercisesError(null);
 
     try {
+      // emomの作成
       const emomData = {
         name: emomName,
         ready,
-        sets: sets, // "set" カラム名に合わせて送信
+        sets,
       };
 
-      console.log("Request payload:", emomData);
+      console.log("Request payload (emom):", emomData);
 
       // `fetch` を使ってAPIにPOSTリクエスト
-      const response = await fetch("/api/emoms", {
+      const emomResponse = await fetch("/api/emoms", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -123,20 +148,80 @@ const CreatePage = () => {
       });
 
       // レスポンスのチェック
-      if (!response.ok) {
-        const errorData = await response.json();
+      if (!emomResponse.ok) {
+        const errorData = await emomResponse.json();
         throw new Error(errorData.error || "Failed to create emom");
       }
 
-      const createdEmom = await response.json();
+      const createdEmom = await emomResponse.json();
+      const emomId = createdEmom.id;
+
+      if (!emomId) {
+        throw new Error("EMOM ID is missing.");
+      }
+
+      console.log("Created EMOM ID:", emomId);
+
+      // デフォルトのエクササイズの作成
+      const firstExerciseData = {
+        emom_id: emomId,
+        name: firstExerciseName,
+        reps: firstExerciseReps,
+      };
+
+      console.log("Request payload (first exercise):", firstExerciseData);
+
+      const firstExerciseResponse = await fetch("/api/exercises", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(firstExerciseData),
+      });
+
+      if (!firstExerciseResponse.ok) {
+        const errorData = await firstExerciseResponse.json();
+        throw new Error(errorData.error || "Failed to create first exercise");
+      }
+
+      console.log(
+        "Created First Exercise:",
+        await firstExerciseResponse.json()
+      );
+
+      // 2個目以降のexerciseの作成
+      for (const exercise of exercises) {
+        const exerciseData = {
+          emom_id: emomId,
+          name: exercise.name,
+          reps: exercise.reps,
+        };
+
+        console.log("Request payload (exercise):", exerciseData);
+
+        const exerciseResponse = await fetch("/api/exercises", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(exerciseData),
+        });
+
+        if (!exerciseResponse.ok) {
+          const errorData = await exerciseResponse.json();
+          throw new Error(errorData.error || "Failed to create exercise");
+        }
+
+        console.log("Created Exercise:", await exerciseResponse.json());
+      }
 
       // emomのIDを使ってリダイレクト
-      router.push(`/emoms/${createdEmom[0].id}/timer`);
+      router.push(`/emoms/${emomId}/timer`);
     } catch (error: unknown) {
       if (error instanceof Error) {
         setSubmitError(error.message);
       } else {
-        setSubmitError("'An unknown error occurred'");
+        setSubmitError("An unknown error occurred");
       }
     } finally {
       setIsSubmitting(false);

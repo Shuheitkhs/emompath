@@ -41,6 +41,7 @@ export async function GET() {
 // POST: 新しいemomを作成
 export async function POST(req: NextRequest) {
   const supabase = createRouteHandlerClient({ cookies: () => cookies() });
+
   // セッションからユーザーIDを取得
   const { data: sessionData, error: sessionError } =
     await supabase.auth.getSession();
@@ -58,14 +59,23 @@ export async function POST(req: NextRequest) {
   // リクエストボディから新しいemomのデータを取得
   const { name, ready, sets } = await req.json();
 
+  // バリデーション（必要に応じて追加）
+  if (ready > 60 || sets > 30) {
+    return NextResponse.json(
+      { error: "Invalid input values" },
+      { status: 400 }
+    );
+  }
+
   // user.idをuser_idとして新しいemomを作成
   const { data, error } = await supabase
     .from("emoms")
-    .insert([{ user_id: user.id, name, ready, sets }]);
+    .insert([{ user_id: user.id, name, ready, sets }])
+    .select();
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 
-  return NextResponse.json(data, { status: 200 });
+  return NextResponse.json(data?.[0] ?? { id: null }, { status: 201 });
 }
