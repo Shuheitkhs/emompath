@@ -11,8 +11,9 @@ import Chart from "@/components/atoms/Chart";
 import React, { useState } from "react";
 import EMOMEdit from "@/components/organisms/EmomEdit";
 import Exercise from "@/components/organisms/Exercise";
-import FirstExercise from "@/components/organisms/FirstExercise";
 import AlertDialog from "@/components/AlertDialog";
+import Input from "@/components/atoms/Input";
+import Counter from "@/components/molecules/Counter";
 
 interface ExerciseState {
   name: string;
@@ -51,6 +52,13 @@ const EmomEditPage = () => {
     { data: cData, label: "Chining" },
   ];
 
+  // デフォルトのexercise用の状態管理
+  const [firstExerciseName, setFirstExerciseName] = useState("");
+  const [firstExerciseReps, setFirstExerciseReps] = useState(10);
+  const [firstExerciseError, setFirstExerciseError] = useState<string | null>(
+    null
+  );
+
   // 新しいエクササイズを追加
   const handleNewExercise = () => {
     if (exercises.length < 2) {
@@ -66,6 +74,16 @@ const EmomEditPage = () => {
       index === i ? { ...exercise, name: newValue } : exercise
     );
     setExercises(updatedExercises);
+  };
+
+  // firstExerciseの変更用関数
+  const handleFirstExerciseRepsChange = (newReps: number) => {
+    if (newReps === 1) {
+      setFirstExerciseError("Reps should be at least 1");
+    } else {
+      setFirstExerciseError(null);
+    }
+    setFirstExerciseReps(newReps);
   };
 
   // Repsの変更用
@@ -122,7 +140,38 @@ const EmomEditPage = () => {
         />
       </div>
       <div>
-        <FirstExercise sets={sets} />
+        <div>
+          <div className="my-5">
+            <Input
+              size="large"
+              type="text"
+              onChange={(e) => setFirstExerciseName(e.target.value)}
+              placeholder="Input Your Exercise Name"
+              default="Exercise"
+            />
+            <Counter
+              title="Reps"
+              number={firstExerciseReps}
+              plus1={() => handleFirstExerciseRepsChange(firstExerciseReps + 1)}
+              minus1={() =>
+                handleFirstExerciseRepsChange(
+                  Math.max(firstExerciseReps - 1, 1)
+                )
+              }
+            />
+            <div>
+              {firstExerciseError && (
+                <p className="text-red-500">{firstExerciseError}</p>
+              )}
+            </div>
+            <p className="inline-block text-2xl font-bold border-b-2 my-2">
+              {firstExerciseName} -Volume-{" "}
+              <span className="text-primary text-3xl">
+                {sets * firstExerciseReps}
+              </span>
+            </p>
+          </div>
+        </div>
 
         {/* 二番目以降のexercise */}
         {exercises.map((exercise, index) => (

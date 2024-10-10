@@ -7,8 +7,9 @@ import { useState } from "react";
 import Link from "next/link";
 import Exercise from "@/components/organisms/Exercise";
 import EMOMEdit from "@/components/organisms/EmomEdit";
-import FirstExercise from "@/components/organisms/FirstExercise";
 import { useRouter } from "next/navigation";
+import Input from "@/components/atoms/Input";
+import Counter from "@/components/molecules/Counter";
 
 interface ExerciseState {
   name: string;
@@ -23,6 +24,11 @@ const CreatePage = () => {
   const [ready, setReady] = useState(10);
   const [sets, setSets] = useState(10);
   // デフォルトのexercise用の状態管理
+  const [firstExerciseName, setFirstExerciseName] = useState("");
+  const [firstExerciseReps, setFirstExerciseReps] = useState(10);
+  const [firstExerciseError, setFirstExerciseError] = useState<string | null>(
+    null
+  );
 
   // 2つ目以降のエクササイズを管理
   const [exercises, setExercises] = useState<ExerciseState[]>([]);
@@ -52,6 +58,16 @@ const CreatePage = () => {
     setExercises(updatedExercises);
   };
 
+  // firstExerciseの変更用関数
+  const handleFirstExerciseRepsChange = (newReps: number) => {
+    if (newReps === 1) {
+      setFirstExerciseError("Reps should be at least 1");
+    } else {
+      setFirstExerciseError(null);
+    }
+    setFirstExerciseReps(newReps);
+  };
+
   // Repsの変更用
   const handleRepsChange = (index: number, newReps: number) => {
     const updatedExercises = exercises.map((exercise, i) =>
@@ -64,6 +80,7 @@ const CreatePage = () => {
   const handleRemoveExercise = (index: number) => {
     const updatedExercises = exercises.filter((_, i) => i !== index);
     setExercises(updatedExercises);
+    setExercisesError(null);
   };
 
   // フォームの送信
@@ -141,7 +158,38 @@ const CreatePage = () => {
           />
         </div>
         {/* 最初のエクササイズ情報 */}
-        <FirstExercise sets={sets} />
+        <div>
+          <div className="my-5">
+            <Input
+              size="large"
+              type="text"
+              onChange={(e) => setFirstExerciseName(e.target.value)}
+              placeholder="Input Your Exercise Name"
+              default="Exercise"
+            />
+            <Counter
+              title="Reps"
+              number={firstExerciseReps}
+              plus1={() => handleFirstExerciseRepsChange(firstExerciseReps + 1)}
+              minus1={() =>
+                handleFirstExerciseRepsChange(
+                  Math.max(firstExerciseReps - 1, 1)
+                )
+              }
+            />
+            <div>
+              {firstExerciseError && (
+                <p className="text-red-500">{firstExerciseError}</p>
+              )}
+            </div>
+            <p className="inline-block text-2xl font-bold border-b-2 my-2">
+              {firstExerciseName} -Volume-{" "}
+              <span className="text-primary text-3xl">
+                {sets * firstExerciseReps}
+              </span>
+            </p>
+          </div>
+        </div>
         {/* 二番目以降のexercise */}
         {exercises.map((exercise, index) => (
           <Exercise
