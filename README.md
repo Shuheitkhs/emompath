@@ -76,7 +76,7 @@ EMOM Path は、短時間で効率的な運動を提供することで、これ�
 
 ---
 
-# Overview and Features (English)
+# Overview and Features
 
 ## Overview
 
