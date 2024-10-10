@@ -43,7 +43,7 @@ const EmomListPage = () => {
       }
     };
 
-    fetchEmoms(); // 非同期関数を直接呼び出す
+    fetchEmoms(); // 定義したfetchEmomsを呼び出す
   }, []); // 空の依存配列で初回レンダリング時のみ実行
 
   if (loading) return <p>Loading...</p>; // ローディング中の表示
@@ -81,7 +81,10 @@ const EmomListPage = () => {
               </div>
             ))}
             {emom.exercises.map((exercise, index) => (
-              <div key={exercise.id} className={`row-start-${index + 2}`}>
+              <div
+                key={exercise.id}
+                className={`col-span-1 row-start-${index + 2}`}
+              >
                 {exercise.reps} reps
               </div>
             ))}
@@ -90,7 +93,9 @@ const EmomListPage = () => {
             {emom.exercises.map((exercise, index) => (
               <div
                 key={exercise.id}
-                className={`row-start-${index + emom.exercises.length + 2}`}
+                className={`col-span-1 row-start-${
+                  index + emom.exercises.length + 2
+                }`}
               >
                 {exercise.name} Volume {emom.sets * exercise.reps}
               </div>
