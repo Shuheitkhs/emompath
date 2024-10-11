@@ -105,14 +105,14 @@ const EmomListPage = () => {
             <div
               className={`row-span-${emom.exercises.length} col-span-1 flex items-center justify-center bg-secondary rounded cursor-pointer hover:scale-105 transition-transform duration-100 active:scale-95`}
             >
-              <Link href={`/emom/${emom.id}`}>Edit</Link>
+              <Link href={`/emoms/${emom.id}`}>Edit</Link>
             </div>
 
             {/* Start EMOMボタン */}
             <div
               className={`row-span-${emom.exercises.length} col-span-1 flex items-center justify-center bg-primary rounded cursor-pointer hover:scale-105 transition-transform duration-100 active:scale-95`}
             >
-              <Link href={`/emom/${emom.id}/timer`}>Start EMOM</Link>
+              <Link href={`/emoms/${emom.id}/timer`}>Start EMOM</Link>
             </div>
           </div>
         );

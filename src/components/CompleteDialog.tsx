@@ -58,8 +58,9 @@ const CompleteDialog: React.FC<CompleteDialogProps> = ({ emom, onUpdate }) => {
 
         const data = await response.json();
         console.log("Exercise histories recorded:", data);
-      } catch (error: any) {
-        console.error("Error recording exercise histories:", error.message);
+      } catch (error) {
+        if (error instanceof Error)
+          console.error("Error recording exercise histories:", error.message);
       }
     };
 
@@ -106,7 +107,7 @@ const CompleteDialog: React.FC<CompleteDialogProps> = ({ emom, onUpdate }) => {
                 <div className="grid grid-cols-2 gap-5 text-2xl py-2 my-2">
                   <div className="">{emom.name}</div>
                   <div>{plan.sets} sets</div>
-                  {plan.exercises.map((exercise, exIndex) => (
+                  {plan.exercises.map((exercise) => (
                     <React.Fragment key={exercise.id}>
                       <div>{exercise.name}</div>
                       <div>{exercise.reps} reps</div>
@@ -120,7 +121,7 @@ const CompleteDialog: React.FC<CompleteDialogProps> = ({ emom, onUpdate }) => {
               <div className="grid grid-cols-2 gap-5 text-2xl text-center">
                 <div>{emom.name}</div>
                 <div>{plan.sets} sets</div>
-                {plan.exercises.map((exercise, exIndex) => (
+                {plan.exercises.map((exercise) => (
                   <React.Fragment key={exercise.id}>
                     <div>{exercise.name}</div>
                     <div>{exercise.reps} reps</div>

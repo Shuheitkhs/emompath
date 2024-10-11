@@ -37,7 +37,7 @@ export function calculateNextWorkout(currentEMOM: EMOM): WorkoutPlan[] {
   const increases = [1.1, 1.2, 1.3]; // ボリュームの増加率（10%、20%、30%）
   const volumeIncreases = ["10%", "20%", "30%"];
   const minSets = Math.max(5, currentEMOM.sets - 1); // 現在のセット数-1から最低5セットを維持
-  const maxSets = Math.min(30, currentEMOM.sets + 3); // 前回セットの+3から最大30セットを維持
+  const maxSets = Math.min(30, currentEMOM.sets + 2); // 前回セットの+2から最大30セットを維持
 
   // 各増加率に対して次回のワークアウトプランを計算
   const usedSets = new Map<number, number>(); // 使用済みのセット数を追跡するためのマップ（セット数と出現回数）

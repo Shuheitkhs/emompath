@@ -24,8 +24,6 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const user = sessionData.session.user;
-
   // リクエストボディからデータを取得
   const { exerciseHistories } = await req.json(); // 複数の履歴を受け取る
 

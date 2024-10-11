@@ -5,7 +5,6 @@
 
 "use client";
 import Link from "next/link";
-
 import Button from "@/components/atoms/Button";
 import Chart from "@/components/atoms/Chart";
 import React, { useState } from "react";
@@ -19,10 +18,11 @@ interface ExerciseState {
   name: string;
   reps: number;
 }
-
+//exercise-historiesのvolume・本番は最新15件分
 const sData = [150, 165, 180, 200, 240, 260, 300, 330, 350, 385];
 const cData = [30, 33, 40, 45, 50, 55, 70, 80, 100, 110];
 const pData = [100, 110, 120, 135, 150, 170, 200, 220, 240, 300];
+// exercise-historiesのcompleted_at
 const xLabels = [
   "Day 1",
   "Day 2",
@@ -34,7 +34,7 @@ const xLabels = [
   "Day 8",
   "Day 9",
   "Day 10",
-];
+]; //本番は最新15件分
 
 const EmomEditPage = () => {
   const [ready, setReady] = useState<number>(10);

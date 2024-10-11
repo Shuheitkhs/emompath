@@ -7,7 +7,7 @@ interface UpdateDialogProps {
   onClose: () => void;
 }
 
-const UpdateDialog: React.FC<UpdateDialogProps> = ({ onClose }) => {
+const UpdateDialog: React.FC<UpdateDialogProps> = () => {
   const router = useRouter();
 
   const handleCloseUpdate = () => {
