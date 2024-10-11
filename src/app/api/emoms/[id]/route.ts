@@ -4,14 +4,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
-// GET: 特定のemomsの詳細を取得・/emoms/[id]と/emoms/[id]/timer、completeで使用
+// GET: 特定のemomsの詳細を取得・/emoms/[id]と/emoms/[id]/timerで使用
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const emomId = params.id;
-
   const supabase = createRouteHandlerClient({ cookies: () => cookies() });
+
+  const emomId = params.id;
 
   // emoms と関連する exercises を取得
   const { data, error } = await supabase
@@ -26,7 +26,8 @@ export async function GET(
 
   return NextResponse.json(data, { status: 200 });
 }
-// PUT: emomsの更新・/emoms/[id]とcompleteで使用
+
+// PUT: emomsの更新・/emoms/[id]で使用
 export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -38,7 +39,9 @@ export async function PUT(
   const supabase = createRouteHandlerClient({ cookies: () => cookies() });
   const { data, error } = await supabase
     .from("emoms")
-    .upsert({ id: emomId, name, ready, set });
+    .upsert({ id: emomId, name, ready, set })
+    .eq("id", emomId)
+    .select();
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 400 });

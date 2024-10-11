@@ -1,20 +1,32 @@
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 // PUT: exerciseの更新・/emoms/[id]で使用
 export async function PUT(
-  req: NextRequest,
+  req: Request,
   { params }: { params: { id: string } }
 ) {
-  const exerciseId = params.id;
-  const { emom_id, name, reps } = await req.json();
-
-  // 更新データを指定して全てのフィールドを置き換え
   const supabase = createRouteHandlerClient({ cookies: () => cookies() });
+  const exerciseId = params.id;
+  const { name, reps } = await req.json();
+
+  // バリデーション
+  if (!name || typeof name !== "string") {
+    return NextResponse.json(
+      { error: "Invalid exercise name." },
+      { status: 400 }
+    );
+  }
+  if (!reps || typeof reps !== "number" || reps < 1) {
+    return NextResponse.json({ error: "Invalid reps value." }, { status: 400 });
+  }
+
   const { data, error } = await supabase
     .from("exercises")
-    .upsert({ id: exerciseId, emom_id, name, reps });
+    .update({ name, reps })
+    .eq("id", exerciseId)
+    .select();
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 400 });
@@ -25,21 +37,24 @@ export async function PUT(
 
 // DELETE: 特定のexerciseを削除・/emoms/[id]で使用
 export async function DELETE(
-  req: NextRequest,
+  req: Request,
   { params }: { params: { id: string } }
 ) {
+  const supabase = createRouteHandlerClient({ cookies: () => cookies() });
   const exerciseId = params.id;
 
-  // 特定のidを持つexerciseを削除
-  const supabase = createRouteHandlerClient({ cookies: () => cookies() });
   const { data, error } = await supabase
     .from("exercises")
     .delete()
-    .eq("id", exerciseId);
+    .eq("id", exerciseId)
+    .select();
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 
-  return NextResponse.json(data, { status: 200 });
+  return NextResponse.json(
+    { message: "Exercise deleted successfully.", data },
+    { status: 200 }
+  );
 }
