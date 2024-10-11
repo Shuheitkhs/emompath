@@ -2,7 +2,7 @@
 
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import AlertDialog from "./AlertDialog";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
@@ -18,6 +18,53 @@ interface CompleteDialogProps {
 const CompleteDialog: React.FC<CompleteDialogProps> = ({ emom, onUpdate }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const workoutPlans: WorkoutPlan[] = calculateNextWorkout(emom);
+
+  const hasSentRequest = useRef(false); //デプロイ前に削除
+
+  useEffect(() => {
+    // ローカル環境下だとstrict modeで2回実行されるので、一旦1度に・デプロイ前に削除
+    if (hasSentRequest.current) {
+      return;
+    }
+    // リクエスト送信フラグをセット・デプロイ前に削除
+    hasSentRequest.current = true;
+
+    // ダイアログが表示されたときにexercise-historiesにPOST
+    const recordExerciseHistory = async () => {
+      try {
+        // 各エクササイズに対して履歴を作成
+        const exerciseHistories = emom.exercises.map((exercise) => ({
+          exercise_id: exercise.id,
+          volume: emom.sets * exercise.reps,
+          completed_at: new Date().toISOString(),
+        }));
+
+        const response = await fetch("/api/exercise-histories", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            exerciseHistories,
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(
+            errorData.error || "Failed to record exercise histories."
+          );
+        }
+
+        const data = await response.json();
+        console.log("Exercise histories recorded:", data);
+      } catch (error: any) {
+        console.error("Error recording exercise histories:", error.message);
+      }
+    };
+
+    recordExerciseHistory();
+  }, [emom]);
 
   const handleAgree = (plan: WorkoutPlan) => {
     onUpdate(plan);
