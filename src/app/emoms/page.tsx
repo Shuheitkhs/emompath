@@ -56,7 +56,9 @@ const EmomListPage = () => {
       </div>
       <div className="mb-5 flex justify-center">
         <Button size="large" color="secondary">
-          <Link href="/emoms/create">Create New EMOM</Link>
+          <Link href="/emoms/create" className="w-full ">
+            Create New EMOM
+          </Link>
         </Button>
       </div>
 
@@ -103,16 +105,26 @@ const EmomListPage = () => {
 
             {/* Editボタン */}
             <div
-              className={`row-span-${emom.exercises.length} col-span-1 flex items-center justify-center bg-secondary rounded cursor-pointer hover:scale-105 transition-transform duration-100 active:scale-95`}
+              className={`row-span-${emom.exercises.length}  col-span-1 flex items-center justify-center bg-secondary rounded cursor-pointer hover:scale-105 transition-transform duration-100 active:scale-95`}
             >
-              <Link href={`/emoms/${emom.id}`}>Edit</Link>
+              <Link
+                href={`/emoms/${emom.id}`}
+                className="w-full h-full content-center"
+              >
+                Edit
+              </Link>
             </div>
 
             {/* Start EMOMボタン */}
             <div
               className={`row-span-${emom.exercises.length} col-span-1 flex items-center justify-center bg-primary rounded cursor-pointer hover:scale-105 transition-transform duration-100 active:scale-95`}
             >
-              <Link href={`/emoms/${emom.id}/timer`}>Start EMOM</Link>
+              <Link
+                href={`/emoms/${emom.id}/timer`}
+                className="w-full h-full content-center"
+              >
+                Start EMOM
+              </Link>
             </div>
           </div>
         );
