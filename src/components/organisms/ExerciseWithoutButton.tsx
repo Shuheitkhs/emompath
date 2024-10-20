@@ -3,23 +3,18 @@
 import { useState } from "react";
 import Input from "@/components/atoms/Input";
 import Counter from "@/components/molecules/Counter";
-import Button from "@/components/atoms/Button";
-import ClearIcon from "@mui/icons-material/Clear";
-import AlertDialog from "@/components/AlertDialog";
 
 interface ExerciseProps {
   exercise: { name: string; reps: number };
   onExerciseChange: (newValue: string) => void;
   onRepsChange: (newReps: number) => void;
-  onRemove: () => void;
   sets: number;
 }
 
-const Exercise: React.FC<ExerciseProps> = ({
+const ExerciseWithoutButton: React.FC<ExerciseProps> = ({
   exercise,
   onExerciseChange,
   onRepsChange,
-  onRemove,
   sets,
 }) => {
   const [repsError, setRepsError] = useState<string | null>(null);
@@ -40,25 +35,12 @@ const Exercise: React.FC<ExerciseProps> = ({
     <div className="my-5">
       <div className="flex justify-center items-center space-x-1">
         <Input
-          size="with-button"
+          size="large"
           type="text"
           value={name}
           onChange={(e) => onExerciseChange(e.target.value)}
           placeholder="Input Your Exercise Name"
           default="Exercise"
-        />
-        <AlertDialog
-          trigger={
-            <Button size="full" color="danger">
-              <ClearIcon />
-            </Button>
-          }
-          title="Delete this exercise?"
-          content="Previous logs will also be lost."
-          agreeText="Yes"
-          disagreeText="No"
-          onAgree={onRemove}
-          onDisagree={() => {}}
         />
       </div>
 
@@ -77,4 +59,4 @@ const Exercise: React.FC<ExerciseProps> = ({
   );
 };
 
-export default Exercise;
+export default ExerciseWithoutButton;
