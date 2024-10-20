@@ -43,11 +43,13 @@ export async function POST(request: Request) {
       { message: "User created successfully", user: data.user },
       { status: 201 }
     );
-  } catch (err: any) {
-    console.error(err);
-    return NextResponse.json(
-      { error: "サインアップ中にエラーが発生しました。" },
-      { status: 500 }
-    );
+  } catch (error) {
+    console.error(error);
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { error: "サインアップ中にエラーが発生しました。" },
+        { status: 500 }
+      );
+    }
   }
 }

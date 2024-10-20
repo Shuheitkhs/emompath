@@ -3,7 +3,7 @@ import supabaseAdmin from "@/lib/supabaseAdminClient";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
-export async function DELETE(request: Request) {
+export async function DELETE() {
   try {
     // ユーザーのセッションを取得
     const supabase = createRouteHandlerClient({ cookies });
@@ -34,11 +34,13 @@ export async function DELETE(request: Request) {
       { message: "アカウントが正常に削除されました。" },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error deleting account:", error);
-    return NextResponse.json(
-      { error: error.message || "アカウント削除中にエラーが発生しました。" },
-      { status: 500 }
-    );
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { error: error.message || "アカウント削除中にエラーが発生しました。" },
+        { status: 500 }
+      );
+    }
   }
 }

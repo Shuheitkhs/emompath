@@ -41,12 +41,9 @@ export async function PATCH(request: Request) {
     const userId = session.user.id;
 
     // メールアドレスの更新（管理者クライアントを使用）
-    const { data, error } = await supabaseAdmin.auth.admin.updateUserById(
-      userId,
-      {
-        email: newEmail,
-      }
-    );
+    const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, {
+      email: newEmail,
+    });
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 400 });
@@ -59,11 +56,12 @@ export async function PATCH(request: Request) {
       },
       { status: 200 }
     );
-  } catch (err: any) {
-    console.error("Error updating email:", err);
-    return NextResponse.json(
-      { error: "メールアドレスの更新中にエラーが発生しました。" },
-      { status: 500 }
-    );
+  } catch (error) {
+    console.error("Error updating email:", error);
+    if (error instanceof Error)
+      return NextResponse.json(
+        { error: "メールアドレスの更新中にエラーが発生しました。" },
+        { status: 500 }
+      );
   }
 }

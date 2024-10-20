@@ -83,9 +83,11 @@ const PasswordPage = () => {
           general: data.error || "パスワードの変更に失敗しました。",
         });
       }
-    } catch (error: any) {
-      setErrors({ general: "予期せぬエラーが発生しました。" });
-      console.error("Error changing password:", error);
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrors({ general: "予期せぬエラーが発生しました。" });
+        console.error("Error changing password:", error);
+      }
     } finally {
       setLoading(false);
       router.refresh();

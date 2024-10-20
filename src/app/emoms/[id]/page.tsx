@@ -90,9 +90,11 @@ const EmomEditPage = () => {
           const errorData = await res.json();
           setError(errorData.error || "データの取得に失敗しました。");
         }
-      } catch (err: any) {
-        setError("予期せぬエラーが発生しました。");
-        console.error("Error fetching EMOM details:", err);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError("予期せぬエラーが発生しました。");
+          console.error("Error fetching EMOM details:", error);
+        }
       } finally {
         setLoading(false);
       }
@@ -165,9 +167,11 @@ const EmomEditPage = () => {
         const errorData = await res.json();
         setError(errorData.error || "EMOM削除中にエラーが発生しました。");
       }
-    } catch (error: any) {
-      setError("予期せぬエラーが発生しました。");
-      console.error("Error deleting EMOM:", error);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError("予期せぬエラーが発生しました。");
+        console.error("Error deleting EMOM:", error);
+      }
     }
   };
 
@@ -210,16 +214,17 @@ const EmomEditPage = () => {
       });
 
       if (res.ok) {
-        const data = await res.json();
-        alert("EMOMが正常に保存されました！");
+        alert("EMOMが正常に保存されました!!");
         router.push("/emoms");
       } else {
         const errorData = await res.json();
         alert(errorData.error || "EMOMの保存に失敗しました。");
       }
-    } catch (err: any) {
-      console.error("Error saving EMOM:", err);
-      alert("予期せぬエラーが発生しました。");
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error saving EMOM:", error);
+        alert("予期せぬエラーが発生しました。");
+      }
     } finally {
       setIsSaving(false);
     }

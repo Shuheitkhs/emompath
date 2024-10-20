@@ -97,11 +97,13 @@ export async function GET(
     };
 
     return NextResponse.json(responseData, { status: 200 });
-  } catch (err: any) {
-    console.error("Error fetching EMOM details:", err);
-    return NextResponse.json(
-      { error: "詳細情報の取得中にエラーが発生しました。" },
-      { status: 500 }
-    );
+  } catch (error) {
+    console.error("Error fetching EMOM details:", error);
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { error: "詳細情報の取得中にエラーが発生しました。" },
+        { status: 500 }
+      );
+    }
   }
 }

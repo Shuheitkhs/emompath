@@ -52,9 +52,11 @@ const MypagePage = () => {
         const errorData = await res.json();
         setError(errorData.error || "アカウント削除中にエラーが発生しました。");
       }
-    } catch (error: any) {
-      setError("予期せぬエラーが発生しました。");
-      console.error("Error deleting account:", error);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError("予期せぬエラーが発生しました。");
+        console.error("Error deleting account:", error);
+      }
     }
   };
 

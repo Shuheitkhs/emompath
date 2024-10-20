@@ -75,11 +75,13 @@ export async function PATCH(request: Request) {
       },
       { status: 200 }
     );
-  } catch (err: any) {
-    console.error("Error changing password:", err);
-    return NextResponse.json(
-      { error: "パスワードの変更中にエラーが発生しました。" },
-      { status: 500 }
-    );
+  } catch (error) {
+    console.error("Error changing password:", error);
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { error: "パスワードの変更中にエラーが発生しました。" },
+        { status: 500 }
+      );
+    }
   }
 }

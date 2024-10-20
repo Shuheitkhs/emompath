@@ -56,7 +56,7 @@ const SignUpPage = () => {
     } else {
       setErrors({});
       try {
-        const { data, error } = await supabaseClient.auth.signUp({
+        const { error } = await supabaseClient.auth.signUp({
           email,
           password,
         });
