@@ -4,11 +4,13 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 // import { supabase } from "@/lib/supabaseClient";
 
-export async function POST() {
+export async function GET() {
   const supabase = createRouteHandlerClient({ cookies: () => cookies() });
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
+      // TODO: 公式リファレンスでは独自実装したRoute Handlerのエンドポイントを指定している
+      // https://supabase.com/docs/guides/auth/social-login/auth-google
       redirectTo: process.env.NEXT_PUBLIC_REDIRECT_URL,
     },
   });
@@ -17,6 +19,9 @@ export async function POST() {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 
+  return NextResponse.json({ redirect_url: data.url }, { status: 200 });
+
+  // TIPS: Route Handler内でリダイレクトできない理由は、Googleのコンソール上の設定でリダイレクト元のURLとしてlocalhostが設定されていないからかもしれない
   // OAuth認証の場合、リダイレクトURLが返される
-  return NextResponse.redirect(data.url);
+  // return NextResponse.redirect(data.url);
 }
