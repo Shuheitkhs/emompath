@@ -173,7 +173,9 @@ const TimerPage = () => {
     <div className="my-5">
       <div>
         <Button size="large" color="danger">
-          <Link href="/emoms">STOP</Link>
+          <Link href="/emoms" className="block">
+            Back to EMOM List
+          </Link>
         </Button>
       </div>
       <div>
