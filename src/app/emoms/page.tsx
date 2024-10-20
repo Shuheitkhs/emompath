@@ -91,29 +91,6 @@ const EmomListPage = () => {
                 </div>
               ))}
             </div>
-            <div className="col-span-2">
-              {emom.name}
-              {/* 各Exerciseの表示 */}
-              {emom.exercises.map((exercise, index) => (
-                <div
-                  key={exercise.id}
-                  className={`col-span-2 row-start-${index + 2}`}
-                >
-                  {exercise.name}
-                </div>
-              ))}
-            </div>
-            <div className="col-span-1">
-              {emom.sets} sets
-              {emom.exercises.map((exercise, index) => (
-                <div
-                  key={exercise.id}
-                  className={`col-span-1 row-start-${index + 2}`}
-                >
-                  {exercise.reps} reps
-                </div>
-              ))}
-            </div>
 
             <div className="col-span-1">
               {/* 各exercisesのvolumeの表示 */}
