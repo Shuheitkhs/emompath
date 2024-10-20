@@ -213,7 +213,7 @@ const TimerPage = () => {
             <CountdownCircleTimer
               key={`main-${key}`}
               isPlaying={isRunning}
-              duration={5} //本番は60秒固定
+              duration={60} //本番は60秒固定
               colors={["#4666FF", "#00FEFC", "#FFF700", "#FF2603"]}
               colorsTime={[45, 30, 15, 0]}
               onComplete={() => {
