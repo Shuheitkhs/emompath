@@ -1,5 +1,3 @@
-// app/api/auth/changePassword/route.ts
-
 import { NextResponse } from "next/server";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";

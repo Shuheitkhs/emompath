@@ -12,6 +12,7 @@ interface ExerciseProps {
   onRepsChange: (newReps: number) => void;
   onRemove: () => void;
   sets: number;
+  canRemove: boolean;
 }
 
 const Exercise: React.FC<ExerciseProps> = ({
@@ -20,6 +21,7 @@ const Exercise: React.FC<ExerciseProps> = ({
   onRepsChange,
   onRemove,
   sets,
+  canRemove,
 }) => {
   const [repsError, setRepsError] = useState<string | null>(null);
 
@@ -50,6 +52,11 @@ const Exercise: React.FC<ExerciseProps> = ({
           <ClearIcon />
         </Button>
       </div>
+      {!canRemove && (
+        <span className="text-red-500 text-sm">
+          最低1つのエクササイズが必要です。
+        </span>
+      )}
       <Counter
         title="Reps"
         number={reps}

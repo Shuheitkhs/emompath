@@ -1,6 +1,7 @@
-/** 登録したパスワードの変更フォーム */
+// src/pages/auth/mypage/password.tsx
 
 "use client";
+
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
 import Label from "@/components/atoms/Label";
@@ -8,16 +9,13 @@ import BorderLabel from "@/components/atoms/BorderLabel";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import { useState } from "react";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 
+// パスワードのバリデーションスキーマ
 const schema = z.object({
-  currentPassword: z
-    .string()
-    .min(6, {
-      message: "Current password must be at least 6 characters long.",
-    }),
   newPassword: z
     .string()
-    .min(6, { message: "New password must be at least 6 characters long." }),
+    .min(8, { message: "新しいパスワードは8文字以上で入力してください。" }),
 });
 
 const PasswordPage = () => {
@@ -26,20 +24,15 @@ const PasswordPage = () => {
   const [errors, setErrors] = useState<{
     currentPassword?: string;
     newPassword?: string;
+    general?: string;
   }>({});
+  const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
 
-  const inputCurrentPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentPassword(e.target.value);
-  };
-
-  const inputNewPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewPassword(e.target.value);
-  };
-
-  const onSubmit = () => {
+  const handleChange = async () => {
     // バリデーション
     const result = schema.safeParse({
-      currentPassword: currentPassword,
       newPassword: newPassword,
     });
 
@@ -56,24 +49,61 @@ const PasswordPage = () => {
         }
       });
       setErrors(fieldErrors);
+      setMessage("");
+      return;
     } else {
       setErrors({});
-      // パスワード変更処理をここに追加します
-      alert("パスワードが変更されました");
-      // 例: APIを呼び出してパスワードを更新する
+    }
+
+    setLoading(true);
+    setMessage("");
+
+    try {
+      // APIエンドポイントにリクエストを送信
+      const res = await fetch("/api/auth/changePassword", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          currentPassword,
+          newPassword,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setMessage(data.message);
+        alert("パスワードが正常に変更されました。再度ログインしてください。");
+        router.push("/auth/signin");
+      } else {
+        // APIからのエラーメッセージを表示
+        setErrors({
+          general: data.error || "パスワードの変更に失敗しました。",
+        });
+      }
+    } catch (error: any) {
+      setErrors({ general: "予期せぬエラーが発生しました。" });
+      console.error("Error changing password:", error);
+    } finally {
+      setLoading(false);
+      router.refresh();
     }
   };
 
   return (
-    <div className="my-5 ">
+    <div className="my-5">
       <div className="flex flex-col space-y-2 border-b-2 py-2">
-        <h3 className="text-start text-2xl ">Change Your Password</h3>
+        <h3 className="text-start text-2xl">Change Your Password</h3>
+
         <Label className="text-start">Current Password:</Label>
         <Input
           size="large"
           type="password"
           value={currentPassword}
-          onChange={inputCurrentPassword}
+          onChange={(e) => setCurrentPassword(e.target.value)}
+          placeholder="現在のパスワード"
         />
         {errors.currentPassword && (
           <p className="text-red-500">{errors.currentPassword}</p>
@@ -84,15 +114,24 @@ const PasswordPage = () => {
           size="large"
           type="password"
           value={newPassword}
-          onChange={inputNewPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+          placeholder="新しいパスワード"
         />
         {errors.newPassword && (
           <p className="text-red-500">{errors.newPassword}</p>
         )}
 
-        <Button size="small" color="secondary" onClick={onSubmit}>
+        {errors.general && <p className="text-red-500">{errors.general}</p>}
+        {message && <p className="text-green-500">{message}</p>}
+
+        <Button
+          size="small"
+          color="secondary"
+          onClick={handleChange}
+          disabled={loading}
+        >
           <BorderColorIcon className="mr-2" />
-          CHANGE
+          {loading ? "Processing..." : "CHANGE"}
         </Button>
         <div className="flex justify-start">
           <BorderLabel href="/auth/mypage">Back to My Page</BorderLabel>

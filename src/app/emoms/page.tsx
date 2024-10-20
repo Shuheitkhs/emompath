@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import Button from '@/components/atoms/Button';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import Exercise from '@/components/organisms/Exercise';
+import Button from "@/components/atoms/Button";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import Exercise from "@/components/organisms/Exercise";
 
 // EMOMのデータ型を定義
 interface Exercise {
@@ -28,15 +28,15 @@ const EmomListPage = () => {
   useEffect(() => {
     const fetchEmoms = async () => {
       try {
-        const res = await fetch('/api/emoms'); // APIにGETリクエスト
-        if (!res.ok) throw new Error('Failed to fetch emoms');
+        const res = await fetch("/api/emoms"); // APIにGETリクエスト
+        if (!res.ok) throw new Error("Failed to fetch emoms");
         const data = await res.json();
         setEmoms(data); // データをセット
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
         } else {
-          setError('An unknown error occurred');
+          setError("An unknown error occurred");
         }
       } finally {
         setLoading(false);
@@ -63,13 +63,19 @@ const EmomListPage = () => {
       {/* EMOMリストを動的に生成 */}
       {emoms.map((emom) => {
         return (
-          <div key={emom.id} className="grid grid-cols-3 gap-5 border rounded text-xl p-3 my-3 font-bold">
+          <div
+            key={emom.id}
+            className="grid grid-cols-3 gap-5 border rounded text-xl p-3 my-3 font-bold"
+          >
             {/* EMOM名とセット数の表示 */}
             <div className="col-span-2">
               {emom.name}
               {/* 各Exerciseの表示 */}
               {emom.exercises.map((exercise, index) => (
-                <div key={exercise.id} className={`col-span-2 row-start-${index + 2}`}>
+                <div
+                  key={exercise.id}
+                  className={`col-span-2 row-start-${index + 2}`}
+                >
                   {exercise.name}
                 </div>
               ))}
@@ -77,7 +83,33 @@ const EmomListPage = () => {
             <div className="col-span-1">
               {emom.sets} sets
               {emom.exercises.map((exercise, index) => (
-                <div key={exercise.id} className={`col-span-1 row-start-${index + 2}`}>
+                <div
+                  key={exercise.id}
+                  className={`col-span-1 row-start-${index + 2}`}
+                >
+                  {exercise.reps} reps
+                </div>
+              ))}
+            </div>
+            <div className="col-span-2">
+              {emom.name}
+              {/* 各Exerciseの表示 */}
+              {emom.exercises.map((exercise, index) => (
+                <div
+                  key={exercise.id}
+                  className={`col-span-2 row-start-${index + 2}`}
+                >
+                  {exercise.name}
+                </div>
+              ))}
+            </div>
+            <div className="col-span-1">
+              {emom.sets} sets
+              {emom.exercises.map((exercise, index) => (
+                <div
+                  key={exercise.id}
+                  className={`col-span-1 row-start-${index + 2}`}
+                >
                   {exercise.reps} reps
                 </div>
               ))}

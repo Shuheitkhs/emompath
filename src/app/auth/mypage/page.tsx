@@ -7,9 +7,11 @@ import AlertDialog from "@/components/AlertDialog";
 import Button from "@/components/atoms/Button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const MypagePage = () => {
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
   // ログアウトのハンドラー関数
   const handleLogout = async () => {
@@ -31,13 +33,33 @@ const MypagePage = () => {
     }
   };
 
-  const handleAgree = () => {
-    alert("Agreed!");
+  const handleDeleteAccount = async () => {
+    setError(null);
+    try {
+      const res = await fetch("/api/auth/deleteAccount", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (res.ok) {
+        alert(
+          "アカウントが正常に削除されました。サインインページにリダイレクトします。"
+        );
+        router.push("/auth/signin");
+      } else {
+        const errorData = await res.json();
+        setError(errorData.error || "アカウント削除中にエラーが発生しました。");
+      }
+    } catch (error: any) {
+      setError("予期せぬエラーが発生しました。");
+      console.error("Error deleting account:", error);
+    }
   };
 
-  const handleDisagree = () => {
-    alert("Disagreed!");
-  };
+  const handleDisagree = () => {};
+
   return (
     <div className="flex flex-col my-5">
       <div className="space-y-4">
@@ -66,9 +88,10 @@ const MypagePage = () => {
             content="Previous logs will also be lost."
             agreeText="Yes"
             disagreeText="No"
-            onAgree={handleAgree}
+            onAgree={handleDeleteAccount}
             onDisagree={handleDisagree}
           />
+          {error && <p className="text-red-500">{error}</p>}
         </div>
       </div>
     </div>
