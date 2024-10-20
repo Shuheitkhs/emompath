@@ -5,6 +5,7 @@ import Input from "@/components/atoms/Input";
 import Counter from "@/components/molecules/Counter";
 import Button from "@/components/atoms/Button";
 import ClearIcon from "@mui/icons-material/Clear";
+import AlertDialog from "@/components/AlertDialog";
 
 interface ExerciseProps {
   exercise: { name: string; reps: number };
@@ -46,9 +47,19 @@ const Exercise: React.FC<ExerciseProps> = ({
           placeholder="Input Your Exercise Name"
           default="Exercise"
         />
-        <Button size="extra-small" color="danger" onClick={onRemove}>
-          <ClearIcon />
-        </Button>
+        <AlertDialog
+          trigger={
+            <Button size="extra-small" color="danger" onClick={onRemove}>
+              <ClearIcon />
+            </Button>
+          }
+          title="Delete this exercise?"
+          content="Previous logs will also be lost."
+          agreeText="Yes"
+          disagreeText="No"
+          onAgree={onRemove}
+          onDisagree={() => {}}
+        />
       </div>
 
       <Counter

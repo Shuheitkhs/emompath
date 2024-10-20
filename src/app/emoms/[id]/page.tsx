@@ -6,10 +6,8 @@
 import Button from "@/components/atoms/Button";
 import Chart from "@/components/atoms/Chart";
 import EMOMEdit from "@/components/organisms/EmomEdit";
-import Exercise from "@/components/organisms/Exercise";
+import ExerciseWithAlert from "@/components/organisms/ExerciseWithAlert";
 import AlertDialog from "@/components/AlertDialog";
-import Input from "@/components/atoms/Input";
-import Counter from "@/components/molecules/Counter";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
@@ -42,12 +40,6 @@ interface ExerciseHistory {
   completed_at: string;
 }
 
-// exerciseの更新に必要な型
-interface NewExerciseState {
-  name: string;
-  reps: number;
-}
-
 const EmomEditPage = () => {
   // chartデータ表示のための状態管理
   const params = useParams();
@@ -61,21 +53,15 @@ const EmomEditPage = () => {
   const [ready, setReady] = useState<number>(10);
   const [sets, setSets] = useState<number>(10);
 
-  // デフォルトのexercise用の状態管理
-  const [firstExerciseName, setFirstExerciseName] = useState("");
-  const [firstExerciseReps, setFirstExerciseReps] = useState(10);
-  const [firstExerciseError, setFirstExerciseError] = useState<string | null>(
-    null
-  );
-  //追加のexercise用の状態管理
-  const [newExercises, setNewExercises] = useState<NewExerciseState[]>([]);
-
   // エクササイズ数のバリデーション用
   const [newExercisesError, setNewExercisesError] = useState<string | null>(
     null
   );
+  // その他エラー用
+  const [error, setError] = useState<string | null>("");
 
-  const [error, setError] = useState<string>("");
+  // ローディングの表示
+  const [loading, setLoading] = useState<boolean>(true);
 
   // useEffectでレンダリング時にデータ取得
   useEffect(() => {
@@ -99,6 +85,8 @@ const EmomEditPage = () => {
       } catch (err: any) {
         setError("予期せぬエラーが発生しました。");
         console.error("Error fetching EMOM details:", err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -106,6 +94,10 @@ const EmomEditPage = () => {
       fetchEmomDetails();
     }
   }, [emomId]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   if (error) {
     return <p className="text-red-500">{error}</p>;
@@ -131,8 +123,17 @@ const EmomEditPage = () => {
 
   // 新しいエクササイズを追加
   const handleNewExercise = () => {
-    if (newExercises.length < 2) {
-      setNewExercises([...newExercises, { name: "", reps: 10 }]);
+    if (exercises.length < 3) {
+      setExercises([
+        ...exercises,
+        {
+          id: `temp-${Date.now()}`, // 一時的なID
+          emom_id: emomId,
+          name: "",
+          reps: 10,
+          histories: [], // 空の履歴
+        },
+      ]);
     } else {
       setNewExercisesError("Exercises should be at most 3");
     }
@@ -146,16 +147,6 @@ const EmomEditPage = () => {
     setExercises(updatedExercises);
   };
 
-  // firstExerciseの変更用関数
-  const handleFirstExerciseRepsChange = (newReps: number) => {
-    if (newReps === 1) {
-      setFirstExerciseError("Reps should be at least 1");
-    } else {
-      setFirstExerciseError(null);
-    }
-    setFirstExerciseReps(newReps);
-  };
-
   // Repsの変更用
   const handleRepsChange = (index: number, newReps: number) => {
     const updatedExercises = exercises.map((exercise, i) =>
@@ -164,25 +155,70 @@ const EmomEditPage = () => {
     setExercises(updatedExercises);
   };
 
+  // 編集したEMOMを保存して開始
+  const handleStartEmom = () => {};
+
   // エクササイズの削除用
-  const handleRemoveExercise = (index: number) => {
+  const handleRemoveExercise = async (index: number) => {
     if (exercises.length <= 1) {
-      setNewExercisesError("最低1つのエクササイズが必要です。");
+      setNewExercisesError("Exercises should be at least 1");
       return;
     }
-    const updatedExercises = exercises.filter((_, i) => i !== index);
-    setExercises(updatedExercises);
-    //エラー文の削除
-    setNewExercisesError(null);
+
+    const exerciseToDelete = exercises[index];
+
+    try {
+      const res = await fetch(`/api/exercises/${exerciseToDelete.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        console.log(data.message);
+        // エクササイズをステートから削除
+        const updatedExercises = exercises.filter((_, i) => i !== index);
+        setExercises(updatedExercises);
+        // エラー文の削除
+        setNewExercisesError(null);
+      } else {
+        const errorData = await res.json();
+        setNewExercisesError(
+          errorData.error || "エクササイズの削除に失敗しました。"
+        );
+      }
+    } catch (error: any) {
+      setNewExercisesError("予期せぬエラーが発生しました。");
+      console.error("Error deleting exercise:", error);
+    }
   };
 
-  // Dialog用の関数
-  const handleAgree = () => {
-    alert("Agreed!");
-  };
+  // EMOMの削除用
+  const handleDeleteEmom = async () => {
+    setError(null);
+    try {
+      const res = await fetch(`/api/emoms/${emomId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-  const handleDisagree = () => {
-    alert("Disagreed!");
+      if (res.ok) {
+        alert(
+          "EMOMが正常に削除されました。EMOM listページにリダイレクトします。"
+        );
+        router.push("/emoms");
+      } else {
+        const errorData = await res.json();
+        setError(errorData.error || "EMOM削除中にエラーが発生しました。");
+      }
+    } catch (error: any) {
+      setError("予期せぬエラーが発生しました。");
+      console.error("Error deleting EMOM:", error);
+    }
   };
 
   return (
@@ -214,10 +250,9 @@ const EmomEditPage = () => {
         />
       </div>
       <div>
-        {/* 二番目以降のexercise */}
         {exercises.map((exercise, index) => (
-          <Exercise
-            key={index}
+          <ExerciseWithAlert
+            key={exercise.id}
             exercise={exercise}
             onExerciseChange={(newValue) =>
               handleExercisesChange(index, newValue)
@@ -225,7 +260,6 @@ const EmomEditPage = () => {
             onRepsChange={(newReps) => handleRepsChange(index, newReps)}
             onRemove={() => handleRemoveExercise(index)}
             sets={sets}
-            canRemove={exercises.length > 1}
           />
         ))}
       </div>
@@ -236,7 +270,7 @@ const EmomEditPage = () => {
         <Button size="medium" color="secondary" onClick={handleNewExercise}>
           Add New Exercise
         </Button>
-        <Button size="medium" color="primary" onClick={handleNewExercise}>
+        <Button size="medium" color="primary" onClick={handleStartEmom}>
           Start EMOM
         </Button>
       </div>
@@ -251,8 +285,8 @@ const EmomEditPage = () => {
           content="Previous logs will also be lost."
           agreeText="Yes"
           disagreeText="No"
-          onAgree={handleAgree}
-          onDisagree={handleDisagree}
+          onAgree={handleDeleteEmom}
+          onDisagree={() => {}}
         />
       </div>
     </div>

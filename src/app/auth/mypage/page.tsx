@@ -58,8 +58,6 @@ const MypagePage = () => {
     }
   };
 
-  const handleDisagree = () => {};
-
   return (
     <div className="flex flex-col my-5">
       <div className="space-y-4">
@@ -89,7 +87,7 @@ const MypagePage = () => {
             agreeText="Yes"
             disagreeText="No"
             onAgree={handleDeleteAccount}
-            onDisagree={handleDisagree}
+            onDisagree={() => {}}
           />
           {error && <p className="text-red-500">{error}</p>}
         </div>
