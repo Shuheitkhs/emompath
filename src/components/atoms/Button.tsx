@@ -12,7 +12,7 @@
  */
 
 export type ButtonProps = {
-  size?: "extra-small" | "small" | "medium" | "large" | "normal";
+  size?: "extra-small" | "small" | "medium" | "large" | "normal" | "full";
   color?: "primary" | "secondary" | "danger";
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children: React.ReactNode;
@@ -41,8 +41,11 @@ const Button: React.FC<ButtonProps> = ({
       break;
     case "large":
       sizeClass =
-        "py-3 px-6 text-2xl font-bold w-[90%]  hover:scale-105 transition-transform duration-100 active:scale-95"; // 横幅90%
+        "py-3 px-6 text-2xl font-bold w-[90%]  hover:scale-110 transition-transform duration-100 active:scale-95"; // 横幅90%
       break;
+    case "full":
+      sizeClass =
+        "py-3 px-6 text-2xl font-bold w-[110%] h-[100%]  hover:scale-105 transition-transform duration-100 active:scale-95";
     default:
       sizeClass =
         "py-2 px-4 text-xl font-bold w-auto  hover:scale-105 transition-transform duration-100 active:scale-95"; // normalボタン用

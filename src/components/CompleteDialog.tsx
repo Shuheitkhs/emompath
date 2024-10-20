@@ -87,14 +87,14 @@ const CompleteDialog: React.FC<CompleteDialogProps> = ({ emom, onUpdate }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-danger p-5 rounded shadow-lg flex flex-col max-h-[90vh] w-full max-w-2xl">
+      <div className="bg-danger p-5 rounded shadow-lg flex flex-col max-h-[90vh] w-full max-w-2xl ">
         <h3 className="text-primary font-bold text-5xl mb-4">
           Congratulations!!
         </h3>
         <p className="text-xl font-bold mb-4">
           Now get ready for your next training session!
         </p>
-        <div className="flex-grow overflow-y-auto">
+        <div className="flex-grow overflow-y-auto p-5">
           {workoutPlans.map((plan, index) => (
             <AlertDialog
               key={index}

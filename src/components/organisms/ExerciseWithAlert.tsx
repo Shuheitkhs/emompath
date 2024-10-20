@@ -38,7 +38,7 @@ const Exercise: React.FC<ExerciseProps> = ({
 
   return (
     <div className="my-5">
-      <div className="flex justify-center">
+      <div className="flex justify-center items-center space-x-1">
         <Input
           size="with-button"
           type="text"
@@ -49,7 +49,7 @@ const Exercise: React.FC<ExerciseProps> = ({
         />
         <AlertDialog
           trigger={
-            <Button size="extra-small" color="danger" onClick={onRemove}>
+            <Button size="full" color="danger">
               <ClearIcon />
             </Button>
           }
