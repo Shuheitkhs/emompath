@@ -215,7 +215,7 @@ const SignInPage = () => {
         </div>
         <div className="space-y-2 flex flex-col justify-start border-b-2 py-2">
           <h2 className="text-start text-2xl">New User</h2>
-          <Link href="/auth/signup">
+          <Link href="/auth/signup" className="text-start">
             <Button size="small" color="secondary">
               <BorderColorIcon className="mr-2" />
               SIGN UP

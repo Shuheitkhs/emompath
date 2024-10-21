@@ -232,17 +232,19 @@ const EmomEditPage = () => {
 
   return (
     <div className="my-5">
-      <div className="flex justify-center space-x-2 mb-5">
-        <Link href="/emoms">
-          <Button size="medium" color="danger">
-            Back to EMOM List{" "}
-          </Button>
-        </Link>
-        <Link href="/emoms/create">
-          <Button size="medium" color="primary">
-            Create New EMOM
-          </Button>
-        </Link>
+      <div className="mb-5">
+        <div>
+          <Link href="/emoms">
+            <Button size="medium" color="danger">
+              Back to EMOM List
+            </Button>
+          </Link>
+          <Link href="/emoms/create">
+            <Button size="medium" color="primary">
+              Create New EMOM
+            </Button>
+          </Link>
+        </div>
       </div>
       <div>
         <div className="flex justify-center">
@@ -283,7 +285,7 @@ const EmomEditPage = () => {
           size="large"
           color="primary"
           onClick={handleSaveEmom}
-          disabled={isSaving} // ローディング状態でボタンを無効化
+          disabled={isSaving}
         >
           {isSaving ? "Saving..." : "Save EMOM"}
         </Button>

@@ -307,7 +307,7 @@ const CreatePage = () => {
             size="small"
             color="primary"
             onClick={handleSubmit}
-            disabled={isSubmitting} // 送信中はボタンを無効化
+            disabled={isSubmitting}
           >
             {isSubmitting ? "Submitting..." : "Start EMOM"}
           </Button>

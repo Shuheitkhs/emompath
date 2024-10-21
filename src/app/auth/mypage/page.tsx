@@ -62,25 +62,33 @@ const MypagePage = () => {
 
   return (
     <div className="flex flex-col my-5">
-      <div className="space-y-4">
-        <Link href="/emoms">
-          <Button size="large" color="secondary">
-            EMOM List
+      <div>
+        <div className="my-2">
+          <Link href="/emoms">
+            <Button size="large" color="secondary">
+              EMOM List
+            </Button>
+          </Link>
+        </div>
+        <div className="my-2">
+          <Button size="large" color="danger" onClick={handleLogout}>
+            Logout
           </Button>
-        </Link>
-        <Button size="large" color="danger" onClick={handleLogout}>
-          Logout
-        </Button>
-        <Link href="/auth/mypage/email">
-          <Button size="large" color="danger">
-            Change Email
-          </Button>
-        </Link>
-        <Link href="/auth/mypage/password">
-          <Button size="large" color="danger">
-            Change Password
-          </Button>
-        </Link>
+        </div>
+        <div className="my-2">
+          <Link href="/auth/mypage/email">
+            <Button size="large" color="danger">
+              Change Email
+            </Button>
+          </Link>
+        </div>
+        <div className="my-2">
+          <Link href="/auth/mypage/password">
+            <Button size="large" color="danger">
+              Change Password
+            </Button>
+          </Link>
+        </div>
       </div>
       <div>
         <div className="my-5">

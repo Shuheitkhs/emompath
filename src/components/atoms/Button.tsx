@@ -17,6 +17,7 @@ export type ButtonProps = {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children: React.ReactNode;
   disabled?: React.ReactNode;
+  className?: string;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -24,6 +25,7 @@ const Button: React.FC<ButtonProps> = ({
   color = "primary",
   onClick,
   children,
+  className,
 }) => {
   let sizeClass = "";
   switch (size) {
@@ -66,7 +68,8 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className={`text-center rounded ${sizeClass} ${colorClass}`}
+      className={`text-center rounded 
+         ${sizeClass} ${colorClass} ${className}`}
       onClick={onClick}
     >
       {children}
