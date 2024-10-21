@@ -294,8 +294,8 @@ const CreatePage = () => {
         </div>
         {/* ボタンの配置 */}
         <div className="flex justify-center space-x-3">
-          <Link href="/emoms">
-            <Button size="small" color="danger">
+          <Link href="/emoms" className="block">
+            <Button size="normal" color="danger">
               Back to EMOM List
             </Button>
           </Link>
