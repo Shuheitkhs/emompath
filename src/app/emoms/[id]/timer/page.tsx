@@ -172,11 +172,11 @@ const TimerPage = () => {
   return (
     <div className="my-5">
       <div>
-        <Button size="large" color="danger">
-          <Link href="/emoms" className="block">
+        <Link href="/emoms" className="block">
+          <Button size="large" color="danger">
             Back to EMOM List
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </div>
       <div>
         <div className="flex justify-center my-5">

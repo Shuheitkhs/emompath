@@ -233,12 +233,16 @@ const EmomEditPage = () => {
   return (
     <div className="my-5">
       <div className="flex justify-center space-x-2 mb-5">
-        <Button size="medium" color="danger">
-          <Link href="/emoms">Back to EMOM List</Link>
-        </Button>
-        <Button size="medium" color="primary">
-          <Link href="/emoms/create">Create New EMOM</Link>
-        </Button>
+        <Link href="/emoms">
+          <Button size="medium" color="danger">
+            Back to EMOM List{" "}
+          </Button>
+        </Link>
+        <Link href="/emoms/create">
+          <Button size="medium" color="primary">
+            Create New EMOM
+          </Button>
+        </Link>
       </div>
       <div>
         <div className="flex justify-center">

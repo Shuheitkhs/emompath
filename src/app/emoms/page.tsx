@@ -55,11 +55,11 @@ const EmomListPage = () => {
         <h2 className="text-3xl my-5">EMOM List</h2>
       </div>
       <div className="mb-5 flex justify-center">
-        <Button size="large" color="secondary">
-          <Link href="/emoms/create" className="w-full ">
+        <Link href="/emoms/create" className="w-full ">
+          <Button size="large" color="secondary">
             Create New EMOM
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </div>
 
       {/* EMOMリストを動的に生成 */}

@@ -1,5 +1,3 @@
-// src/pages/auth/signup.tsx
-
 "use client";
 
 import { useState } from "react";
@@ -9,7 +7,6 @@ import Label from "@/components/atoms/Label";
 import BorderLabel from "@/components/atoms/BorderLabel";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import { z } from "zod";
-// import { supabaseClient } from "@/lib/supabaseClient"; // Supabaseクライアントのインポート
 import { useRouter } from "next/navigation";
 
 // フロントエンド側でのメールアドレスとパスワードのバリデーション

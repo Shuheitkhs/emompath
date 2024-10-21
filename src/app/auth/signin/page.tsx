@@ -8,7 +8,6 @@ import Button from "@/components/atoms/Button";
 import GoogleIcon from "@mui/icons-material/Google";
 import Label from "@/components/atoms/Label";
 import Input from "@/components/atoms/Input";
-import BorderLabel from "@/components/atoms/BorderLabel";
 import LoginIcon from "@mui/icons-material/Login";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Link from "next/link";
@@ -213,18 +212,15 @@ const SignInPage = () => {
               )}
             </p>
           </div>
-          <div className="flex justify-start">
-            <BorderLabel href="">Forgot Password?</BorderLabel>
-          </div>
         </div>
         <div className="space-y-2 flex flex-col justify-start border-b-2 py-2">
           <h2 className="text-start text-2xl">New User</h2>
-          <Button size="small" color="secondary">
-            <Link href="/auth/signup">
+          <Link href="/auth/signup">
+            <Button size="small" color="secondary">
               <BorderColorIcon className="mr-2" />
               SIGN UP
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

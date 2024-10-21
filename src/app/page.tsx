@@ -49,13 +49,13 @@ const HomePage = () => {
         <div>
           <p className="mb-4">こんにちは!!</p> {/* userが存在する場合 */}
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded m-2"
+            className="bg-primary text-white px-4 py-2 rounded m-2"
             onClick={() => router.push("/emoms")}
           >
             EMOM一覧を見る
           </button>
           <button
-            className="bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded m-2"
+            className="bg-secondary text-white px-4 py-2 rounded m-2"
             onClick={() => router.push("/emoms/create")}
           >
             新しいEMOMを作成
@@ -65,7 +65,7 @@ const HomePage = () => {
         <div>
           <p className="mb-4">EMOMの管理にはログインが必要です。</p>
           <button
-            className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded"
+            className="bg-primary text-white px-4 py-2 rounded"
             onClick={() => router.push("/auth/signin")}
           >
             ログイン

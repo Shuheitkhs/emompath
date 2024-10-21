@@ -294,9 +294,12 @@ const CreatePage = () => {
         </div>
         {/* ボタンの配置 */}
         <div className="flex justify-center space-x-3">
-          <Button size="small" color="danger">
-            <Link href="/emoms">Back to EMOM List</Link>
-          </Button>
+          <Link href="/emoms">
+            <Button size="small" color="danger">
+              Back to EMOM List
+            </Button>
+          </Link>
+
           <Button size="small" color="secondary" onClick={handleNewExercise}>
             Add New Exercise
           </Button>

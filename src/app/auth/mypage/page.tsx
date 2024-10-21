@@ -1,5 +1,5 @@
 /** mypage
- * ここから登録情報の変更と、アカウントの削除
+ * 登録情報の変更と、アカウントの削除
  */
 
 "use client";
@@ -63,18 +63,24 @@ const MypagePage = () => {
   return (
     <div className="flex flex-col my-5">
       <div className="space-y-4">
-        <Button size="large" color="secondary">
-          <Link href="/emoms">EMOM List</Link>
-        </Button>
+        <Link href="/emoms">
+          <Button size="large" color="secondary">
+            EMOM List
+          </Button>
+        </Link>
         <Button size="large" color="danger" onClick={handleLogout}>
           Logout
         </Button>
-        <Button size="large" color="danger">
-          <Link href="/auth/mypage/email">Change Email</Link>
-        </Button>
-        <Button size="large" color="danger">
-          <Link href="/auth/mypage/password">Change Password</Link>
-        </Button>
+        <Link href="/auth/mypage/email">
+          <Button size="large" color="danger">
+            Change Email
+          </Button>
+        </Link>
+        <Link href="/auth/mypage/password">
+          <Button size="large" color="danger">
+            Change Password
+          </Button>
+        </Link>
       </div>
       <div>
         <div className="my-5">

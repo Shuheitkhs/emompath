@@ -66,7 +66,7 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className={`text-center block rounded ${sizeClass} ${colorClass}`}
+      className={`text-center rounded ${sizeClass} ${colorClass}`}
       onClick={onClick}
     >
       {children}
