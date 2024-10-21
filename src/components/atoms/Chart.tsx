@@ -38,11 +38,6 @@ interface ChartProps {
 }
 
 const Chart: React.FC<ChartProps> = ({ seriesData, xLabels }) => {
-  // seriesDataが空の場合のエラーチェック
-  if (seriesData.length === 0) {
-    return <div>No data available</div>;
-  }
-
   const chartRef = useRef<HTMLDivElement>(null);
   const [chartSize, setChartSize] = useState<{
     width: number;
@@ -80,6 +75,11 @@ const Chart: React.FC<ChartProps> = ({ seriesData, xLabels }) => {
       resizeObserver.disconnect();
     };
   }, []);
+
+  // seriesDataが空の場合のエラーチェック
+  if (seriesData.length === 0) {
+    return <div>No data available</div>;
+  }
 
   return (
     <div ref={chartRef} className="w-full h-64 md:h-96">

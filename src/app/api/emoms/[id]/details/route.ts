@@ -68,7 +68,7 @@ export async function GET(
       .select("*")
       .in("exercise_id", exerciseIds)
       .order("completed_at", { ascending: true })
-      .limit(15);
+      .limit(45);
 
     if (historiesError) {
       return NextResponse.json(
