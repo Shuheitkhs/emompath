@@ -9,7 +9,7 @@ import Label from "@/components/atoms/Label";
 import BorderLabel from "@/components/atoms/BorderLabel";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import { z } from "zod";
-import { supabaseClient } from "@/lib/supabaseClient"; // Supabaseクライアントのインポート
+// import { supabaseClient } from "@/lib/supabaseClient"; // Supabaseクライアントのインポート
 import { useRouter } from "next/navigation";
 
 // フロントエンド側でのメールアドレスとパスワードのバリデーション
@@ -56,13 +56,27 @@ const SignUpPage = () => {
     } else {
       setErrors({});
       try {
-        const { error } = await supabaseClient.auth.signUp({
-          email,
-          password,
-        });
+        // const { error } = await supabaseClient.auth.signUp({
+        //   email,
+        //   password,
+        // });
 
-        if (error) {
-          setErrors({ apiError: error.message });
+        // if (error) {
+        //   setErrors({ apiError: error.message });
+        // } else {
+        //   alert("サインアップに成功しました！メールをご確認ください。");
+        //   router.push("/auth/signin");
+        // }
+        const res = await fetch("/api/auth/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          setErrors({ apiError: data.error });
         } else {
           alert("サインアップに成功しました！メールをご確認ください。");
           router.push("/auth/signin");

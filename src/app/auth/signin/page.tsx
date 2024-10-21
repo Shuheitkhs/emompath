@@ -14,7 +14,7 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Link from "next/link";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabaseClient";
+// import { supabase } from "@/lib/supabaseClient";
 
 // フロントエンド側でのメールアドレスとパスワードのバリデーション
 const schema = z.object({
@@ -118,30 +118,29 @@ const SignInPage = () => {
 
   const signinWithGoogle = async () => {
     // Googleサインインの処理・クライアントサイドで処理
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: process.env.NEXT_PUBLIC_REDIRECT_URL,
-      },
-    });
-    if (error) {
-      console.error("Error signing in with Google:", error.message);
-    }
-    // 307エラーが出るので、一旦API経由せずに実装
-    // try {
-    //   const res = await fetch("/api/auth/signin-google", {
-    //     method: "POST",
-    //   });
-    //   if (res.ok) {
-    //     const data = await res.json();
-    //     window.location.href = data.url;
-    //   } else {
-    //     const errorData = await res.json();
-    //     setErrors({ apiError: errorData.error });
-    //   }
-    // } catch (error) {
-    //   setErrors({ apiError: "An unexpected error occurred." });
+    // const { error } = await supabase.auth.signInWithOAuth({
+    //   provider: "google",
+    //   options: {
+    //     redirectTo: process.env.NEXT_PUBLIC_REDIRECT_URL,
+    //   },
+    // });
+    // if (error) {
+    //   console.error("Error signing in with Google:", error.message);
     // }
+    // 307エラーが出るので、一旦API経由せずに実装
+    try {
+      const res = await fetch("/api/auth/signin-google", {
+        method: "GET",
+      });
+      const data = await res.json();
+      if (res.ok) {
+        window.location.href = data.redirect_url;
+      } else {
+        setErrors({ apiError: data.error });
+      }
+    } catch (error) {
+      setErrors({ apiError: "An unexpected error occurred." });
+    }
   };
 
   return (

@@ -29,10 +29,10 @@ export async function POST(request: Request) {
     }
 
     // ユーザー作成
-    const { data, error } = await supabaseAdmin.auth.admin.createUser({
+    const { data, error } = await supabaseAdmin.auth.signUp({
       email,
       password,
-      email_confirm: false,
+      // email_confirm: false,
     });
 
     if (error) {
