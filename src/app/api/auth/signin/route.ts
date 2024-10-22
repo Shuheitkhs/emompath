@@ -29,16 +29,13 @@ export async function POST(request: Request) {
     );
   }
 
-  // API側でリダイレクト
-  return NextResponse.redirect(new URL("/emoms", request.url));
-
   // サインインに成功した場合、セッション情報をクッキーに保存
-  // const response = NextResponse.json({ message: "Signed in successfully" });
-  // response.headers.set(
-  //   "Set-Cookie",
-  //   `supabase-auth-token=${data.session.access_token}; Path=/; HttpOnly; Secure; SameSite=Strict;`
-  // );
+  const response = NextResponse.json({ message: "Signed in successfully" });
+  response.headers.set(
+    "Set-Cookie",
+    `supabase-auth-token=${data.session.access_token}; Path=/; HttpOnly; Secure; SameSite=Strict;`
+  );
 
   // 認証テスト
-  // return response;
+  return response;
 }
