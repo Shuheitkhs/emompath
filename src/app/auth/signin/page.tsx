@@ -103,6 +103,7 @@ const SignInPage = () => {
 
         if (res.ok) {
           // サインイン成功
+          console.log("サインイン成功");
           router.push("/emoms"); // EMOM Listにリダイレクト
         } else {
           // サインイン失敗
