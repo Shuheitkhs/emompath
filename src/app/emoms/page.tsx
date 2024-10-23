@@ -67,7 +67,7 @@ const EmomListPage = () => {
         return (
           <div
             key={emom.id}
-            className="grid grid-cols-3 gap-5 border rounded text-xl p-3 my-3 font-bold"
+            className="grid grid-cols-3 gap-5 border rounded text-sm sm:text-xl p-3 my-3 font-bold"
           >
             {/* EMOM名とセット数の表示 */}
             <div className="col-span-2">
