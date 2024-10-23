@@ -2,7 +2,7 @@
  *  サービスの簡単な紹介と、各種サインイン
  */
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Chart from "@/components/atoms/Chart";
 import Button from "@/components/atoms/Button";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -14,6 +14,7 @@ import Link from "next/link";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
+import { Session } from "@supabase/supabase-js"; // Session 型をインポート
 
 // フロントエンド側でのメールアドレスとパスワードのバリデーション
 const schema = z.object({
@@ -49,6 +50,8 @@ const xLabels = [
 
 const SignInPage = () => {
   const [email, setEmail] = useState("");
+  const session = useState<Session | null>(null); // 型を指定
+
   const [Password, setPassword] = useState("");
   // エラーを種類によって出し分け
   const [errors, setErrors] = useState<{
@@ -57,6 +60,13 @@ const SignInPage = () => {
     apiError?: string;
   }>({});
   const router = useRouter();
+
+  // セッションチェックとリダイレクト
+  useEffect(() => {
+    if (session) {
+      router.push("/emoms");
+    }
+  }, [session, router]);
 
   // デモデータのラベル設定
   const seriesData = [
