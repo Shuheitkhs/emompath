@@ -134,6 +134,7 @@ const SignInPage = () => {
           console.log("サインイン成功");
           await supabase.auth.getSession().then(() => {
             router.replace("/emoms");
+            console.log("mail/passのリダイレクト");
           });
         }
       } catch (error) {
