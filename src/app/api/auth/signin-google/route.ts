@@ -13,7 +13,7 @@ export async function GET() {
     options: {
       // TODO: 公式リファレンスでは独自実装したRoute Handlerのエンドポイントを指定している
       // https://supabase.com/docs/guides/auth/social-login/auth-google
-      redirectTo: `http://localhost:3000/api/auth/callback`,
+      redirectTo: `https://www.emompath.com/api/auth/callback`,
     },
   });
 
