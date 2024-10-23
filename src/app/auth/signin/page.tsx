@@ -13,6 +13,7 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Link from "next/link";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabaseClient";
 
 // フロントエンド側でのメールアドレスとパスワードのバリデーション
 const schema = z.object({
@@ -85,9 +86,9 @@ const SignInPage = () => {
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     // バリデーション
-    const result = schema.safeParse({ email, password }); // 修正: Password -> password
+    const result = schema.safeParse({ email, password });
     if (!result.success) {
-      // エラーメッセージを設定
+      // バリデーションエラーの処理
       const fieldErrors: { email?: string; password?: string } = {};
       result.error.errors.forEach((err) => {
         if (err.path.includes("email")) {
@@ -100,25 +101,17 @@ const SignInPage = () => {
       setErrors(fieldErrors);
     } else {
       setErrors({});
-      // サインイン処理
-      try {
-        const res = await fetch("/api/auth/signin", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email, password: password }), // 修正: Password -> password
-        });
+      // Supabaseクライアントを使用してサインイン
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-        if (res.ok) {
-          // サインイン成功
-          console.log("サインイン成功");
-          router.push("/emoms"); // EMOM Listにリダイレクト
-        } else {
-          // サインイン失敗
-          const errorData = await res.json();
-          setErrors({ apiError: errorData.error });
-        }
-      } catch (error) {
-        setErrors({ apiError: "An unexpected error occurred." }); //エラー表示
+      if (error) {
+        setErrors({ apiError: error.message });
+      } else {
+        console.log("サインイン成功");
+        router.push("/emoms"); // EMOM Listにリダイレクト
       }
     }
   };
