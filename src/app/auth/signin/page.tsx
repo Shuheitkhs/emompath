@@ -13,7 +13,7 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Link from "next/link";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-// import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "@/lib/supabaseClient";
 
 // フロントエンド側でのメールアドレスとパスワードのバリデーション
 const schema = z.object({
@@ -102,71 +102,71 @@ const SignInPage = () => {
     } else {
       setErrors({});
       // 以降API
-      try {
-        const res = await fetch("/api/auth/signin", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email, password: Password }),
-        });
-
-        if (res.ok) {
-          // サインイン成功
-          console.log("サインイン成功");
-          router.push("/emoms"); // EMOM Listにリダイレクト
-        } else {
-          // サインイン失敗
-          const errorData = await res.json();
-          setErrors({ apiError: errorData.error });
-        }
-      } catch (error) {
-        setErrors({ apiError: "An unexpected error occurred." }); //エラー表示
-      }
       // try {
-      //   const { error } = await supabase.auth.signInWithPassword({
-      //     email: email,
-      //     password: Password,
+      //   const res = await fetch("/api/auth/signin", {
+      //     method: "POST",
+      //     headers: { "Content-Type": "application/json" },
+      //     body: JSON.stringify({ email: email, password: Password }),
       //   });
 
-      //   if (error) {
-      //     // サインイン失敗
-      //     setErrors({ apiError: error.message });
-      //   } else {
+      //   if (res.ok) {
+      //     // サインイン成功
       //     console.log("サインイン成功");
-      //     router.push("/emoms");
+      //     router.push("/emoms"); // EMOM Listにリダイレクト
+      //   } else {
+      //     // サインイン失敗
+      //     const errorData = await res.json();
+      //     setErrors({ apiError: errorData.error });
       //   }
       // } catch (error) {
-      //   if (error instanceof Error) {
-      //     setErrors({ apiError: "予期せぬエラーが発生しました。" });
-      //   }
+      //   setErrors({ apiError: "An unexpected error occurred." }); //エラー表示
       // }
+      try {
+        const { error } = await supabase.auth.signInWithPassword({
+          email: email,
+          password: Password,
+        });
+
+        if (error) {
+          // サインイン失敗
+          setErrors({ apiError: error.message });
+        } else {
+          console.log("サインイン成功");
+          router.push("/emoms");
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          setErrors({ apiError: "予期せぬエラーが発生しました。" });
+        }
+      }
     }
   };
 
   const signinWithGoogle = async () => {
     // Googleサインインの処理・クライアントサイドで処理
-    // const { error } = await supabase.auth.signInWithOAuth({
-    //   provider: "google",
-    //   options: {
-    //     redirectTo: process.env.NEXT_PUBLIC_REDIRECT_URL,
-    //   },
-    // });
-    // if (error) {
-    //   console.error("Error signing in with Google:", error.message);
-    // }
-    // 307エラーが出るので、一旦API経由せずに実装
-    try {
-      const res = await fetch("/api/auth/signin-google", {
-        method: "GET",
-      });
-      const data = await res.json();
-      if (res.ok) {
-        window.location.href = data.redirect_url;
-      } else {
-        setErrors({ apiError: data.error });
-      }
-    } catch (error) {
-      setErrors({ apiError: "An unexpected error occurred." });
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: process.env.NEXT_PUBLIC_REDIRECT_URL,
+      },
+    });
+    if (error) {
+      console.error("Error signing in with Google:", error.message);
     }
+    // 307エラーが出るので、一旦API経由せずに実装
+    // try {
+    //   const res = await fetch("/api/auth/signin-google", {
+    //     method: "GET",
+    //   });
+    //   const data = await res.json();
+    //   if (res.ok) {
+    //     window.location.href = data.redirect_url;
+    //   } else {
+    //     setErrors({ apiError: data.error });
+    //   }
+    // } catch (error) {
+    //   setErrors({ apiError: "An unexpected error occurred." });
+    // }
   };
 
   return (
