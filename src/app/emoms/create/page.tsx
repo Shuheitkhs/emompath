@@ -3,7 +3,6 @@
 "use client";
 import Button from "@/components/atoms/Button";
 import { useState } from "react";
-import Link from "next/link";
 import Exercise from "@/components/organisms/Exercise";
 import EMOMEdit from "@/components/organisms/EmomEdit";
 import { useRouter } from "next/navigation";
@@ -228,6 +227,10 @@ const CreatePage = () => {
     }
   };
 
+  const handleBack = () => {
+    router.push("/emoms");
+  };
+
   return (
     <div className="my-5">
       <div>
@@ -294,11 +297,9 @@ const CreatePage = () => {
         </div>
         {/* ボタンの配置 */}
         <div className="flex justify-center space-x-3">
-          <Link href="/emoms" className="block">
-            <Button size="normal" color="danger">
-              Back to EMOM List
-            </Button>
-          </Link>
+          <Button size="small" color="danger" onClick={handleBack}>
+            Back to EMOM List
+          </Button>
 
           <Button size="small" color="secondary" onClick={handleNewExercise}>
             Add New Exercise
