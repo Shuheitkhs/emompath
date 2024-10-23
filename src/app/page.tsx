@@ -15,6 +15,7 @@ const HomePage = () => {
   const [session, setSession] = useState<Session | null>(null); // 型を指定
   const router = useRouter();
 
+  console.log("HomePage");
   useEffect(() => {
     const fetchSession = async () => {
       const { data, error } = await supabase.auth.getSession();
@@ -30,7 +31,7 @@ const HomePage = () => {
         // セッションが取得できなかった場合
         router.push("/auth/signin");
       } else {
-        console.log("/emomsへ遷移")
+        console.log("/emomsへ遷移");
         // セッションが取得できた場合
         setSession(data.session);
         router.push("/emoms");
