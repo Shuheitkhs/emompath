@@ -148,29 +148,29 @@ const SignInPage = () => {
   const signinWithGoogle = async () => {
     console.log("SigninPage");
     // Googleサインインの処理・クライアントサイドで処理
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: process.env.NEXT_PUBLIC_REDIRECT_URL,
-      },
-    });
-    if (error) {
-      console.error("Error signing in with Google:", error.message);
-    }
-    // 307エラーが出るので、一旦API経由せずに実装
-    // try {
-    //   const res = await fetch("/api/auth/signin-google", {
-    //     method: "GET",
-    //   });
-    //   const data = await res.json();
-    //   if (res.ok) {
-    //     window.location.href = data.redirect_url;
-    //   } else {
-    //     setErrors({ apiError: data.error });
-    //   }
-    // } catch (error) {
-    //   setErrors({ apiError: "An unexpected error occurred." });
+    // const { error } = await supabase.auth.signInWithOAuth({
+    //   provider: "google",
+    //   options: {
+    //     redirectTo: process.env.NEXT_PUBLIC_REDIRECT_URL,
+    //   },
+    // });
+    // if (error) {
+    //   console.error("Error signing in with Google:", error.message);
     // }
+    // 307エラーが出るので、一旦API経由せずに実装
+    try {
+      const res = await fetch("/api/auth/signin-google", {
+        method: "GET",
+      });
+      const data = await res.json();
+      if (res.ok) {
+        window.location.href = data.redirect_url;
+      } else {
+        setErrors({ apiError: data.error });
+      }
+    } catch (error) {
+      setErrors({ apiError: "An unexpected error occurred." });
+    }
   };
 
   return (
