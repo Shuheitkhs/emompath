@@ -2,7 +2,7 @@
  *  サービスの簡単な紹介と、各種サインイン
  */
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Chart from "@/components/atoms/Chart";
 import Button from "@/components/atoms/Button";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -13,8 +13,7 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Link from "next/link";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabaseClient";
-import { Session } from "@supabase/supabase-js"; // Session 型をインポート
+// import { supabase } from "@/lib/supabaseClient";
 
 // フロントエンド側でのメールアドレスとパスワードのバリデーション
 const schema = z.object({
@@ -50,7 +49,6 @@ const xLabels = [
 
 const SignInPage = () => {
   const [email, setEmail] = useState("");
-  const session = useState<Session | null>(null); // 型を指定
 
   const [Password, setPassword] = useState("");
   // エラーを種類によって出し分け
@@ -62,11 +60,11 @@ const SignInPage = () => {
   const router = useRouter();
 
   // セッションチェックとリダイレクト
-  useEffect(() => {
-    if (session) {
-      router.push("/emoms");
-    }
-  }, [session, router]);
+  // useEffect(() => {
+  //   if (session) {
+  //     router.push("/emoms");
+  //   }
+  // }, [session, router]);
 
   // デモデータのラベル設定
   const seriesData = [
@@ -128,29 +126,29 @@ const SignInPage = () => {
 
   const signinWithGoogle = async () => {
     // Googleサインインの処理・クライアントサイドで処理
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: process.env.NEXT_PUBLIC_REDIRECT_URL,
-      },
-    });
-    if (error) {
-      console.error("Error signing in with Google:", error.message);
-    }
-    // 307エラーが出るので、一旦API経由せずに実装
-    // try {
-    //   const res = await fetch("/api/auth/signin-google", {
-    //     method: "GET",
-    //   });
-    //   const data = await res.json();
-    //   if (res.ok) {
-    //     window.location.href = data.redirect_url;
-    //   } else {
-    //     setErrors({ apiError: data.error });
-    //   }
-    // } catch (error) {
-    //   setErrors({ apiError: "An unexpected error occurred." });
+    // const { error } = await supabase.auth.signInWithOAuth({
+    //   provider: "google",
+    //   options: {
+    //     redirectTo: process.env.NEXT_PUBLIC_REDIRECT_URL,
+    //   },
+    // });
+    // if (error) {
+    //   console.error("Error signing in with Google:", error.message);
     // }
+    // 307エラーが出るので、一旦API経由せずに実装
+    try {
+      const res = await fetch("/api/auth/signin-google", {
+        method: "GET",
+      });
+      const data = await res.json();
+      if (res.ok) {
+        window.location.href = data.redirect_url;
+      } else {
+        setErrors({ apiError: data.error });
+      }
+    } catch (error) {
+      setErrors({ apiError: "An unexpected error occurred." });
+    }
   };
 
   return (
