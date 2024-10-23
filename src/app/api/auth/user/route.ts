@@ -3,7 +3,8 @@ import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
 export async function GET() {
-  const supabase = createRouteHandlerClient({ cookies: () => cookies() });
+  const cookiesStore = cookies();
+  const supabase = createRouteHandlerClient({ cookies: () => cookiesStore });
 
   const {
     data: { session },
