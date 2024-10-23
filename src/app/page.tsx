@@ -18,15 +18,19 @@ const HomePage = () => {
   useEffect(() => {
     const fetchSession = async () => {
       const { data, error } = await supabase.auth.getSession();
+      console.log("data", data);
       // エラーがある場合のみログを出力
       if (error) {
         console.error("Error fetching session:", error.message);
       }
 
       if (error || !data.session) {
+        console.log("session", data.session);
+        console.log("error", error);
         // セッションが取得できなかった場合
         router.push("/auth/signin");
       } else {
+        console.log("/emomsへ遷移")
         // セッションが取得できた場合
         setSession(data.session);
         router.push("/emoms");
