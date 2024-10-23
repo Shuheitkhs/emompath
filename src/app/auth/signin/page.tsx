@@ -13,7 +13,6 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Link from "next/link";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabaseClient";
 
 // フロントエンド側でのメールアドレスとパスワードのバリデーション
 const schema = z.object({
@@ -50,7 +49,7 @@ const xLabels = [
 const SignInPage = () => {
   const [email, setEmail] = useState("");
 
-  const [Password, setPassword] = useState("");
+  const [password, setPassword] = useState(""); // 小文字に変更
   // エラーを種類によって出し分け
   const [errors, setErrors] = useState<{
     email?: string;
@@ -86,7 +85,7 @@ const SignInPage = () => {
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     // バリデーション
-    const result = schema.safeParse({ email: email, password: Password });
+    const result = schema.safeParse({ email, password }); // 修正: Password -> password
     if (!result.success) {
       // エラーメッセージを設定
       const fieldErrors: { email?: string; password?: string } = {};
@@ -101,63 +100,31 @@ const SignInPage = () => {
       setErrors(fieldErrors);
     } else {
       setErrors({});
-      // 以降API
-      // try {
-      //   const res = await fetch("/api/auth/signin", {
-      //     method: "POST",
-      //     headers: { "Content-Type": "application/json" },
-      //     body: JSON.stringify({ email: email, password: Password }),
-      //   });
-
-      //   if (res.ok) {
-      //     // サインイン成功
-      //     console.log("サインイン成功");
-      //     router.push("/emoms"); // EMOM Listにリダイレクト
-      //   } else {
-      //     // サインイン失敗
-      //     const errorData = await res.json();
-      //     setErrors({ apiError: errorData.error });
-      //   }
-      // } catch (error) {
-      //   setErrors({ apiError: "An unexpected error occurred." }); //エラー表示
-      // }
+      // サインイン処理
       try {
-        const { error } = await supabase.auth.signInWithPassword({
-          email: email,
-          password: Password,
+        const res = await fetch("/api/auth/signin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email, password: password }), // 修正: Password -> password
         });
 
-        if (error) {
-          // サインイン失敗
-          setErrors({ apiError: error.message });
-        } else {
+        if (res.ok) {
+          // サインイン成功
           console.log("サインイン成功");
-          await supabase.auth.getSession().then(() => {
-            router.replace("/emoms");
-            console.log("mail/passのリダイレクト");
-          });
+          router.push("/emoms"); // EMOM Listにリダイレクト
+        } else {
+          // サインイン失敗
+          const errorData = await res.json();
+          setErrors({ apiError: errorData.error });
         }
       } catch (error) {
-        if (error instanceof Error) {
-          setErrors({ apiError: "予期せぬエラーが発生しました。" });
-        }
+        setErrors({ apiError: "An unexpected error occurred." }); //エラー表示
       }
     }
   };
 
   const signinWithGoogle = async () => {
     console.log("SigninPage");
-    // Googleサインインの処理・クライアントサイドで処理
-    // const { error } = await supabase.auth.signInWithOAuth({
-    //   provider: "google",
-    //   options: {
-    //     redirectTo: process.env.NEXT_PUBLIC_REDIRECT_URL,
-    //   },
-    // });
-    // if (error) {
-    //   console.error("Error signing in with Google:", error.message);
-    // }
-    // 307エラーが出るので、一旦API経由せずに実装
     try {
       const res = await fetch("/api/auth/signin-google", {
         method: "GET",
@@ -229,7 +196,7 @@ const SignInPage = () => {
             size="large"
             type="password"
             onChange={inputPassword}
-            value={Password}
+            value={password}
           />
           {errors.password && <p className="text-red-500">{errors.password}</p>}
           <Button size="small" color="secondary" onClick={handleSignIn}>
