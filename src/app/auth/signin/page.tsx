@@ -132,7 +132,9 @@ const SignInPage = () => {
           setErrors({ apiError: error.message });
         } else {
           console.log("サインイン成功");
-          router.push("/emoms");
+          await supabase.auth.getSession().then(() => {
+            router.replace("/emoms");
+          });
         }
       } catch (error) {
         if (error instanceof Error) {
