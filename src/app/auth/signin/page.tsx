@@ -146,6 +146,7 @@ const SignInPage = () => {
   };
 
   const signinWithGoogle = async () => {
+    console.log("SigninPage");
     // Googleサインインの処理・クライアントサイドで処理
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",

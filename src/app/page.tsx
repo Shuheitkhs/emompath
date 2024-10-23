@@ -15,9 +15,9 @@ const HomePage = () => {
   const [session, setSession] = useState<Session | null>(null); // 型を指定
   const router = useRouter();
 
-  console.log("HomePage");
   useEffect(() => {
     const fetchSession = async () => {
+      console.log("HomePage");
       const { data, error } = await supabase.auth.getSession();
       console.log("data", data);
       // エラーがある場合のみログを出力
