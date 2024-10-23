@@ -142,7 +142,9 @@ const SignInPage = () => {
       });
       const data = await res.json();
       if (res.ok) {
-        window.location.href = data.redirect_url;
+        console.log("google認証OK");
+        // window.location.href = data.redirect_url;
+        router.push("/emoms"); // EMOM Listにリダイレクト
       } else {
         setErrors({ apiError: data.error });
       }
