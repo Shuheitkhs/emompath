@@ -13,7 +13,7 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Link from "next/link";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabaseClient";
+// import { supabase } from "@/lib/supabaseClient";
 
 // フロントエンド側でのメールアドレスとパスワードのバリデーション
 const schema = z.object({
