@@ -1,6 +1,7 @@
 /**  3秒の時点でカウントダウンを鳴らすコンポーネント */
 
 import { useEffect } from "react";
+import Head from "next/head";
 
 interface Countdown3secProps {
   remainingTime: number;
@@ -28,6 +29,9 @@ const Countdown3sec: React.FC<Countdown3secProps> = ({
 
   return (
     <div className="flex flex-col">
+      <Head>
+        <link rel="preload" href="/3sec_countdown.mp3" as="audio" />
+      </Head>
       {isReady ? (
         <>
           <div className="text-2xl font-bold">Ready</div>

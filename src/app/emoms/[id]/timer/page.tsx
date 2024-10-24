@@ -4,6 +4,8 @@ import Button from "@/components/atoms/Button";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useState, useEffect } from "react";
+import Head from "next/head";
+
 // タイマー
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 // 完了後のポップアップ
@@ -171,6 +173,10 @@ const TimerPage = () => {
 
   return (
     <div className="my-5">
+      <Head>
+        <link rel="preload" href="/gong.mp3" as="audio" />
+        <link rel="preload" href="/stop.mp3" as="audio" />
+      </Head>
       <div>
         <Link href="/emoms" className="block">
           <Button size="large" color="danger">
