@@ -132,10 +132,13 @@ const SignInPage = () => {
           setErrors({ apiError: error.message });
         } else {
           console.log("サインイン成功");
-          await supabase.auth.getSession().then(() => {
-            router.replace("/emoms");
+          const sessionData = await supabase.auth.getSession();
+          if (sessionData.data.session) {
+            await router.replace("/emoms"); // リダイレクトを待つ
             console.log("mail/passのリダイレクト");
-          });
+          } else {
+            console.error("Session not found, redirect failed.");
+          }
         }
       } catch (error) {
         if (error instanceof Error) {
