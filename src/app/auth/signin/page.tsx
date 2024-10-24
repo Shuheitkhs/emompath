@@ -12,7 +12,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Link from "next/link";
 import { z } from "zod";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 // import { supabase } from "@/lib/supabaseClient";
 
 // フロントエンド側でのメールアドレスとパスワードのバリデーション
@@ -57,7 +57,7 @@ const SignInPage = () => {
     password?: string;
     apiError?: string;
   }>({});
-  const router = useRouter();
+  // const router = useRouter();
 
   // セッションチェックとリダイレクト
   // useEffect(() => {
@@ -113,7 +113,7 @@ const SignInPage = () => {
         if (res.ok) {
           // サインイン成功
           console.log("サインイン成功");
-          router.push("/emoms"); // EMOM Listにリダイレクト
+          window.location.href = "/emoms";
         } else {
           // サインイン失敗
           const errorData = await res.json();
