@@ -50,7 +50,7 @@ const xLabels = [
 const SignInPage = () => {
   const [email, setEmail] = useState("");
 
-  const [Password, setPassword] = useState("");
+  const [password, setPassword] = useState("");
   // エラーを種類によって出し分け
   const [errors, setErrors] = useState<{
     email?: string;
@@ -85,8 +85,9 @@ const SignInPage = () => {
   // サインインのハンドリング
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
+
     // バリデーション
-    const result = schema.safeParse({ email: email, password: Password });
+    const result = schema.safeParse({ email, password });
     if (!result.success) {
       // エラーメッセージを設定
       const fieldErrors: { email?: string; password?: string } = {};
@@ -101,49 +102,25 @@ const SignInPage = () => {
       setErrors(fieldErrors);
     } else {
       setErrors({});
-      // 以降API
-      // try {
-      //   const res = await fetch("/api/auth/signin", {
-      //     method: "POST",
-      //     headers: { "Content-Type": "application/json" },
-      //     body: JSON.stringify({ email: email, password: Password }),
-      //   });
-
-      //   if (res.ok) {
-      //     // サインイン成功
-      //     console.log("サインイン成功");
-      //     router.push("/emoms"); // EMOM Listにリダイレクト
-      //   } else {
-      //     // サインイン失敗
-      //     const errorData = await res.json();
-      //     setErrors({ apiError: errorData.error });
-      //   }
-      // } catch (error) {
-      //   setErrors({ apiError: "An unexpected error occurred." }); //エラー表示
-      // }
+      // API経由でサインイン
       try {
-        const { error } = await supabase.auth.signInWithPassword({
-          email: email,
-          password: Password,
+        const res = await fetch("/api/auth/signin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email, password: password }),
         });
 
-        if (error) {
-          // サインイン失敗
-          setErrors({ apiError: error.message });
-        } else {
+        if (res.ok) {
+          // サインイン成功
           console.log("サインイン成功");
-          const sessionData = await supabase.auth.getSession();
-          if (sessionData.data.session) {
-            await router.replace("/emoms"); // リダイレクトを待つ
-            console.log("mail/passのリダイレクト");
-          } else {
-            console.error("Session not found, redirect failed.");
-          }
+          router.push("/emoms"); // EMOM Listにリダイレクト
+        } else {
+          // サインイン失敗
+          const errorData = await res.json();
+          setErrors({ apiError: errorData.error });
         }
       } catch (error) {
-        if (error instanceof Error) {
-          setErrors({ apiError: "予期せぬエラーが発生しました。" });
-        }
+        setErrors({ apiError: "予期せぬエラーが発生しました。" }); // エラー表示
       }
     }
   };
@@ -232,7 +209,7 @@ const SignInPage = () => {
             size="large"
             type="password"
             onChange={inputPassword}
-            value={Password}
+            value={password}
           />
           {errors.password && <p className="text-red-500">{errors.password}</p>}
           <Button size="small" color="secondary" onClick={handleSignIn}>

@@ -1,24 +1,22 @@
-// src/app/api/auth/signin/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
-
-// サーバーサイド専用のSupabaseクライアントを作成
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
-const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
 export async function POST(request: NextRequest) {
   try {
+    // リクエストのボディをJSONとして解析
     const { email, password } = await request.json();
 
-    // バリデーション
+    // バリデーション: メールアドレスとパスワードが存在するか確認
     if (!email || !password) {
       return NextResponse.json(
         { error: "メールアドレスとパスワードが必要です。" },
         { status: 400 }
       );
     }
+
+    // Supabaseクライアントの初期化
+    const supabase = createRouteHandlerClient({ cookies: () => cookies() });
 
     // サインイン処理
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -29,21 +27,21 @@ export async function POST(request: NextRequest) {
     // エラーハンドリング
     if (error || !data.session) {
       return NextResponse.json(
-        { error: error?.message || "Failed to sign in" },
+        { error: error?.message || "サインインに失敗しました。" },
         { status: 401 }
       );
     }
 
-    // セッション情報をクッキーに保存
-    const response = NextResponse.json({ message: "Signed in successfully" });
-    response.cookies.set("supabase-auth-token", data.session.access_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      path: "/",
-    });
+    // サインイン成功時、セッション情報はクッキーに自動的に保存されます
 
-    return response;
+    // リダイレクトURLを指定（必要に応じて変更）
+    const redirectUrl = "/emoms";
+
+    // 成功レスポンスとリダイレクト
+    return NextResponse.json(
+      { message: "サインインに成功しました。" },
+      { status: 200, headers: { Location: redirectUrl } }
+    );
   } catch (err) {
     console.error("サインインAPIエラー:", err);
     return NextResponse.json(
