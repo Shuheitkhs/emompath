@@ -1,13 +1,13 @@
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import supabaseAdmin from "@/lib/supabaseAdminClient";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 
 export async function DELETE() {
   try {
     // ユーザーのセッションを取得
     const supabase = createRouteHandlerClient({ cookies });
-
+    // 認証チェック
     const {
       data: { session },
       error,

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import supabaseAdmin from "@/lib/supabaseAdminClient"; // 管理者クライアントのインポート
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import supabaseAdmin from "@/lib/supabaseAdminClient";
 import { z } from "zod";
 
 // バリデーションスキーマ
@@ -11,8 +11,10 @@ const schema = z.object({
     .min(8, { message: "新しいパスワードは8文字以上で入力してください。" }),
 });
 
+// auth.usersの一部を変更するのでPATCHメソッド
 export async function PATCH(request: Request) {
   try {
+    // リクエストボディから現在のパスワードと新しいパスワードを取得
     const { currentPassword, newPassword } = await request.json();
 
     // 入力バリデーション
@@ -24,6 +26,7 @@ export async function PATCH(request: Request) {
           fieldErrors.newPassword = err.message;
         }
       });
+
       return NextResponse.json({ errors: fieldErrors }, { status: 400 });
     }
 
@@ -45,7 +48,7 @@ export async function PATCH(request: Request) {
 
     const userId = session.user.id;
 
-    // 現在のパスワードで再認証
+    // 現在のパスワードで再認証: パスワード変更前に確認
     const { error: reAuthError } = await supabase.auth.signInWithPassword({
       email: session.user.email!,
       password: currentPassword,
@@ -58,7 +61,7 @@ export async function PATCH(request: Request) {
       );
     }
 
-    // パスワードの更新
+    // パスワードの更新（管理者クライアントを使用）
     const { error: updateError } =
       await supabaseAdmin.auth.admin.updateUserById(userId, {
         password: newPassword,

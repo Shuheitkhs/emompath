@@ -1,8 +1,9 @@
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import supabaseAdmin from "@/lib/supabaseAdminClient";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 
+// auth.usersの一部を変更するのでPATCHメソッド
 export async function PATCH(request: Request) {
   try {
     const { email: newEmail } = await request.json();
@@ -25,7 +26,7 @@ export async function PATCH(request: Request) {
 
     // クライアントサイドからセッション情報を取得
     const supabase = createRouteHandlerClient({ cookies: () => cookies() });
-
+    // 認証チェック
     const {
       data: { session },
       error: sessionError,
@@ -40,7 +41,7 @@ export async function PATCH(request: Request) {
 
     const userId = session.user.id;
 
-    // メールアドレスの更新（管理者クライアントを使用）
+    // メールアドレスの更新（管理者クライアントを使用してセキュリティ対策）
     const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, {
       email: newEmail,
     });
@@ -48,7 +49,7 @@ export async function PATCH(request: Request) {
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
-
+    // 成功した場合
     return NextResponse.json(
       {
         message:

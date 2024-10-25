@@ -12,6 +12,8 @@ export async function GET(
 
     const supabase = createRouteHandlerClient({ cookies: () => cookies() });
 
+    // 認証チェック
+
     const {
       data: { session },
       error: sessionError,
@@ -39,7 +41,7 @@ export async function GET(
         { status: 404 }
       );
     }
-
+    // ログインユーザーとEMOMの作成者を比較してアクセス権を確認
     if (emom.user_id !== userId) {
       return NextResponse.json(
         { error: "このEMOMにアクセスする権限がありません。" },
@@ -59,10 +61,10 @@ export async function GET(
         { status: 500 }
       );
     }
-
+    // 取得したエクササイズのIDリストを作成
     const exerciseIds = exercises.map((ex) => ex.id);
 
-    // 各エクササイズの最新15件の履歴を取得
+    // 各エクササイズの最新15件(15*最大3で45)の履歴を取得
     const { data: histories, error: historiesError } = await supabaseAdmin
       .from("exercise-histories")
       .select("*")
@@ -87,7 +89,7 @@ export async function GET(
         historiesByExercise[history.exercise_id].push(history);
       }
     });
-
+    // エクササイズとそれに関連する履歴を結合したデータを作成
     const responseData = {
       emom,
       exercises: exercises.map((ex) => ({
