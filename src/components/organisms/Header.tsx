@@ -1,3 +1,4 @@
+// ヘッダーコンポーネント・セッションの有無によってMyPageを出し分ける。
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";

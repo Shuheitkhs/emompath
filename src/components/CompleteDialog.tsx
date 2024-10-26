@@ -2,7 +2,7 @@
 
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import AlertDialog from "./AlertDialog";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
@@ -19,16 +19,7 @@ const CompleteDialog: React.FC<CompleteDialogProps> = ({ emom, onUpdate }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const workoutPlans: WorkoutPlan[] = calculateNextWorkout(emom);
 
-  const hasSentRequest = useRef(false); //デプロイ前に削除
-
   useEffect(() => {
-    // ローカル環境下だとstrict modeで2回実行されるので、一旦1度に・デプロイ前に削除
-    if (hasSentRequest.current) {
-      return;
-    }
-    // リクエスト送信フラグをセット・デプロイ前に削除
-    hasSentRequest.current = true;
-
     // ダイアログが表示されたときにexercise-historiesにPOST
     const recordExerciseHistory = async () => {
       try {

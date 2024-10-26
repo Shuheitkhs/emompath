@@ -32,7 +32,6 @@ export async function POST(request: Request) {
     const { data, error } = await supabaseAdmin.auth.signUp({
       email,
       password,
-      // email_confirm: false,
     });
 
     if (error) {

@@ -12,8 +12,6 @@ import LoginIcon from "@mui/icons-material/Login";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Link from "next/link";
 import { z } from "zod";
-// import { useRouter } from "next/navigation";
-// import { supabase } from "@/lib/supabaseClient";
 
 // フロントエンド側でのメールアドレスとパスワードのバリデーション
 const schema = z.object({
@@ -57,14 +55,6 @@ const SignInPage = () => {
     password?: string;
     apiError?: string;
   }>({});
-  // const router = useRouter();
-
-  // セッションチェックとリダイレクト
-  // useEffect(() => {
-  //   if (session) {
-  //     router.push("/emoms");
-  //   }
-  // }, [session, router]);
 
   // デモデータのラベル設定
   const seriesData = [
@@ -112,8 +102,7 @@ const SignInPage = () => {
 
         if (res.ok) {
           // サインイン成功
-          console.log("サインイン成功");
-          window.location.href = "/emoms";
+          window.location.href = "/emoms"; // フルリロードでリダイレクト
         } else {
           // サインイン失敗
           const errorData = await res.json();
@@ -127,17 +116,6 @@ const SignInPage = () => {
 
   const signinWithGoogle = async () => {
     console.log("SigninPage");
-    // Googleサインインの処理・クライアントサイドで処理
-    // const { error } = await supabase.auth.signInWithOAuth({
-    //   provider: "google",
-    //   options: {
-    //     redirectTo: process.env.NEXT_PUBLIC_REDIRECT_URL,
-    //   },
-    // });
-    // if (error) {
-    //   console.error("Error signing in with Google:", error.message);
-    // }
-    // 307エラーが出るので、一旦API経由せずに実装
     try {
       const res = await fetch("/api/auth/signin-google", {
         method: "GET",

@@ -53,17 +53,6 @@ const SignUpPage = () => {
     } else {
       setErrors({});
       try {
-        // const { error } = await supabaseClient.auth.signUp({
-        //   email,
-        //   password,
-        // });
-
-        // if (error) {
-        //   setErrors({ apiError: error.message });
-        // } else {
-        //   alert("サインアップに成功しました！メールをご確認ください。");
-        //   router.push("/auth/signin");
-        // }
         const res = await fetch("/api/auth/signup", {
           method: "POST",
           headers: {

@@ -1,8 +1,4 @@
 // 次回のトレーニングを計算するロジック
-// 使用例を下部に記載
-
-// 次回のトレーニングを計算するロジック
-// 使用例を下部に記載
 
 // EMOMの型
 export interface EMOM {
@@ -32,7 +28,12 @@ export interface WorkoutPlan {
   sets: number; // 次回のセット数
 }
 
-// 次回のワークアウトを計算する関数
+/**
+ * 次回のワークアウトを計算する関数
+ * @function calculateNextWorkout
+ * @param {EMOM} currentEMOM - 現在のEMOMのデータ
+ * @returns {WorkoutPlan[]} 次回のワークアウトプランの配列
+ */
 export function calculateNextWorkout(currentEMOM: EMOM): WorkoutPlan[] {
   const increases = [1.1, 1.2, 1.3]; // ボリュームの増加率（10%、20%、30%）
   const volumeIncreases = ["10%", "20%", "30%"];
@@ -120,44 +121,3 @@ export function calculateNextWorkout(currentEMOM: EMOM): WorkoutPlan[] {
     };
   });
 }
-
-// const currentEMOM: EMOM = {
-//     id: 'emom1',
-//     name: 'Full Body Workout',
-//     ready: 60,
-//     sets: 10,
-//     exercises: [
-//       { id: 'ex1', name: 'Push Ups', reps: 10 },
-//       { id: 'ex2', name: 'Squats', reps: 15 },
-//       { id: 'ex3', name: 'Pull Ups', reps: 5 },
-//     ],
-// のように数値を渡すと、以下のように返ってくる
-// [
-//   {
-//     "volumeIncrease": "10%",
-//     "exercises": [
-//       { "id": "ex1", "name": "Push Ups", "reps": 11, "volume": 110 },
-//       { "id": "ex2", "name": "Squats", "reps": 17, "volume": 170 },
-//       { "id": "ex3", "name": "Pull Ups", "reps": 6, "volume": 60 }
-//     ],
-//     "sets": 10
-//   },
-//   {
-//     "volumeIncrease": "20%",
-//     "exercises": [
-//       { "id": "ex1", "name": "Push Ups", "reps": 12, "volume": 120 },
-//       { "id": "ex2", "name": "Squats", "reps": 18, "volume": 180 },
-//       { "id": "ex3", "name": "Pull Ups", "reps": 6, "volume": 60 }
-//     ],
-//     "sets": 11
-//   },
-//   {
-//     "volumeIncrease": "30%",
-//     "exercises": [
-//       { "id": "ex1", "name": "Push Ups", "reps": 13, "volume": 130 },
-//       { "id": "ex2", "name": "Squats", "reps": 20, "volume": 200 },
-//       { "id": "ex3", "name": "Pull Ups", "reps": 7, "volume": 70 }
-//     ],
-//     "sets": 11
-//   }
-// ]

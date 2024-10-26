@@ -1,3 +1,5 @@
+// CompleteDialogで更新する割合をクリックした後のダイアログ
+
 "use client";
 
 import Button from "./atoms/Button";

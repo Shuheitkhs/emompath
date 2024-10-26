@@ -76,7 +76,7 @@ const ExerciseHistoryChart: React.FC<ExerciseHistoryChartProps> = ({
   if (histories.length === 0)
     return <div>No history available for this exercise.</div>;
 
-  // データを最新15件順にソート
+  // データを最新順にソート
   const sortedHistories = [...histories].sort(
     (a, b) =>
       new Date(a.completed_at).getTime() - new Date(b.completed_at).getTime()
