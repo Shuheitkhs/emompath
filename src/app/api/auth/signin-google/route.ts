@@ -6,11 +6,12 @@ import { NextResponse } from "next/server";
 export async function GET() {
   const cookiesStore = cookies();
   const supabase = createRouteHandlerClient({ cookies: () => cookiesStore });
+  const baseUrl = process.env.BASE_URL;
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `https://www.emompath.com/api/auth/callback`,
+      redirectTo: `${baseUrl}/auth/callback`,
     },
   });
 
