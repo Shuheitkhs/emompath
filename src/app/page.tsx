@@ -30,7 +30,6 @@ const HomePage = () => {
         // セッションが取得できなかった場合
         router.push("/auth/signin");
       } else {
-        console.log("/emomsへ遷移");
         // セッションが取得できた場合
         setSession(data.session);
         router.push("/emoms");
