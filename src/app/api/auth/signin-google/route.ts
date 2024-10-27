@@ -11,7 +11,7 @@ export async function GET() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${baseUrl}/auth/callback`,
+      redirectTo: `${baseUrl}/api/auth/callback`,
     },
   });
 
