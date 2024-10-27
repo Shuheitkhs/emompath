@@ -46,8 +46,6 @@ const CompleteDialog: React.FC<CompleteDialogProps> = ({ emom, onUpdate }) => {
             errorData.error || "Failed to record exercise histories."
           );
         }
-
-        const data = await response.json();
       } catch (error) {
         if (error instanceof Error)
           console.error("Error recording exercise histories:", error.message);
