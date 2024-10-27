@@ -6,7 +6,6 @@ import { NextResponse } from "next/server";
 export async function GET() {
   const cookiesStore = cookies();
   const supabase = createRouteHandlerClient({ cookies: () => cookiesStore });
-  console.log("Google認証API");
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",

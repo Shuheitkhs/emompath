@@ -135,8 +135,6 @@ const CreatePage = () => {
         sets,
       };
 
-      console.log("Request payload (emom):", emomData);
-
       // `fetch` を使ってAPIにPOSTリクエスト
       const emomResponse = await fetch("/api/emoms", {
         method: "POST",
@@ -159,16 +157,12 @@ const CreatePage = () => {
         throw new Error("EMOM ID is missing.");
       }
 
-      console.log("Created EMOM ID:", emomId);
-
       // デフォルトのエクササイズの作成
       const firstExerciseData = {
         emom_id: emomId,
         name: firstExerciseName,
         reps: firstExerciseReps,
       };
-
-      console.log("Request payload (first exercise):", firstExerciseData);
 
       const firstExerciseResponse = await fetch("/api/exercises", {
         method: "POST",
@@ -183,11 +177,6 @@ const CreatePage = () => {
         throw new Error(errorData.error || "Failed to create first exercise");
       }
 
-      console.log(
-        "Created First Exercise:",
-        await firstExerciseResponse.json()
-      );
-
       // 2個目以降のexerciseの作成
       for (const exercise of exercises) {
         const exerciseData = {
@@ -195,8 +184,6 @@ const CreatePage = () => {
           name: exercise.name,
           reps: exercise.reps,
         };
-
-        console.log("Request payload (exercise):", exerciseData);
 
         const exerciseResponse = await fetch("/api/exercises", {
           method: "POST",
@@ -210,8 +197,6 @@ const CreatePage = () => {
           const errorData = await exerciseResponse.json();
           throw new Error(errorData.error || "Failed to create exercise");
         }
-
-        console.log("Created Exercise:", await exerciseResponse.json());
       }
 
       // emomのIDを使ってリダイレクト

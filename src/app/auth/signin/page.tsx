@@ -115,7 +115,6 @@ const SignInPage = () => {
   };
 
   const signinWithGoogle = async () => {
-    console.log("SigninPage");
     try {
       const res = await fetch("/api/auth/signin-google", {
         method: "GET",
