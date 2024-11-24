@@ -4,6 +4,7 @@
 
 import React, { useState, useEffect } from "react";
 import AlertDialog from "./AlertDialog";
+import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
@@ -68,6 +69,7 @@ const CompleteDialog: React.FC<CompleteDialogProps> = ({ emom, onUpdate }) => {
   };
 
   const icons = [
+    <DirectionsWalkIcon fontSize="large" key="icon-0" />,
     <DirectionsRunIcon fontSize="large" key="icon-10" />,
     <TwoWheelerIcon fontSize="large" key="icon-20" />,
     <FlightTakeoffIcon fontSize="large" key="icon-30" />,
